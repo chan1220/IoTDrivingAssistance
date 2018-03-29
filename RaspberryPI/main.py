@@ -183,8 +183,12 @@ class Worker(QThread):
     def set_tmp(self,r):
         self.m_tmp = r.value.magnitude
         self.m_maf = 28.97 * ( 0.85 * 1.5 * ((self.m_rpm * self.m_map / (self.m_tmp +273.15)) / 120) ) / 8.314
-        self.m_cl = (14.7 * 6.17 * 454 * 0.621371 * self.m_vss * 0.425144) / (3600 * self.m_maf)
-        self.change_fef.emit(round(self.m_cl,1)) # Current Fuel
+        
+        if self.m_isFCT:
+            self.change_fef.emit(round(99.9,1)) # Current Fuel
+        else:
+            self.m_cl = (14.7 * 6.17 * 454 * 0.621371 * self.m_vss * 0.425144) / (3600 * self.m_maf)
+            self.change_fef.emit(round(self.m_cl,1)) # Current Fuel
         
     def set_map(self,r):
         value = r.value.magnitude
@@ -195,8 +199,11 @@ class Worker(QThread):
 
     # ===================== Calc Function(Sec) =============================================
     def calc_fuel(self):
-        self.m_total_fuel = self.m_total_fuel + self.m_maf / (14.7 * 0.73 * 1000) # 백만
-        self.change_fuel.emit(round(self.m_total_fuel,2)) # Total Fuel
+        if self.m_isFCT:
+            self.change_fuel.emit(round(self.m_total_fuel,2)) # Total Fuel
+        else:
+            self.m_total_fuel = self.m_total_fuel + self.m_maf / (14.7 * 0.73 * 1000) # 백만
+            self.change_fuel.emit(round(self.m_total_fuel,2)) # Total Fuel
 
     def calc_dis(self):
         self.m_dis = self.m_dis + (self.m_vss / 3600) # 이동거리 계산
@@ -219,7 +226,7 @@ class Worker(QThread):
             self.m_high_rpm = self.m_high_rpm +1 
 
     def isEnginStart(self):
-        if self.m_rpm > 500:
+        if self.m_rpm > 200:
             return True
         else:
             return False
