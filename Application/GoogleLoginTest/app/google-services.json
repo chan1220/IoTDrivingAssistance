@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "31997933503",
+    "firebase_url": "https://logintest-a4480.firebaseio.com",
+    "project_id": "logintest-a4480",
+    "storage_bucket": "logintest-a4480.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31997933503:android:7dde0dfdf5e87087",
+        "android_client_info": {
+          "package_name": "com.example.kpu.googlelogintest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31997933503-v8222mkapnmk891gvemo198stnqlu7is.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kpu.googlelogintest",
+            "certificate_hash": "97509dab8d98900f61dd7d0e9ae67a6b68667418"
+          }
+        },
+        {
+          "client_id": "31997933503-t1eq9v6k42q8qdk53i51940itli0seqm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kpu.googlelogintest",
+            "certificate_hash": "85f8e72a913d6e360d967e9c1f3dad212e7316e2"
+          }
+        },
+        {
+          "client_id": "31997933503-n8o213jdcln0g8ipr39s5ak93kdv1mi8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw5LU0rP9C3bQC9AjymiOmgCsjWIofw48"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "31997933503-n8o213jdcln0g8ipr39s5ak93kdv1mi8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
