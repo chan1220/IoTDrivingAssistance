@@ -16,7 +16,7 @@ class CarInfo(threading.Thread):
         self.is_fct     = False     # Fuel-Cut 여부
 
         # calced Info
-        self.maf        = 0         # Mass Air Flow
+        self.maf        = 1         # Mass Air Flow
         self.ife        = 0         # 순간연비(Instance Fuel Efficiency)(Km/L)
         self.distance   = 0         # 주행거리(Km)
         self.save       = 0         # 관성주행거리(Km)
@@ -66,9 +66,7 @@ class CarInfo(threading.Thread):
 
     # -------------------- 1초에 1번 호출하는 함수 -----------------------------
     def calc_fuel_use(self):    # 총 기름 소모량 계산(1초에 1번 호출)
-        if self.is_fct:
-            pass
-        else:
+        if not self.is_fct:
             self.fuel_use = self.fuel_use + self.maf / (14.7 * 0.73 * 1000)  # 백만
 
 
@@ -82,7 +80,7 @@ class CarInfo(threading.Thread):
     def calc_hard_break(self): # 급브레이크 계산 (1초에 1번 호출)
         if (self.speed > 50) & ((self.prev_speed - self.speed) > 10):
             self.hard_break += 1
-        self.prev_speed = self.m_vss
+        self.prev_speed = self.speed
 
 
     def calc_hard_accl(self): # 급가속 계산 (1초에 1번 호출)
@@ -149,7 +147,7 @@ if __name__ == '__main__':
     car.start()
     import os
     while True:
-        os.system('clear')
+        #os.system('clear')
         print('RPM : \t\t',car.rpm)
         print('Speed : \t',car.speed)
         print('Throttle : \t',car.throttle)
