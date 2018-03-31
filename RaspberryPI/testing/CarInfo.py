@@ -8,10 +8,10 @@ class CarInfo(threading.Thread):
         self.volume     = engine_volume # 배기량
 
         # OBD Info
-        self.rpm        = 0         # RPM
+        self.rpm        = 1         # RPM
         self.speed      = 0         # 속도(Km/H)
         self.throttle   = 0         # 쓰로틀 개방정도
-        self.map        = 0         # 매니폴드 압력(Kpa)
+        self.map        = 1         # 매니폴드 압력(Kpa)
         self.iat        = 0         # 흡기 온도(Intake Air Temp)
         self.is_fct     = False     # Fuel-Cut 여부
 
@@ -35,7 +35,7 @@ class CarInfo(threading.Thread):
 
     def run(self):
         while True:
-            if self.eng_stat:
+            if not self.eng_stat:
                 self.calc_fuel_use()    # 기름소모량
                 self.calc_distance()    # 주행거리
                 self.calc_hard_accl()   # 급가속 횟수
@@ -57,7 +57,7 @@ class CarInfo(threading.Thread):
 
 
     def calc_maf(self): # MAF 계산
-        self.maf = 28.97 * (self.volume * 1.5 * ((self.rpm * self.map / (self.iat + 273.15)) / 120)) / 8.314
+        self.maf = 28.97 * (self.volume * ((self.rpm * self.map / (self.iat + 273.15)) / 120)) / 8.314
 
 
     def calc_instance_fuel_efy(self):   # 순간연비 계산
@@ -147,13 +147,15 @@ class CarInfo(threading.Thread):
 if __name__ == '__main__':
     car = CarInfo()
     car.start()
-
+    import os
     while True:
-        print(car.rpm)
-        print(car.speed)
-        print(car.throttle)
-        print(car.distance)
-        print(car.fuel_use)
-        print(car.ife)
-        print(car.is_fct)
-        print(car.save)
+        os.system('clear')
+        print('RPM : \t\t',car.rpm)
+        print('Speed : \t',car.speed)
+        print('Throttle : \t',car.throttle)
+        print('Distance : \t',car.distance)
+        print('Fuel-Use : \t',car.fuel_use)
+        print('Inst Fuel : \t',car.ife)
+        print('Fuel-Cut : \t',car.is_fct)
+        print('Saving Dist : \t',car.save)
+        time.sleep(1)
