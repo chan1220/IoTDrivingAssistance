@@ -146,6 +146,7 @@ if __name__ == '__main__':
     car = CarInfo()
     car.start()
     import os
+    import datetime
     while True:
         #os.system('clear')
         print('RPM : \t\t',car.rpm)
@@ -156,4 +157,16 @@ if __name__ == '__main__':
         print('Inst Fuel : \t',car.ife)
         print('Fuel-Cut : \t',car.is_fct)
         print('Saving Dist : \t',car.save)
+
+        with open('carlog.txt', 'a') as f:
+            f.write('--------{}-------\n'.format(datetime.datetime.now()))
+            f.write('RPM : \t\t{}\n'.format(car.rpm))
+            f.write('Speed : \t{} Km/H\n'.format(car.speed))
+            f.write('Throttle : \t{} %\n'.format(car.throttle))
+            f.write('Distance : \t{} Km\n'.format(car.distance))
+            f.write('Fuel-Use : \t{} L\n'.format(car.fuel_use))
+            f.write('Inst Fuel : \t{} Km/L\n'.format(car.ife))
+            f.write('Fuel-Cut : \t{}\n'.format(car.is_fct))
+            f.write('Saving Dist : \t{} Km\n\n'.format(car.save))
+
         time.sleep(1)
