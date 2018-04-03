@@ -52,7 +52,7 @@ public class DrivingRecordActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener startDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                start_time.setText(i + "-" + (i1+1) + "-" + i2);
+                start_time.setText(i + "-" + String.format("%02d",(i1+1)) + "-" + String.format("%02d",i2));
             }
         };
         final DatePickerDialog startDateDialog = new DatePickerDialog(this,startDateListener,2018,03,01);
@@ -60,7 +60,7 @@ public class DrivingRecordActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener endtDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                end_time.setText(i + "-" + (i1+1) + "-" + i2);
+                end_time.setText(i + "-" + String.format("%02d",(i1+1)) + "-" + String.format("%02d",i2));
             }
         };
         final DatePickerDialog endDateDialog = new DatePickerDialog(this,endtDateListener,2018,03,01);
