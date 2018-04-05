@@ -5,12 +5,16 @@ import datetime
 import uuid
 import pymysql
 class MyGPS(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
 
-    def run(self):
+        self.status = True
+        self.mac_addr = self.get_mac()
+        self.pos_list = []
         self.lat = 0.0
         self.lon = 0.0
-        self.pos_list = []
-        self.mac_addr = self.get_mac()
+
+    def run(self):
         sem = threading.Semaphore()
         gps_socket = gps3.GPSDSocket()
         data_stream = gps3.DataStream()
@@ -25,17 +29,19 @@ class MyGPS(threading.Thread):
                     print("수신성공!")
                     self.lat = data_stream.TPV['lat']
                     self.lon = data_stream.TPV['lon']
-                    self.insertPosList(self.lat,self.lon) # insert list
+                    self.insertPosList(self.lat, self.lon) # insert list
                     sem.release()
+            if not self.status:
+                break
 
     def get_mac(self):
-        mac_num = hex(uuid.getnode()).replace('0x', '').upper()
-        mac = ':'.join(mac_num[i: i + 2] for i in range(0, 11, 2))
-        return mac
+        with open('/proc/cpuinfo','r') as f:
+            for line in f:
+                if line[0:6]=='Serial':
+                    return str(line[17:26])
 
     def insertPosList(self,lat,lon):
         self.pos_list.append((datetime.datetime.now().strftime('%Y-%m-%d %H:%H:%S'),lat,lon))
-
 
     def getPosition(self):
         self.insertPosList(self.lat, self.lon)

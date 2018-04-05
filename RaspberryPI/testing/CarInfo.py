@@ -5,7 +5,7 @@ import time
 class CarInfo(threading.Thread):
     def __init__(self, engine_volume=1.5):
         threading.Thread.__init__(self)
-        self.volume     = engine_volume # 배기량
+        self.volume     = engine_volume     # 배기량
 
         # OBD Info
         self.rpm        = 1         # RPM
@@ -24,7 +24,6 @@ class CarInfo(threading.Thread):
         self.eng_stat   = False     # 시동 여부
         self.avr_fuel   = 0         # 평균 연비
 
-
         self.prev_speed = 0
 
         # 주행 습관
@@ -32,12 +31,16 @@ class CarInfo(threading.Thread):
         self.hard_rpm   = 0
         self.hard_accel = 0
 
-        self.initOBDConnection()
-
+        self.init_connection()
 
     def run(self):
+
+        while not self.eng_stat:    # 엔진이 가동될때 까지 대기
+            print('wait engine start.....')
+
         start_time = time.time()
-        while self.eng_stat:
+        while self.eng_stat:        # 엔진이 가동되는 동안 계산
+            print('calculation loop....')
             self.calc_fuel_use()    # 기름소모량
             self.calc_distance()    # 주행거리
             self.calc_hard_accl()   # 급가속 횟수
@@ -45,8 +48,12 @@ class CarInfo(threading.Thread):
             self.calc_hard_rpm()    # 고 RPM 횟수
             time.sleep(1.0 - ((time.time() - start_time) % 1.0))           # 1초 정지
 
+        print('engine stop!!')
+        self.release_connection()   # OBD 연결 종료
 
-    def initOBDConnection(self):
+
+
+    def init_connection(self):
         self.connection = obd.Async('/dev/rfcomm0')
         # 해당 값들이 변경될 때 다음의 callback 함수 호출
         self.connection.watch(obd.commands.RPM,             callback=self.set_rpm)
@@ -57,14 +64,17 @@ class CarInfo(threading.Thread):
         self.connection.watch(obd.commands.FUEL_STATUS,     callback=self.set_fct)
         self.connection.start()
 
+    def release_connection(self):
+        self.connection.stop()
+        self.connection.unwatch_all()
+        self.connection.close()
 
-    def calc_maf(self): # MAF 계산
+    def calc_maf(self):     # MAF 계산
         self.maf = 28.97 * (self.volume * ((self.rpm * self.map / (self.iat + 273.15)) / 120)) / 8.314
-
-
+        if self.maf == 0:
+            self.maf = 1
     def calc_instance_fuel_efy(self):   # 순간연비 계산
         self.ife = (14.7 * 6.17 * 454 * 0.621371 * self.speed * 0.425144) / (3600 * self.maf)
-
 
     # -------------------- 1초에 1번 호출하는 함수 -----------------------------
     def calc_fuel_use(self):    # 총 기름 소모량 계산(1초에 1번 호출)
@@ -74,32 +84,26 @@ class CarInfo(threading.Thread):
         if self.fuel_use != 0:      # 평균 연비 계산
             self.avr_fuel = self.distance / self.fuel_use
 
-
     def calc_distance(self):    # 주행거리 계산(1초에 1번 호출)
         self.distance = self.distance + (self.speed / 3600)  # 이동거리 계산
-
-        if self.is_fct:  # Fuel-Cut이 걸려있는 경우 절약거리를 계산
+        if self.is_fct:     # Fuel-Cut이 걸려있는 경우 절약거리를 계산
             self.save = self.save + (self.speed / 3600)
 
-
-    def calc_hard_break(self): # 급브레이크 계산 (1초에 1번 호출)
+    def calc_hard_break(self):  # 급브레이크 계산 (1초에 1번 호출)
         if (self.speed > 50) & ((self.prev_speed - self.speed) > 10):
             self.hard_break += 1
         self.prev_speed = self.speed
 
+    def calc_hard_accl(self):   # 급가속 계산 (1초에 1번 호출)
+        if self.throttle > 40:
+            self.hard_accel += 1
 
-    def calc_hard_accl(self): # 급가속 계산 (1초에 1번 호출)
-         if self.throttle > 40:
-            self.hard_accel +=1
-
-
-    def calc_hard_rpm(self): # 고알피엠 계산 (1초에 1번 호출)
+    def calc_hard_rpm(self):     # 고알피엠 계산 (1초에 1번 호출)
         if self.rpm > 3000:
             self.hard_rpm += 1
     # ---------------------------------------------------------------------------------
 
-
-    def set_rpm(self,r):
+    def set_rpm(self, r):
         if r:
             value = r.value.magnitude
             self.rpm = value
@@ -111,7 +115,6 @@ class CarInfo(threading.Thread):
             self.calc_instance_fuel_efy()
         else:
             self.eng_stat = False
-
 
     def set_speed(self, r):
         if r:
@@ -147,7 +150,7 @@ class CarInfo(threading.Thread):
         else:
             self.eng_stat = False
 
-    def set_fct(self,r):
+    def set_fct(self, r):
         if r:
             value = r.value
             if "fuel cut" in value[0]:      # 퓨얼컷이 걸렸을때
@@ -156,8 +159,6 @@ class CarInfo(threading.Thread):
                 self.is_fct = False
         else:
             self.eng_stat = False
-
-
 
 
 if __name__ == '__main__':

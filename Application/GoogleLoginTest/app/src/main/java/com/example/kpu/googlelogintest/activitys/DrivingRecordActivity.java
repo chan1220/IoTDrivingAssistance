@@ -54,7 +54,7 @@ public class DrivingRecordActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 start_time.setText(i + "-" + String.format("%02d",(i1+1)) + "-" + String.format("%02d",i2));
             }
-        };
+        };ra
         final DatePickerDialog startDateDialog = new DatePickerDialog(this,startDateListener,2018,03,01);
 
         DatePickerDialog.OnDateSetListener endtDateListener = new DatePickerDialog.OnDateSetListener() {
