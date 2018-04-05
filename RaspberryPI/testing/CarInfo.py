@@ -3,7 +3,7 @@ import threading
 import time
 
 class CarInfo(threading.Thread):
-    def __init__(self,engine_volume=1.5):
+    def __init__(self, engine_volume=1.5):
         threading.Thread.__init__(self)
         self.volume     = engine_volume # 배기량
 
@@ -22,6 +22,8 @@ class CarInfo(threading.Thread):
         self.save       = 0         # 관성주행거리(Km)
         self.fuel_use   = 0         # 기름 사용량(L)
         self.eng_stat   = False     # 시동 여부
+        self.avr_fuel   = 0         # 평균 연비
+
 
         self.prev_speed = 0
 
@@ -34,18 +36,18 @@ class CarInfo(threading.Thread):
 
 
     def run(self):
-        while True:
-            if not self.eng_stat:
-                self.calc_fuel_use()    # 기름소모량
-                self.calc_distance()    # 주행거리
-                self.calc_hard_accl()   # 급가속 횟수
-                self.calc_hard_break()  # 급정차 횟수
-                self.calc_hard_rpm()    # 고 RPM 횟수
-                time.sleep(1)           # 1초 정지
-                
+        start_time = time.time()
+        while self.eng_stat:
+            self.calc_fuel_use()    # 기름소모량
+            self.calc_distance()    # 주행거리
+            self.calc_hard_accl()   # 급가속 횟수
+            self.calc_hard_break()  # 급정차 횟수
+            self.calc_hard_rpm()    # 고 RPM 횟수
+            time.sleep(1.0 - ((time.time() - start_time) % 1.0))           # 1초 정지
+
 
     def initOBDConnection(self):
-        self.connection = obd.Async()
+        self.connection = obd.Async('/dev/rfcomm0')
         # 해당 값들이 변경될 때 다음의 callback 함수 호출
         self.connection.watch(obd.commands.RPM,             callback=self.set_rpm)
         self.connection.watch(obd.commands.SPEED,           callback=self.set_speed)
@@ -68,6 +70,9 @@ class CarInfo(threading.Thread):
     def calc_fuel_use(self):    # 총 기름 소모량 계산(1초에 1번 호출)
         if not self.is_fct:
             self.fuel_use = self.fuel_use + self.maf / (14.7 * 0.73 * 1000)  # 백만
+
+        if self.fuel_use != 0:      # 평균 연비 계산
+            self.avr_fuel = self.distance / self.fuel_use
 
 
     def calc_distance(self):    # 주행거리 계산(1초에 1번 호출)
@@ -95,49 +100,62 @@ class CarInfo(threading.Thread):
 
 
     def set_rpm(self,r):
-        value = r.value.magnitude
-        self.rpm = value
-        if self.rpm > 500:
-            eng_stat = True
+        if r:
+            value = r.value.magnitude
+            self.rpm = value
+            if self.rpm > 500:
+                self.eng_stat = True
+            else:
+                self.eng_stat = False
+            self.calc_maf()
+            self.calc_instance_fuel_efy()
         else:
-            eng_stat = False
-        self.calc_maf()
-        self.calc_instance_fuel_efy()
+            self.eng_stat = False
 
 
-    def set_speed(self,r):
-        value = r.value.magnitude
-        self.speed = value
-        self.calc_maf()
-        self.calc_instance_fuel_efy()
+    def set_speed(self, r):
+        if r:
+            value = r.value.magnitude
+            self.speed = value
+            self.calc_maf()
+            self.calc_instance_fuel_efy()
+        else:
+            self.eng_stat = False
 
+    def set_throttle(self, r):
+        if r:
+            value = r.value.magnitude
+            self.throttle = value
+        else:
+            self.eng_stat = False
 
-    def set_throttle(self,r):
-        value = r.value.magnitude
-        self.throttle = value
+    def set_map(self, r):
+        if r:
+            value = r.value.magnitude
+            self.map = value
+            self.calc_maf()
+            self.calc_instance_fuel_efy()
+        else:
+            self.eng_stat = False
 
-
-    def set_map(self,r):
-        value = r.value.magnitude
-        self.map = value
-        self.calc_maf()
-        self.calc_instance_fuel_efy()
-
-
-    def set_iat(self,r):
-        value = r.value.magnitude
-        self.iat = value
-        self.calc_maf()
-        self.calc_instance_fuel_efy()
-
+    def set_iat(self, r):
+        if r:
+            value = r.value.magnitude
+            self.iat = value
+            self.calc_maf()
+            self.calc_instance_fuel_efy()
+        else:
+            self.eng_stat = False
 
     def set_fct(self,r):
-        value = r.value
-        if "fuel cut" in value[0]:      # 퓨얼컷이 걸렸을때
-            self.is_fct = True
+        if r:
+            value = r.value
+            if "fuel cut" in value[0]:      # 퓨얼컷이 걸렸을때
+                self.is_fct = True
+            else:
+                self.is_fct = False
         else:
-            self.is_fct = False
-
+            self.eng_stat = False
 
 
 
