@@ -10,4 +10,8 @@
 
     <string name="action_settings">로그아웃</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="title_activity_car_book">CarBookActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
