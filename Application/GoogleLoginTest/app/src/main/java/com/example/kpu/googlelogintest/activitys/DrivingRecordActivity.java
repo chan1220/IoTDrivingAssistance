@@ -135,8 +135,7 @@ public class DrivingRecordActivity extends AppCompatActivity {
             for(int i=0;i<json.length();i++) {
 
                 RecordData dto = new RecordData();
-                String json_position = PHPRequest.execute(getText(R.string.server_url)+"/get_position.php","car_id",json.getJSONObject(i).get("CAR_ID").toString(),"START_TIME",json.getJSONObject(i).get("START_TIME").toString(),"end_time",json.getJSONObject(i).get("END_TIME").toString());
-
+                String json_position = PHPRequest.execute(getText(R.string.server_url)+"/get_position.php","car_id",json.getJSONObject(i).get("CAR_ID").toString(),"start_time",json.getJSONObject(i).get("START_TIME").toString(),"end_time",json.getJSONObject(i).get("END_TIME").toString());
                 dto.setCar_id(json.getJSONObject(i).get("CAR_ID").toString());
                 dto.setStart_time(json.getJSONObject(i).get("START_TIME").toString());
                 dto.setEnd_time(json.getJSONObject(i).get("END_TIME").toString());

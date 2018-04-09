@@ -41,7 +41,7 @@ class MyGPS(threading.Thread):
                     return str(line[17:26])
 
     def insertPosList(self,lat,lon):
-        self.pos_list.append((datetime.datetime.now().strftime('%Y-%m-%d %H:%H:%S'),lat,lon))
+        self.pos_list.append((datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),lat,lon))
 
     def getPosition(self):
         self.insertPosList(self.lat, self.lon)
