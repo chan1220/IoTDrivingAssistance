@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "딱풀 건드리지마", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "메롱 -_-", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -167,6 +167,10 @@ public class MainActivity extends AppCompatActivity
             // 주행 점수
         } else if (id == R.id.nav_book) {
             // 차계부
+            Intent intent_carbook=new Intent(MainActivity.this, CarBookActivity.class);
+            intent_carbook.putExtra("id",intent.getStringExtra("id"));
+            intent_carbook.putExtra("name",intent.getStringExtra("name"));
+            startActivity(intent_carbook);
         } else if (id == R.id.nav_info) {
             Intent intent_info=new Intent(MainActivity.this, InformationActivity.class);
             startActivity(intent_info);
