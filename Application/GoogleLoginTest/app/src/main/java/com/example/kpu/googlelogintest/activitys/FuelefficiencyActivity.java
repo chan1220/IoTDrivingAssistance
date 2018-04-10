@@ -1,14 +1,10 @@
 package com.example.kpu.googlelogintest.activitys;
 
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.example.kpu.googlelogintest.R;
@@ -20,83 +16,32 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class CarBookActivity extends AppCompatActivity {
+public class FuelefficiencyActivity extends AppCompatActivity {
 
-    Button start_time, end_time;
-    Button button_search;
+    EditText edt_fef, edt_score, edt_break, edt_accel;
     ArrayList<RecordData> recordArray;
-    EditText edt_fef, edt_fuel, edt_distance, edt_date;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_car_book);
-
-
-        start_time = findViewById(R.id.start_date);
-        end_time = findViewById(R.id.end_date);
-        button_search = findViewById(R.id.search);
+        setContentView(R.layout.activity_fuelefficiency);
 
         edt_fef = findViewById(R.id.edt_fef);
-        edt_fuel = findViewById(R.id.edt_fuel);
-        edt_distance = findViewById(R.id.edt_distance);
-        edt_date = findViewById(R.id.edt_date);
-
-
-
-
+        edt_score = findViewById(R.id.edt_score);
+        edt_break = findViewById(R.id.edt_break);
+        edt_accel = findViewById(R.id.edt_accel);
 
         recordArray = new ArrayList<RecordData>();
 
-        DatePickerDialog.OnDateSetListener startDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                start_time.setText(i + "-" + String.format("%02d",(i1+1)) + "-" + String.format("%02d",i2));
-            }
-        };
-        final DatePickerDialog startDateDialog = new DatePickerDialog(this,startDateListener,2018,03,01);
-
-        DatePickerDialog.OnDateSetListener endtDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                end_time.setText(i + "-" + String.format("%02d",(i1+1)) + "-" + String.format("%02d",i2));
-            }
-        };
-        final DatePickerDialog endDateDialog = new DatePickerDialog(this,endtDateListener,2018,03,01);
-
-
-
-        start_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startDateDialog.show();
-            }
-        });
-
-        end_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                endDateDialog.show();
-            }
-        });
-
-        button_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recordArray.clear();
-                new BackgroundTask().execute();
-            }
-        });
-
-
-
+        new BackgroundTask().execute();
     }
+
+
 
 
 
     private boolean setData() {
         String userid = getIntent().getStringExtra("id");
-        String json_result = PHPRequest.execute(getText(R.string.server_url)+"/drive_record.php","usr_id",userid,"start_time",start_time.getText().toString(),"end_time",end_time.getText().toString());
+        String json_result = PHPRequest.execute(getText(R.string.server_url)+"/drive_record.php","usr_id",userid,"start_time","1980-01-01","end_time","2100-12-31");
         try {
             if(json_result == null)
                 return false;
@@ -138,7 +83,10 @@ public class CarBookActivity extends AppCompatActivity {
     {
         double total_fuel = 0;
         double total_dis = 0;
-        ProgressDialog progressDialog = new ProgressDialog(CarBookActivity.this);
+        int total_break = 0;
+        int total_accel = 0;
+        int total_score = 0;
+        ProgressDialog progressDialog = new ProgressDialog(FuelefficiencyActivity.this);
 
 
         @Override // 여기에 할 작업
@@ -161,16 +109,18 @@ public class CarBookActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             progressDialog.dismiss();
-            
+
             for(RecordData rd : recordArray)
             {
                 total_fuel += Double.parseDouble(rd.getDistance()) / Double.parseDouble(rd.getFuel_eft());
                 total_dis += Double.parseDouble(rd.getDistance());
+                total_score += Integer.parseInt(rd.getScore());
+                total_accel += Integer.parseInt(rd.getAccel_num());
             }
-            edt_date.setText(start_time.getText().toString() + " ~ " + end_time.getText().toString() + "의 기록입니다.");
-            edt_distance.setText("총 주행거리 : "+total_dis + " Km");
-            edt_fuel.setText("기름 사용량 : "+total_fuel+" L");
-            edt_fef.setText("평균연비 : "+ total_dis / total_fuel + " Km/L");
+            edt_fef.setText("" + total_dis / total_fuel);
+            edt_score.setText(""+total_score / recordArray.size());
+            edt_break.setText(""+ total_break / total_dis);
+            edt_accel.setText(""+total_break / total_dis);
         }
     }
 }

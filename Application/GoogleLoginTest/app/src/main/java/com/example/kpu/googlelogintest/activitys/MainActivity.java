@@ -162,7 +162,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_efi) {
             // 연비 확인
-
+            Intent intent_fef=new Intent(MainActivity.this, FuelefficiencyActivity.class);
+            intent_fef.putExtra("id",intent.getStringExtra("id"));
+            startActivity(intent_fef);
         } else if (id == R.id.nav_score) {
             // 주행 점수
         } else if (id == R.id.nav_book) {

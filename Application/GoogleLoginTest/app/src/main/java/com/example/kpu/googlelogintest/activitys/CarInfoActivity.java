@@ -13,12 +13,8 @@ import com.example.kpu.googlelogintest.utills.PHPRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.concurrent.ExecutionException;
-
 public class CarInfoActivity extends AppCompatActivity {
     private String id;
-    private String json_string;
-
 
     EditText edt_name,edt_carname,edt_volume,edt_fuel,edt_fuel_efi,edt_carid;
     @Override
@@ -35,36 +31,8 @@ public class CarInfoActivity extends AppCompatActivity {
 
 
         id = getIntent().getStringExtra("id");
-        try {
-            json_string = new BackgroundTask().execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        new BackgroundTask().execute();
         edt_name.setText(getIntent().getStringExtra("name"));
-
-        try {
-            JSONArray json = new JSONArray(json_string);
-            if(json.length() <= 0) {
-                Toast.makeText(this, "차량이 등록되있지 않습니다. \n먼저 차량을 등록해주세요.", Toast.LENGTH_LONG).show();
-                finish();
-            }
-            for(int i=0;i<json.length();i++) {
-                // json을 받아서 EdtiText에 설정
-                edt_carid.setText(json.getJSONObject(i).get("CAR_ID").toString());
-                edt_carname.setText(json.getJSONObject(i).get("CAR_NAME").toString());
-                edt_volume.setText(json.getJSONObject(i).get("VOLUME").toString() + " CC");
-                edt_fuel.setText(json.getJSONObject(i).get("FUEL").toString());
-                edt_fuel_efi.setText(json.getJSONObject(i).get("FUEL_EFI").toString() + " Km/L");
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"JSONException",Toast.LENGTH_SHORT).show();
-        }
-
-
 
     }
 
@@ -73,11 +41,12 @@ public class CarInfoActivity extends AppCompatActivity {
     public class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         ProgressDialog progressDialog = new ProgressDialog(CarInfoActivity.this);
-
+        String car_info_json;
 
         @Override // 여기에 할 작업
         protected String doInBackground(Void... voids) {
-            return PHPRequest.execute(getString(R.string.server_url)+"/carinfo.php","id",id);
+            car_info_json = PHPRequest.execute(getString(R.string.server_url)+"/carinfo.php","id",id);
+            return null;
         }
 
 
@@ -90,11 +59,31 @@ public class CarInfoActivity extends AppCompatActivity {
             progressDialog.show();
         }
 
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressDialog.dismiss();
+            JSONArray json = null;
+
+            try {
+                json = new JSONArray(car_info_json);
+                if(json.length() <= 0) {
+                    Toast.makeText(getApplicationContext(), "차량이 등록되있지 않습니다. \n먼저 차량을 등록해주세요.", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+                for(int i=0;i<json.length();i++) {
+                    // json을 받아서 EdtiText에 설정
+                    edt_carid.setText(json.getJSONObject(i).get("CAR_ID").toString());
+                    edt_carname.setText(json.getJSONObject(i).get("CAR_NAME").toString());
+                    edt_volume.setText(json.getJSONObject(i).get("VOLUME").toString() + " CC");
+                    edt_fuel.setText(json.getJSONObject(i).get("FUEL").toString());
+                    edt_fuel_efi.setText(json.getJSONObject(i).get("FUEL_EFI").toString() + " Km/L");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
+            }
+
         }
 
     }

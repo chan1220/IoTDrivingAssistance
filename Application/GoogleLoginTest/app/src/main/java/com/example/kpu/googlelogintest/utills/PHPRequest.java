@@ -1,7 +1,5 @@
 package com.example.kpu.googlelogintest.utills;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +26,7 @@ public class PHPRequest {
 
         for(int i=1; i<data.length; i+=2) {
             builder.add(data[i], data[i + 1]);
-            Log.d("타입이름" + data[i], "속성 값 : "+ data[i+1]+", i값 : "+i);
+            // Log.d("타입이름" + data[i], "속성 값 : "+ data[i+1]+", i값 : "+i);
         }
         RequestBody body = builder.build();
         //request
