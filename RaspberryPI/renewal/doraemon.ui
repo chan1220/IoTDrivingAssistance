@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>826</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>도라에몽</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>801</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="RPMGauge" name="widget_3" native="true">
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>64</width>
+          <height>15</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>테스트</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="SpeedGauge" name="widget_2" native="true">
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>10</y>
+          <width>64</width>
+          <height>15</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>테스트</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="FEFGauge" name="widget" native="true">
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>64</width>
+          <height>15</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>테스트</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>280</y>
+      <width>801</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLCDNumber" name="lcd_distance"/>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcd_current_fuel"/>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcd_total_fuel"/>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcd_fuel_efi"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>826</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RPMGauge</class>
+   <extends>QWidget</extends>
+   <header location="global">RPMGauge.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SpeedGauge</class>
+   <extends>QWidget</extends>
+   <header>SpeedGauge.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FEFGauge</class>
+   <extends>QWidget</extends>
+   <header>FEFGauge.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
