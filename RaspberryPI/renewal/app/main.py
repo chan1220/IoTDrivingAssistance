@@ -29,44 +29,44 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.obd.on_changed_fuel_cut.connect(self.on_changed_fuel_cut)
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
 		self.sensor.start()
-	def on_changed_fuel_use(self, a):
+	def on_changed_fuel_use(self, a): # 총 기름 사용량
+		self.lcd_total_fuel.display(float(a))
+
+	def on_changed_avr_fuel(self, a): # 평균연비
+		self.lcd_fuel_efi.display(float(a))
+
+	def on_changed_distance(self, a): # 주행거리
+		self.lcd_distance.display(float(a))
+
+	def on_changed_save(self, a): # 절약거리
+		print("절 약거 리: ",a)
+
+	def on_changed_ife(self, a): # 순간연비
+		self.lcd_current_fuel.display(float(a))
+
+	def on_changed_hbreak_count(self, a, b): #급정차
 		pass
 
-	def on_changed_avr_fuel(self, a):
+	def on_hard_accel(self, a, b):	# 급출발
 		pass
 
-	def on_changed_distance(self, a):
+	def on_hard_rpm(self, a, b): # 고RPM
 		pass
 
-	def on_changed_save(self, a):
-		pass
+	def on_changed_rpm(self, a): # RPM
+		self.widget_3.render(int(a))
 
-	def on_changed_ife(self, a):
-		pass
-
-	def on_changed_hbreak_count(self, a, b):
-		pass
-
-	def on_hard_accel(self, a, b):
-		pass
-
-	def on_hard_rpm(self, a, b):
-		pass
-
-	def on_changed_rpm(self, a):
-		pass
-
-	def on_changed_speed(self, a):
-		pass
+	def on_changed_speed(self, a):	# 속도
+		self.widget_2.render(int(a))
 
 	def on_changed_throttle(self, a):
-		pass
+		print("throttle : ",a)
 
 	def on_changed_fuel_cut(self, a):
-		pass
+		print("fuel-cut : ",a)
 
 	def on_changed_gps(self, position):
-		pass
+		print("gps : ",position)
 
 		
 

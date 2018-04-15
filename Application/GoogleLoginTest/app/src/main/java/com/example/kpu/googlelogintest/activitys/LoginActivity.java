@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.example.kpu.googlelogintest.R;
+import com.example.kpu.googlelogintest.utills.DBRequester;
 import com.example.kpu.googlelogintest.utills.PHPRequest;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -18,10 +20,16 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-public class LoginActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class LoginActivity extends AppCompatActivity implements DBRequester.Listener {
     private static final int RESOLVE_CONNECTION_REQUEST_CODE = 1;
-    GoogleApiClient mGoogleApiClient;
-    SignInButton googleLoginButton;
+    private GoogleApiClient mGoogleApiClient;
+    private SignInButton googleLoginButton;
+    private DBRequester _requester;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // 엑션 바 감추기
 
         setContentView(R.layout.activity_login);
+
+        this._requester = new DBRequester(this, this);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -68,39 +78,83 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data )
     {
-        switch ( requestCode )
-        {
-            case RESOLVE_CONNECTION_REQUEST_CODE:
-                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-                if ( result.isSuccess( ) )
-                {
+        try {
+
+            switch ( requestCode )
+            {
+                case RESOLVE_CONNECTION_REQUEST_CODE:
+                    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                    if(result.isSuccess() == false)
+                        throw new Exception("could not login with google id");
+
                     GoogleSignInAccount acct = result.getSignInAccount( ); // 계정 정보 얻어오기
                     String id, name, token;
                     name = acct.getDisplayName();
                     id = acct.getId();
                     token = FirebaseInstanceId.getInstance().getToken();
 
-                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtra("name",name);
-                    intent.putExtra("email",acct.getEmail());
-                    intent.putExtra("id",id);
+
 
                     // 실행!
-                    PHPRequest.execute(getString(R.string.server_url)+"/register_user.php","id",id,"name",name,"token",token);
-                    startActivity(intent);
-                    finish();
+                    JSONObject user = new JSONObject();
+                    user.put("id", id);
+                    user.put("name", name);
+                    user.put("token", token);
+                    new DBRequester.Builder(this, "http://49.236.136.179:5000", this)
+                            .attach("register/user")
+                            .streamPost(user)
+                            .request("register user");
+                    break;
 
-                }
-                break;
+                default:
+                    super.onActivityResult( requestCode, resultCode, data );
+            }
+        } catch (Exception e) {
 
-            default:
-                super.onActivityResult( requestCode, resultCode, data );
+            Log.d("activity result", e.getMessage());
         }
+
     }
 
 
+    @Override
+    public void onResponse(String id, JSONObject json, Object... params) {
 
+        try {
+            if(json.getBoolean("success") == false)
+                return;
 
+            switch(id) {
+
+                case "register user":
+                    JSONObject data = json.getJSONObject("data");
+                    String uid = data.getString("id");
+                    String uname = data.getString("name");
+                    String token = data.getString("token");
+                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                    intent.putExtra("name",uname);
+                    intent.putExtra("id",uid);
+
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        } catch (Exception e) {
+
+            Log.d("on response", e.getMessage());
+
+        }
+    }
+
+    @Override
+    public void onResponse(String id, JSONArray json, Object... params) {
+
+    }
+
+    @Override
+    public void onError(String id, String message, Object... params) {
+
+    }
 }
 
 
