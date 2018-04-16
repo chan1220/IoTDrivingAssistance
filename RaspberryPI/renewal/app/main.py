@@ -28,30 +28,31 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.obd.on_changed_throttle.connect(self.on_changed_throttle)
 		self.sensor.obd.on_changed_fuel_cut.connect(self.on_changed_fuel_cut)
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
+		self.label_fct.setPixmap(QtGui.QPixmap('fct_off.png').scaled(100, 100))
 		self.sensor.start()
 	def on_changed_fuel_use(self, a): # 총 기름 사용량
-		self.lcd_total_fuel.display(float(a))
+		self.lcd_total_fuel.display(round(float(a),2))
 
 	def on_changed_avr_fuel(self, a): # 평균연비
-		self.lcd_fuel_efi.display(float(a))
+		self.lcd_fuel_efi.display(round(float(a),2))
 
 	def on_changed_distance(self, a): # 주행거리
-		self.lcd_distance.display(float(a))
+		self.lcd_distance.display(round(float(a),2))
 
 	def on_changed_save(self, a): # 절약거리
-		print("절 약거 리: ",a)
+		self.lcd_save.display(round(float(a),2))
 
 	def on_changed_ife(self, a): # 순간연비
-		self.lcd_current_fuel.display(float(a))
+		self.lcd_current_fuel.display(round(float(a),2))
 
-	def on_changed_hbreak_count(self, a, b): #급정차
-		pass
+	def on_changed_hbreak_count(self, a): #급정차
+		self.lcd_hard_break.display(int(a))
 
-	def on_hard_accel(self, a, b):	# 급출발
-		pass
+	def on_hard_accel(self, a):	# 급출발
+		self.lcd_hard_accel.display(int(a))
 
-	def on_hard_rpm(self, a, b): # 고RPM
-		pass
+	def on_hard_rpm(self, a): # 고RPM
+		self.lcd_hard_rpm.display(int(a))
 
 	def on_changed_rpm(self, a): # RPM
 		self.widget_3.render(int(a))
@@ -59,11 +60,14 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 	def on_changed_speed(self, a):	# 속도
 		self.widget_2.render(int(a))
 
-	def on_changed_throttle(self, a):
-		print("throttle : ",a)
+	def on_changed_throttle(self, a): # 쓰로틀 개방
+		self.lcd_throttle.display(round(float(a),2))
 
-	def on_changed_fuel_cut(self, a):
-		print("fuel-cut : ",a)
+	def on_changed_fuel_cut(self, a): # 퓨얼 컷
+		if a:
+			self.label_fct.setPixmap(QPixmap('fct_on.png').scaled(100, 100))
+		else:
+			self.label_fct.setPixmap(QPixmap('fct_off.png').scaled(100, 100))
 
 	def on_changed_gps(self, position):
 		print("gps : ",position)

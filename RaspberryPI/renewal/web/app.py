@@ -10,7 +10,7 @@ def on_update_gps():
 	ret = {'success': True}
 	try:
 		data = json.loads(request.data.decode('utf-8'))
-		ret['data'] = add_position(data['id'], data['lat'], data['lon'])
+		ret['data'] = model.add_position(data['id'], data['lat'], data['lon'])
 	except Exception as e:
 		ret['success'] = False
 		ret['error'] = str(e)
@@ -22,8 +22,8 @@ def on_update_gps():
 def on_update_drive():
 	ret = {'success': True}
 	try:
-		data = json.loads(request.data.decoe('utf-8'))
-		ret['data'] = add_drive(data['id'], data['fuel_efi'], data['speed'])
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.add_drive(data['id'], data['fuel_efi'], data['speed'])
 	except Exception as e:
 		ret['success'] = False
 		ret['error'] = str(e)
@@ -37,6 +37,19 @@ def on_update_car():
 	try:
 		data = json.loads(request.data.decode('utf-8'))
 		ret['data'] = model.set_car(data['id'], data['uid'], data['cname'], data['volume'], data['fuel'], data['fuel_efi'])
+	except Exception as e:
+		ret['success'] = False
+		ret['error'] = str(e)
+	finally:
+		return json.dumps(ret)
+
+
+@app.route('/update/record', methods=['POST'])
+def on_update_record():
+	ret = {'success': True}
+	try:
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.add_record(data['id'], data['start_time'], data['fuel_efi'], data['avr_speed'], data['hard_rpm'], data['hard_break'], data['hard_accel'], data['score'], data['distance'])
 	except Exception as e:
 		ret['success'] = False
 		ret['error'] = str(e)

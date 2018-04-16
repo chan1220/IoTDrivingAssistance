@@ -46,3 +46,6 @@ CREATE TABLE car (
   KEY usr_id (usr_id),
   CONSTRAINT car_ibfk_1 FOREIGN KEY (usr_id) REFERENCES users (usr_id)
 );
+
+
+select * from position;

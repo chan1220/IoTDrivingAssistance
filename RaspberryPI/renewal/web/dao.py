@@ -4,7 +4,7 @@ import datetime
 
 
 class dao(MySQL):
-	def __init__(self, app, host='localhost', port=3306, uname='root', upw='root', dbname='doraemon'):
+	def __init__(self, app, host='localhost', port=3306, uname='root', upw='doraemon', dbname='doraemon'):
 		app.config['MYSQL_HOST'] = host
 		app.config['MYSQL_PORT'] = port
 		app.config['MYSQL_DB']   = dbname
@@ -50,6 +50,12 @@ class dao(MySQL):
 		self.connection.commit()
 		return {'id': id, 'fuel_efi': fuel_efi, 'speed': speed}
 		
+	def add_record(self, id, start_time, fuel_efi, avr_speed, hard_rpm, hard_break, hard_accel, score, distance):
+		cursor = self.connection.cursor()
+		cursor.execute('''INSERT INTO record (car_id, start_time, fuel_efi, speed, rpm, brk_num, acl_num, score, distance, end_time) VALUES(%s, %s, %s, %s, %s, %s ,%s, %s, %s, now())''', (id, start_time, fuel_efi, avr_speed, hard_rpm, hard_break, hard_accel, score, distance))
+		self.connection.commit()
+		return {'id': id, 'start_time': start_time,  'fuel_efi': fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': hard_rpm, 'hard_break': hard_break, 'hard_accel': hard_accel, 'score': score, 'distance': distance} # 수업 갓다와서 여기 바꿔야함
+
 
 	def set_car(self, id, uid, cname, volume, fuel, fuel_efi):
 		query = '''
