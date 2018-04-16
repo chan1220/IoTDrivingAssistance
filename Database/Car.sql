@@ -1,48 +1,60 @@
-CREATE TABLE CAR (
-  CAR_ID varchar(30) NOT NULL,
-  USR_ID varchar(30) NOT NULL,
-  CAR_NAME varchar(30) NOT NULL,
-  VOLUME varchar(30) NOT NULL,
-  FUEL varchar(30) NOT NULL,
-  FUEL_EFI varchar(30) NOT NULL,
-  PRIMARY KEY (CAR_ID),
-  KEY USR_ID (USR_ID),
-  CONSTRAINT CAR_ibfk_1 FOREIGN KEY (USR_ID) REFERENCES USERS (USR_ID)
-)
-
-INSERT INTO CAR VALUES ('kalos','110169985313641949566','Kalos','1498','Gasoline','14.3');
+USE doraemon;
 
 
-CREATE TABLE POSITION (
-  CAR_ID varchar(30),
-  POS_TIME datetime,
-  POS_X double,
-  POS_Y double
-)
+CREATE TABLE users (
+  usr_id varchar(30) UNIQUE,
+  usr_name varchar(20),
+  token varchar(200)
+);
 
 
-INSERT INTO POSITION VALUES ('kalos','2018-03-15 15:20:00',37.3405,126.7335),('kalos','2018-03-15 15:21:00',37.3989,126.7409),('kalos','2018-03-15 15:22:00',37.4058,126.7711),('kalos','2018-03-15 15:23:00',37.4407,126.7842);
+CREATE TABLE drive (
+  car_id varchar(30),
+  pos_time datetime,
+  fuel_efi double,
+  speed int(11)
+);
 
+CREATE TABLE position (
+  car_id varchar(30),
+  pos_time datetime,
+  pos_x double,
+  pos_y double
+);
 
-CREATE TABLE RECORD (
-  CAR_ID varchar(30),
-  START_TIME datetime,
-  FUEL_EFI float,
-  SPEED int(11),
-  RPM int(11),
-  BRK_NUM int(11),
-  ACL_NUM int(11),
-  SCORE int(11),
-  DISTANCE float,
-  END_TIME datetime
-) 
+CREATE TABLE record (
+  car_id varchar(30),
+  start_time datetime,
+  fuel_efi float,
+  speed int(11),
+  rpm int(11),
+  brk_num int(11),
+  acl_num int(11),
+  score int(11),
+  distance float,
+  end_time datetime
+);
 
-INSERT INTO RECORD VALUES ('kalos','2018-03-15 15:20:00',15.2,53,20,5,3,67,22.3,'2018-03-15 16:00:00'),('kalos','2018-03-16 12:23:30',12.2,46,18,10,6,67,22.3,'2018-03-16 16:55:00'),('avante','2018-03-16 12:23:30',12.2,46,18,10,6,67,22.3,'2018-03-16 16:55:00'),('grandure','2018-03-16 12:23:30',12.2,46,18,10,6,67,22.3,'2018-03-16 16:55:00'),('kalos','2018-03-15 15:20:00',15.2,53,20,5,3,67,22.3,'2018-03-15 16:00:00'),('kalos','2018-03-16 12:23:30',12.2,46,18,10,6,67,22.3,'2018-03-16 16:55:00'),('kalos','2018-03-15 15:20:00',15.2,53,20,5,3,67,22.3,'2018-03-15 16:00:00'),('kalos','2018-03-16 12:23:30',12.2,46,18,10,6,67,22.3,'2018-03-16 16:55:00');
+CREATE TABLE car (
+  car_id varchar(30) NOT NULL,
+  usr_id varchar(30) NOT NULL,
+  car_name varchar(30) NOT NULL,
+  volume varchar(30) NOT NULL,
+  fuel varchar(30) NOT NULL,
+  fuel_efi varchar(30) NOT NULL,
+  PRIMARY KEY (car_id),
+  KEY usr_id (usr_id),
+  CONSTRAINT car_ibfk_1 FOREIGN KEY (usr_id) REFERENCES users (usr_id)
+);
 
+set sql_safe_updates=0;
 
-CREATE TABLE USERS (
-  USR_ID varchar(30),
-  USR_NAME varchar(20),
-  TOKEN varchar(200),
-  UNIQUE KEY USR_ID (USR_ID)
-) 
+select * from position;
+select * from drive;
+select * from record;
+
+delete from position;
+delete from car;
+delete from record;
+delete from drive;
+delete from users;

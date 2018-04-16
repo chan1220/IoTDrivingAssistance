@@ -46,7 +46,7 @@ class dao(MySQL):
 
 	def add_drive(self, id, fuel_efi, speed):
 		cursor = self.connection.cursor()
-		cursor.execute('''INSERT INTO position (car_id, pos_time, pos_x, pos_y) VALUES(%s, now(), %s, %s)''', (id, fuel_efi, speed))
+		cursor.execute('''INSERT INTO drive (car_id, pos_time, fuel_efi, speed) VALUES(%s, now(), %s, %s)''', (id, fuel_efi, speed))
 		self.connection.commit()
 		return {'id': id, 'fuel_efi': fuel_efi, 'speed': speed}
 		
@@ -54,7 +54,7 @@ class dao(MySQL):
 		cursor = self.connection.cursor()
 		cursor.execute('''INSERT INTO record (car_id, start_time, fuel_efi, speed, rpm, brk_num, acl_num, score, distance, end_time) VALUES(%s, %s, %s, %s, %s, %s ,%s, %s, %s, now())''', (id, start_time, fuel_efi, avr_speed, hard_rpm, hard_break, hard_accel, score, distance))
 		self.connection.commit()
-		return {'id': id, 'start_time': start_time,  'fuel_efi': fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': hard_rpm, 'hard_break': hard_break, 'hard_accel': hard_accel, 'score': score, 'distance': distance} # 수업 갓다와서 여기 바꿔야함
+		return {'id': id, 'start_time': start_time,  'fuel_efi': fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': hard_rpm, 'hard_break': hard_break, 'hard_accel': hard_accel, 'score': score, 'distance': distance}
 
 
 	def set_car(self, id, uid, cname, volume, fuel, fuel_efi):
