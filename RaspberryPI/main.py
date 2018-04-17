@@ -65,9 +65,9 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 
 	def on_changed_fuel_cut(self, a): # 퓨얼 컷
 		if a:
-			self.label_fct.setPixmap(QPixmap('fct_on.png').scaled(100, 100))
+			self.label_fct.setPixmap(QtGui.QPixmap('fct_on.png').scaled(100, 100))
 		else:
-			self.label_fct.setPixmap(QPixmap('fct_off.png').scaled(100, 100))
+			self.label_fct.setPixmap(QtGui.QPixmap('fct_off.png').scaled(100, 100))
 
 	def on_changed_gps(self, position):
 		print("gps : ",position)

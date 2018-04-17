@@ -71,7 +71,9 @@ class obdex(QtCore.QThread):
 			self.connection.watch(obd.commands.INTAKE_TEMP,     callback=self._on_update_iat)
 			self.connection.watch(obd.commands.FUEL_STATUS,     callback=self._on_update_fct)
 			self.connection.start()
-		
+			while not self.eng_stat:
+				print('wait engine start....')
+
 			begin_time = time.time()
 			while self.enabled and self.eng_stat:
 				self._update_fuel_use()    # 기름소모량
@@ -80,15 +82,14 @@ class obdex(QtCore.QThread):
 				self._update_hard_break()  # 급정차 횟수
 				self._update_hard_rpm()    # 고 RPM 횟수
 				self.on_updated.emit(self)
-
 				elapsed_time = time.time() - begin_time
 				time.sleep((1 - elapsed_time) % 1)
 				begin_time = time.time()
 
-			on_drive_terminate.emit(self)
+			self.on_drive_terminate.emit(self)
 
-		except:
-			print('obd connection error')
+		except Exception as e:
+			print(e)
 			enabled = False
 	def _get_maf(self):     # MAF 계산
 		maf = 28.97 * (self.volume * ((self.rpm * self.map / (self.iat + 273.15)) / 120)) / 8.314
@@ -130,7 +131,7 @@ class obdex(QtCore.QThread):
 		if (self.speed > 50) & ((self.prev_speed - self.speed) > 10):
 			self.hard_break += 1
 			self.on_changed_hbreak_count.emit(self.hard_break)
-		
+
 		self.prev_speed = self.speed
 
 	def _update_hard_accl(self):   # 급가속 계산 (1초에 1번 호출)
@@ -195,7 +196,7 @@ class obdex(QtCore.QThread):
 		if r:
 			current_fct = True if 'fuel cut' in r.value[0] else False
 			if self.is_fct is not current_fct:
-				self.on_changed_fuel_cut.emit(self.is_fct)
+				self.on_changed_fuel_cut.emit(current_fct)
 				self.is_fct = current_fct
 		else:
 			self.eng_stat = False

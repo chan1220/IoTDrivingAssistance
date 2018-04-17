@@ -29,15 +29,15 @@ class sensor():
 					return str(line[17:26])
 
 	def on_obd_updated(self, obd): # 매 초당 주행 정보
-		self.db.request('update/drive', {'id': id, 'fuel_efi': obd.ife, 'speed': obd.speed})
+		self.db.request('update/drive', {'id': self.id, 'fuel_efi': obd.ife, 'speed': obd.speed})
 
 	def on_changed_gps(self, position): # GPS 정보
 		lat, lon = position
-		self.db.request('update/gps', {'id': id, 'lat': lat, 'lon': lon})
+		self.db.request('update/gps', {'id': self.id, 'lat': lat, 'lon': lon})
 
 	def on_obd_drive_terminate(self, obd): # 주행이 종료됬을 때 한번만 호출
 		avr_fuel_efi = obd.fuel_use / obd.distance
 		lapse_sec = (datetime.datetime.now() - obd.start_time).seconds
-		avr_speed = distance / (lapse_sec * 3600)
-		score = 100 - (obd.hard_break * 5 - obd.hard_rpm * 2 - obd.hard_accel * 5) / (lapse_sec + 1000) * 3600 
-		sefl.db.request('update/record', {'id': id, 'start_time': obd.start_time.strftime("%Y-%m-%d %H:%M:%S"), 'fuel_efi': avr_fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': obd.hard_rpm, 'hard_break': obd.hard_break, 'hard_accel': obd.hard_accel, 'score': score, 'distance': obd.distance})
+		avr_speed = obd.distance / (lapse_sec * 3600)
+		score = 100 - (((lapse_sec - 25553) ** 2) / (25553 ** 2) * (obd.hard_break * 5 + obd.hard_rpm * 2 + obd.hard_accel * 5))
+		self.db.request('update/record', {'id': self.id, 'start_time': obd.start_time.strftime("%Y-%m-%d %H:%M:%S"), 'fuel_efi': avr_fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': obd.hard_rpm, 'hard_break': obd.hard_break, 'hard_accel': obd.hard_accel, 'score': score, 'distance': obd.distance})
