@@ -92,14 +92,17 @@ class obdex(QtCore.QThread):
 			print(e)
 			enabled = False
 	def _get_maf(self):     # MAF 계산
-		maf = 28.97 * (self.volume * ((self.rpm * self.map / (self.iat + 273.15)) / 120)) / 8.314
+		maf = 28.97 * (self.volume * 0.8 * ((self.rpm * self.map / (self.iat + 273.15)) / 120)) / 8.314
 		if maf == 0:
-			maf = 1
+			maf = 0.01
 		return maf
 
 	def _update_instance_fuel_efy(self):   # 순간연비 계산
 		self.ife = (14.7 * 6.17 * 454 * 0.621371 * self.speed * 0.425144) / (3600 * self._get_maf())
-		self.on_changed_ife.emit(self.ife)
+		if self.is_fct:
+			self.on_changed_ife.emit(99.9)
+		else:
+			self.on_changed_ife.emit(self.ife)
 
 	# --- 1초에 한번만 호출되는 함수들 ----
 	def _update_fuel_use(self):    # 총 기름 소모량 계산(1초에 1번 호출)
@@ -142,7 +145,7 @@ class obdex(QtCore.QThread):
 			self.hard_accel += 1
 			self.on_hard_accel.emit(self.hard_accel)
 
-	def _update_hard_rpm(self):     # 고알피엠 계산 (1초에 1번 호출)
+	def k(self):     # 고알피엠 계산 (1초에 1번 호출)
 		if self.eng_stat is not True:
 			return
 
