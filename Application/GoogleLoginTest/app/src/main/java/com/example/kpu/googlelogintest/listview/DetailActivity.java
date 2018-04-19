@@ -80,12 +80,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         try {
             JSONArray json = new JSONArray(recordData.getPosition_json());
             for(int i=0;i<json.length();i++) {
-                polylineOptions.add(new LatLng(json.getJSONObject(i).getDouble("POS_X"),json.getJSONObject(i).getDouble("POS_Y")));
+                polylineOptions.add(new LatLng(json.getJSONObject(i).getDouble("pos_x"),json.getJSONObject(i).getDouble("pos_y")));
             }
             polylineOptions.color(Color.RED);
-            mMap.addMarker(new MarkerOptions().position(new LatLng(json.getJSONObject(0).getDouble("POS_X"),json.getJSONObject(0).getDouble("POS_Y"))).title("Start!"));
-            mMap.addMarker(new MarkerOptions().position(new LatLng(json.getJSONObject(json.length()-1).getDouble("POS_X"),json.getJSONObject(json.length()-1).getDouble("POS_Y"))).title("End!"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(json.getJSONObject(json.length()-1).getDouble("POS_X"),json.getJSONObject(json.length()-1).getDouble("POS_Y"))));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(json.getJSONObject(0).getDouble("pos_x"),json.getJSONObject(0).getDouble("pos_y"))).title("Start!"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(json.getJSONObject(json.length()-1).getDouble("pos_x"),json.getJSONObject(json.length()-1).getDouble("pos_y"))).title("End!"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(json.getJSONObject(json.length()-1).getDouble("pos_x"),json.getJSONObject(json.length()-1).getDouble("pos_y"))));
 
         } catch (JSONException e) {
             e.printStackTrace();

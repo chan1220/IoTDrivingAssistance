@@ -110,18 +110,18 @@ public class CarBookActivity extends AppCompatActivity {
 
                 RecordData dto = new RecordData();
                 //String json_position = PHPRequest.execute(getText(R.string.server_url)+"/get_position.php","car_id",json.getJSONObject(i).get("CAR_ID").toString(),"START_TIME",json.getJSONObject(i).get("START_TIME").toString(),"end_time",json.getJSONObject(i).get("END_TIME").toString());
-                dto.setCar_id(json.getJSONObject(i).get("CAR_ID").toString());
-                dto.setStart_time(json.getJSONObject(i).get("START_TIME").toString());
-                dto.setEnd_time(json.getJSONObject(i).get("END_TIME").toString());
-                dto.setFuel_eft(json.getJSONObject(i).get("FUEL_EFI").toString());
-                dto.setSpeed(json.getJSONObject(i).get("SPEED").toString());
-                dto.setRpm(json.getJSONObject(i).get("RPM").toString());
-                dto.setBreak_num(json.getJSONObject(i).get("BRK_NUM").toString());
-                dto.setAccel_num(json.getJSONObject(i).get("ACL_NUM").toString());
-                dto.setScore(json.getJSONObject(i).get("SCORE").toString());
-                dto.setDistance(json.getJSONObject(i).get("DISTANCE").toString());
+                dto.setCar_id(json.getJSONObject(i).get("car_id").toString());
+                dto.setStart_time(json.getJSONObject(i).get("start_time").toString());
+                dto.setEnd_time(json.getJSONObject(i).get("end_time").toString());
+                dto.setFuel_eft(json.getJSONObject(i).get("fuel_efi").toString());
+                dto.setSpeed(json.getJSONObject(i).get("speed").toString());
+                dto.setRpm(json.getJSONObject(i).get("rpm").toString());
+                dto.setBreak_num(json.getJSONObject(i).get("brk_num").toString());
+                dto.setAccel_num(json.getJSONObject(i).get("acl_num").toString());
+                dto.setScore(json.getJSONObject(i).get("score").toString());
+                dto.setDistance(json.getJSONObject(i).get("distance").toString());
                 //dto.setPosition_json(json_position);
-                Log.d("차계부 테스트",json.getJSONObject(i).get("FUEL_EFI").toString());
+                Log.d("차계부 테스트",json.getJSONObject(i).get("fuel_efi").toString());
                 recordArray.add(dto);
             }
 

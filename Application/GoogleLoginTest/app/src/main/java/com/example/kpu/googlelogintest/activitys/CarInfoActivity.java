@@ -73,11 +73,11 @@ public class CarInfoActivity extends AppCompatActivity {
                 }
                 for(int i=0;i<json.length();i++) {
                     // json을 받아서 EdtiText에 설정
-                    edt_carid.setText(json.getJSONObject(i).get("CAR_ID").toString());
-                    edt_carname.setText(json.getJSONObject(i).get("CAR_NAME").toString());
-                    edt_volume.setText(json.getJSONObject(i).get("VOLUME").toString() + " CC");
-                    edt_fuel.setText(json.getJSONObject(i).get("FUEL").toString());
-                    edt_fuel_efi.setText(json.getJSONObject(i).get("FUEL_EFI").toString() + " Km/L");
+                    edt_carid.setText(json.getJSONObject(i).get("car_id").toString());
+                    edt_carname.setText(json.getJSONObject(i).get("car_name").toString());
+                    edt_volume.setText(json.getJSONObject(i).get("volume").toString() + " CC");
+                    edt_fuel.setText(json.getJSONObject(i).get("fuel").toString());
+                    edt_fuel_efi.setText(json.getJSONObject(i).get("fuel_efi").toString() + " Km/L");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
