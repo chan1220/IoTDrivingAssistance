@@ -92,7 +92,7 @@ class obdex(QtCore.QThread):
 			print(e)
 			enabled = False
 	def _get_maf(self):     # MAF 계산
-		maf = 28.97 * (self.volume * 0.8 * ((self.rpm * self.map / (self.iat + 273.15)) / 120)) / 8.314
+		maf = 28.97 * (self.volume * 0.85 * ((self.rpm * self.map / (self.iat + 273.15)) / 120)) / 8.314
 		if maf == 0:
 			maf = 0.01
 		return maf
@@ -145,7 +145,7 @@ class obdex(QtCore.QThread):
 			self.hard_accel += 1
 			self.on_hard_accel.emit(self.hard_accel)
 
-	def k(self):     # 고알피엠 계산 (1초에 1번 호출)
+	def _update_hard_rpm(self):     # 고알피엠 계산 (1초에 1번 호출)
 		if self.eng_stat is not True:
 			return
 
