@@ -1,6 +1,6 @@
 <?php
 // MySQL 데이터베이스 연결
-$link = mysqli_connect('localhost', 'root', 'root', 'pidb');
+$link = mysqli_connect('localhost', 'root', 'doraemon', 'doraemon');
   
 // 연결 오류 발생 시 스크립트 종료
 if (mysqli_connect_errno()) {
@@ -11,7 +11,7 @@ $result_array = array();
 $car_id 	= $_POST["car_id"];
 $start_time = $_POST["start_time"];
 $end_time 	= $_POST["end_time"];
-$query ="SELECT * FROM POSITION WHERE CAR_ID='$car_id' and POS_TIME between '$start_time' and '$end_time';";
+$query ="SELECT * FROM position WHERE CAR_ID='$car_id' and POS_TIME between '$start_time' and '$end_time';";
 // 쿼리문 전송
 if ($result = mysqli_query($link, $query)) 
 {

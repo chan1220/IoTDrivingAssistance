@@ -61,7 +61,8 @@ def on_update_record():
 def on_request_position():
 	ret = {'success': True}
 	try:
-		ret['data'] = model.get_position()
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.get_position(data['id'], data['start_time'], data['end_time'])
 	except Exception as e:
 		ret['success'] = False
 		ret['error'] = str(e)

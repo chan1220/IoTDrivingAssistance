@@ -1,6 +1,6 @@
 <?php
 // MySQL 데이터베이스 연결
-$link = mysqli_connect('localhost', 'root', 'root', 'pidb');
+$link = mysqli_connect('localhost', 'root', 'doraemon', 'doraemon');
   
 // 연결 오류 발생 시 스크립트 종료
 if (mysqli_connect_errno()) {
@@ -13,7 +13,7 @@ $id 	= $_POST["id"];
 
 
 
-$query ="SELECT * FROM CAR WHERE USR_ID = '$id';";
+$query ="SELECT * FROM car WHERE USR_ID = '$id';";
 // 쿼리문 전송
 if ($result = mysqli_query($link, $query)) 
 {

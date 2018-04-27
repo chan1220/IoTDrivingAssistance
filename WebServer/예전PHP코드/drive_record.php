@@ -1,6 +1,6 @@
 <?php
 // MySQL 데이터베이스 연결
-$link = mysqli_connect('localhost', 'root', 'root', 'pidb');
+$link = mysqli_connect('localhost', 'root', 'doraemon', 'doraemon');
   
 // 연결 오류 발생 시 스크립트 종료
 if (mysqli_connect_errno()) {
@@ -12,7 +12,7 @@ $usr_id 	= $_POST["usr_id"];
 $start_time = $_POST["start_time"];
 $end_time 	= $_POST["end_time"];
 
-$query ="SELECT * FROM CAR,RECORD WHERE USR_ID='$usr_id' and START_TIME between '$start_time 00:00:00' and '$end_time 23:59:59';";
+$query ="SELECT * FROM car,record WHERE USR_ID='$usr_id' and START_TIME between '$start_time 00:00:00' and '$end_time 23:59:59';";
 // 쿼리문 전송
 if ($result = mysqli_query($link, $query)) 
 {

@@ -12,9 +12,9 @@ class dao(MySQL):
 		app.config['MYSQL_PASSWORD'] = upw
 		MySQL.__init__(self, app)
 
-	def get_position(self):
+	def get_position(self, id, start_time, end_time):
 		cursor = self.connection.cursor()
-		cursor.execute("SELECT * FROM position")
+		cursor.execute('''SELECT * FROM position WHERE car_id=%s and pos_time between %s and %s''', (id, start_time, end_time))
 
 		data = []
 		for element in cursor.fetchall():
@@ -23,7 +23,6 @@ class dao(MySQL):
 		return data
 		
 			
-
 	def get_drive(self):
 		cursor = self.connection.cursor()
 		cursor.execute("SELECT * FROM drive")
