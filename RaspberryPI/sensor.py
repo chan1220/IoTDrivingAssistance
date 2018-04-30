@@ -36,8 +36,11 @@ class sensor():
 		self.db.request('update/gps', {'id': self.id, 'lat': lat, 'lon': lon})
 
 	def on_obd_drive_terminate(self, obd): # 주행이 종료됬을 때 한번만 호출
+		self.obd.stop() # GPS 정지
 		avr_fuel_efi = obd.distance / obd.fuel_use
 		lapse_sec = (datetime.datetime.now() - obd.start_time).seconds
-		avr_speed = obd.distance / (lapse_sec * 3600)
+		avr_speed = obd.distance / (lapse_sec / 3600)
 		score = 100 - (((lapse_sec - 25553) ** 2) / (25553 ** 2) * (obd.hard_break * 5 + obd.hard_rpm * 2 + obd.hard_accel * 5))
+		if score < 0:
+			score = 0
 		self.db.request('update/record', {'id': self.id, 'start_time': obd.start_time.strftime("%Y-%m-%d %H:%M:%S"), 'fuel_efi': avr_fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': obd.hard_rpm, 'hard_break': obd.hard_break, 'hard_accel': obd.hard_accel, 'score': score, 'distance': obd.distance})

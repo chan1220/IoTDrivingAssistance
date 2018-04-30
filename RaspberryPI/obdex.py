@@ -3,9 +3,7 @@ from PyQt5.QtCore import pyqtSignal
 import obd
 import time
 import datetime
-#
-# 최대한 가지고 있을 필요가 없는 멤버변수를 줄여야함
-#
+
 class obdex(QtCore.QThread):
 
 	on_updated 				= QtCore.pyqtSignal(object)
@@ -87,7 +85,9 @@ class obdex(QtCore.QThread):
 				begin_time = time.time()
 
 			self.on_drive_terminate.emit(self)
-
+			self.connection.unwatch_all()
+			self.connection.stop()
+			print("dirve finished!!")
 		except Exception as e:
 			print(e)
 			enabled = False
@@ -155,7 +155,7 @@ class obdex(QtCore.QThread):
 
 	# --- obd.async에 으해 호출되는 함수들 ----
 	def _on_update_rpm(self, r):
-		if r:
+		if not r.is_null():
 			self.rpm = r.value.magnitude
 			self.on_changed_rpm.emit(self.rpm)
 			self.eng_stat = True if self.rpm > 500 else False
@@ -167,7 +167,7 @@ class obdex(QtCore.QThread):
 			self.eng_stat = False
 
 	def _on_update_speed(self, r):
-		if r:
+		if not r.is_null():
 			self.speed = r.value.magnitude
 			self.on_changed_speed.emit(self.speed)
 			self._update_instance_fuel_efy()
@@ -175,28 +175,28 @@ class obdex(QtCore.QThread):
 			self.eng_stat = False
 
 	def _on_update_throttle(self, r):
-		if r:
+		if not r.is_null():
 			self.throttle = r.value.magnitude
 			self.on_changed_throttle.emit(self.throttle)
 		else:
 			self.eng_stat = False
 
 	def _on_update_map(self, r):
-		if r:
+		if not r.is_null():
 			self.map = r.value.magnitude
 			self._update_instance_fuel_efy()
 		else:
 			self.eng_stat = False
 
 	def _on_update_iat(self, r):
-		if r:
+		if not r.is_null():
 			self.iat = r.value.magnitude
 			self._update_instance_fuel_efy()
 		else:
 			self.eng_stat = False
 
 	def _on_update_fct(self, r):
-		if r:
+		if not r.is_null():
 			current_fct = True if 'fuel cut' in r.value[0] else False
 			if self.is_fct is not current_fct:
 				self.on_changed_fuel_cut.emit(current_fct)
