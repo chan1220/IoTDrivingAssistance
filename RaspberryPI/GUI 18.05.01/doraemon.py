@@ -10,11 +10,11 @@ from sys import argv
 from time import sleep
 
 
-class QtForm(QDialog):
-    def __init__(self):
-        QDialog.__init__(self)
-        self.setWindowTitle('GUI')
-        self.resize(800, 450)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        # QMainWindow.__init__(self)
+        MainWindow.setWindowTitle('GUI')
+        MainWindow.resize(800, 450)
 
         # =============== Widget Init =================
         """ LEFT LCD """
@@ -63,6 +63,8 @@ class QtForm(QDialog):
         self.worker.change_bspd.connect(self.gauge_window.render_bspd)
         self.worker.change_bstp.connect(self.gauge_window.render_bstp)
         self.worker.start()
+
+        QMetaObject.connectSlotsByName(MainWindow)
 
     def set_label(self, x, y, width, height, text, value=False):
         font = QFont()
@@ -223,6 +225,6 @@ class Worker(QThread):
 
 if __name__ == '__main__':
     app = QApplication(argv)
-    form = QtForm()
-    form.show()
+    window = MainWindow()
+    window.show()
     exit(app.exec_())
