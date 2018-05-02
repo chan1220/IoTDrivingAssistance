@@ -3,15 +3,15 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 
-class FEFGauge(QWidget):
+class CuFEFGauge(QWidget):
     def __init__(self, parent):
-        super(FEFGauge, self).__init__(parent)
+        super(CuFEFGauge, self).__init__(parent)
         self.setGeometry(0, 0, 385, 70)
 
         self.value = 0.0
-        self.label_name = self.set_label(10, 5, 40, 25, '연비')
-        self.label_value = self.set_label(5, 30, 120, 70, str(self.value), True)
-        self.label_unit = self.set_label(130, 45, 40, 25, 'Km/L')
+        self.label_name = self.set_label(10, 5, 80, 25, '순간연비')
+        self.label_value = self.set_label(5, 30, 120, 55, str(self.value), True)
+        self.label_unit = self.set_label(120, 45, 50, 30, 'Km/L')
 
     def set_label(self, x, y, width, height, text, value=False):
         font = QFont()
@@ -37,7 +37,12 @@ class FEFGauge(QWidget):
         painter.begin(self)
         self.label_value.setText(str(self.value))
         gauge_value = int(self.value)
+        for i in range(30):
+            painter.setPen(QPen(QColor(39,41,43), 4))
+            painter.drawLine(180 + i * 6, 30, 180 + i * 6, 70)
+
         for i in range(gauge_value):
+
             if i > 29:
                 continue
             if gauge_value < 5:

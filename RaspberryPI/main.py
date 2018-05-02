@@ -28,51 +28,52 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.obd.on_changed_throttle.connect(self.on_changed_throttle)
 		self.sensor.obd.on_changed_fuel_cut.connect(self.on_changed_fuel_cut)
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
-		self.label_fct.setPixmap(QtGui.QPixmap('fct_off.png').scaled(100, 100))
 		self.sensor.start()
-
 	def on_changed_fuel_use(self, a): # 총 기름 사용량
-		self.label_fam.setText(str(round(float(a),2)))
-		self.label_fpi.setText((round(float(a) * 1550, 2)))
+		self.LCD_total_fuel.display(round(float(a),2))
+		self.LCD_fuel_price.display(int(float(a) * 1550))
 
 	def on_changed_avr_fuel(self, a): # 평균연비
-        pass
-		# self.lcd_fuel_efi.display(round(float(a),2))
+		self.GAUGE_average_fuel.render(round(float(a),2))
 
 	def on_changed_distance(self, a): # 주행거리
-		self.label_dis.setText(str(round(float(a),2)))
+		self.LCD_distance.display(round(float(a),2))
 
 	def on_changed_save(self, a): # 절약거리
-		self.label_sdi.setText(str(round(float(a),2)))
+		self.LCD_save_distance.display(round(float(a),2))
 
 	def on_changed_ife(self, a): # 순간연비
-		self.gauge_fef.render(round(float(a),2))
+		self.GAUGE_current_fuel.render(round(float(a),2))
 
 	def on_changed_hbreak_count(self, a): #급정차
-		self.gauge_window.bstp_cnt.display(int(a))
+		self.LCD_hard_break.display(int(a))
 
 	def on_hard_accel(self, a):	# 급출발
-		self.gauge_window.bspd_cnt.display(int(a))
+		self.LCD_hard_accel.display(int(a))
 
 	def on_hard_rpm(self, a): # 고RPM
-        pass
 		# self.lcd_hard_rpm.display(int(a))
+		pass
 
 	def on_changed_rpm(self, a): # RPM
-		self.gauge_window.render_rpm(int(a))
+		self.GAUGE_rpm.render(int(a))
 
 	def on_changed_speed(self, a):	# 속도
-		self.gauge_window.render_spd(int(a))
+		self.GAUGE_SPEED.render(int(a))
 
 	def on_changed_throttle(self, a): # 쓰로틀 개방
-        pass
 		# self.lcd_throttle.display(round(float(a),2))
+		pass
 
 	def on_changed_fuel_cut(self, a): # 퓨얼 컷
 		if a:
-			self.label_fct.setPixmap(QtGui.QPixmap('fct_on.png').scaled(100, 100))
+			# self.label_fct.setPixmap(QtGui.QPixmap('fct_on.png').scaled(100, 100))
+			self.LCD_save_distance.setStyleSheet("color : green;")
+			self.label_15.setStyleSheet("color : green;")
 		else:
-			self.label_fct.setPixmap(QtGui.QPixmap('fct_off.png').scaled(100, 100))
+			# self.label_fct.setPixmap(QtGui.QPixmap('fct_off.png').scaled(100, 100))
+			self.LCD_save_distance.setStyleSheet("color : white;")
+			self.label_15.setStyleSheet("color : white;")
 
 	def on_changed_gps(self, position):
 		print("gps : ",position)
