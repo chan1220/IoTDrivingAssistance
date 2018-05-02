@@ -2,20 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    >
 
     <LinearLayout
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="30dp"
         android:layout_alignParentTop="true">
 
         <Button
             android:id="@+id/button_new"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="이건 차량등록버튼이야" />
-
+            android:layout_height="60dp"
+            android:background="#FAE0D4"
+            android:text="차량등록버튼" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -34,8 +39,11 @@
                 android:id="@+id/editText"
                 android:layout_weight="1" />
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></LinearLayout>
         <Button
+            android:background="#FAE0D4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send"

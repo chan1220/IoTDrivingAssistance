@@ -168,9 +168,9 @@ public class CarBookActivity extends AppCompatActivity {
                 total_dis += Double.parseDouble(rd.getDistance());
             }
             edt_date.setText(start_time.getText().toString() + " ~ " + end_time.getText().toString() + "의 기록입니다.");
-            edt_distance.setText("총 주행거리 : "+total_dis + " Km");
-            edt_fuel.setText("기름 사용량 : "+total_fuel+" L");
-            edt_fef.setText("평균연비 : "+ total_dis / total_fuel + " Km/L");
+            edt_distance.setText("총 주행거리 : "+String.format("%.1f", total_dis) + " Km");
+            edt_fuel.setText("기름 사용량 : "+String.format("%.2f", total_fuel)+" L");
+            edt_fef.setText("평균연비 : "+ String.format("%.2f", total_dis / total_fuel) + " Km/L");
         }
     }
 }

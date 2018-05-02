@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_margin="30dp"
     tools:context="com.example.kpu.googlelogintest.activitys.LoginActivity"
     >
 
@@ -31,7 +32,7 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="30dp"
         android:text="" />
 
     <com.google.android.gms.common.SignInButton

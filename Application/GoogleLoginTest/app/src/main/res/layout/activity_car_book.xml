@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
 
         <Button
             android:id="@+id/start_date"
@@ -36,12 +37,16 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_margin="30dp"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <EditText
+            android:gravity="center"
+            android:background="#FAE0D4"
             android:id="@+id/edt_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +55,8 @@
             android:inputType="textPersonName" />
 
         <EditText
+            android:gravity="center"
+            android:background="#FAF4C0"
             android:id="@+id/edt_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +65,8 @@
             android:inputType="textPersonName" />
 
         <EditText
+            android:gravity="center"
+            android:background="#D4F4FA"
             android:id="@+id/edt_fef"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,6 +75,8 @@
             android:inputType="textPersonName" />
 
         <EditText
+            android:gravity="center"
+            android:background="#E4F7BA"
             android:id="@+id/edt_fuel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10px"
     tools:context="com.example.kpu.googlelogintest.listview.DetailActivity"
     android:orientation="vertical">
 
@@ -12,13 +13,14 @@
         android:id="@+id/drive_map"
         class="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="357dp" />
+        android:layout_height="330dp" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="주행 시간" />
+        android:text="주행 시간"
+        android:textColor="@color/fui_bgFacebook" />
 
 
 
@@ -27,24 +29,31 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editText_startTime"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_start"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:background="#c9cff1"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="18dp"
+            android:textStyle="bold|italic" />
 
-        <EditText
-            android:id="@+id/editText_endTime"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_end"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
+            android:background="#c9cff1"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="18dp"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,32 +66,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="주행 점수" />
-
-        <EditText
-            android:id="@+id/editText_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="주행 점수"
+            android:textColor="@color/fui_bgFacebook" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/tv_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="13dp"
             android:layout_weight="1"
-            android:text="주행 연비" />
+            android:text="TextView"
+            android:textSize="17dp"
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editText_fuel"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="주행 연비"
+            android:textColor="@color/fui_bgFacebook" />
+
+        <TextView
+            android:id="@+id/tv_fuel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -91,36 +106,41 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="주행 거리" />
-
-        <EditText
-            android:id="@+id/editText_distance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="주행 거리"
+            android:textColor="@color/fui_bgFacebook" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tv_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="13dp"
             android:layout_weight="1"
-            android:text="주행 속력" />
+            android:text="TextView"
+            android:textSize="17dp"
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editText_speed"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="주행 속력"
+            android:textColor="@color/fui_bgFacebook" />
+
+        <TextView
+            android:id="@+id/tv_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -129,35 +149,40 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="급 가속" />
-
-        <EditText
-            android:id="@+id/editText_accel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="급 가속"
+            android:textColor="@color/fui_bgFacebook" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/tv_accel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="13dp"
             android:layout_weight="1"
-            android:text="급 정차" />
+            android:text="TextView"
+            android:textSize="17dp"
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editText_break"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="급 정차"
+            android:textColor="@color/fui_bgFacebook" />
+
+        <TextView
+            android:id="@+id/tv_break"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </LinearLayout>

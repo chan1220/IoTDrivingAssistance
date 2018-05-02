@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_margin="30dp"
     tools:context=".activitys.FuelefficiencyActivity">
+
+
 
     <ImageView
         android:id="@+id/imageView5"
@@ -54,6 +57,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -63,7 +67,28 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="누적 주행거리" />
+
+        <EditText
+            android:id="@+id/edt_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -76,6 +101,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -85,7 +111,6 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -98,6 +123,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName" />
+
     </LinearLayout>
 
 </LinearLayout>

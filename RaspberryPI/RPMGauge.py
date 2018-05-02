@@ -6,7 +6,7 @@ from util import scale, map_scale, map_value, scale_offsets, str_scale
 
 class RPMGauge(QWidget):
     def __init__(self,parent):
-        super(FEFGauge, self).__init__(parent)
+        super(RPMGauge, self).__init__(parent)
         self.FONT_SIZE = 20
         self.FONT_SIZE_NOTE = 13
         self.value = 0

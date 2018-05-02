@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class FuelefficiencyActivity extends AppCompatActivity {
 
-    EditText edt_fef, edt_score, edt_break, edt_accel;
+    EditText edt_fef, edt_score, edt_break, edt_accel, edt_distance;
     ArrayList<RecordData> recordArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class FuelefficiencyActivity extends AppCompatActivity {
         edt_score = findViewById(R.id.edt_score);
         edt_break = findViewById(R.id.edt_break);
         edt_accel = findViewById(R.id.edt_accel);
-
+        edt_distance = findViewById(R.id.edt_distance);
         recordArray = new ArrayList<RecordData>();
 
         new BackgroundTask().execute();
@@ -114,13 +114,15 @@ public class FuelefficiencyActivity extends AppCompatActivity {
             {
                 total_fuel += Double.parseDouble(rd.getDistance()) / Double.parseDouble(rd.getFuel_eft());
                 total_dis += Double.parseDouble(rd.getDistance());
-                total_score += Integer.parseInt(rd.getScore());
-                total_accel += Integer.parseInt(rd.getAccel_num());
+                total_score += Double.parseDouble(rd.getScore());
+                total_accel += Double.parseDouble(rd.getAccel_num());
+                total_break += Double.parseDouble(rd.getBreak_num());
             }
-            edt_fef.setText("" + total_dis / total_fuel);
+            edt_fef.setText("" + String.format("%.2f", total_dis / total_fuel));
             edt_score.setText(""+total_score / recordArray.size());
-            edt_break.setText(""+ total_break / total_dis);
-            edt_accel.setText(""+total_break / total_dis);
+            edt_break.setText(""+ String.format("%.2f", total_break * 10 / total_dis));
+            edt_accel.setText(""+ String.format("%.2f", total_accel * 10 / total_dis));
+            edt_distance.setText("" + String.format("%.2f", total_dis));
         }
     }
 }

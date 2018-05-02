@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kpu.googlelogintest.R;
@@ -25,13 +26,16 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class DetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     GoogleMap mMap;
     RecordData recordData;
-    EditText t3,t4,t5,t6,t7,t8,t9,t10;
+    TextView tv_speed, tv_start, tv_end, tv_distance, tv_score, tv_accel, tv_break, tv_fuel;
     PolylineOptions polylineOptions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,25 +44,32 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_detail);
 
 
-        t3 = findViewById(R.id.editText_startTime);
-        t4 = findViewById(R.id.editText_endTime);
-        t5 = findViewById(R.id.editText_distance);
-        t6 = findViewById(R.id.editText_fuel);
-        t7 = findViewById(R.id.editText_score);
-        t8 = findViewById(R.id.editText_speed);
-        t9 = findViewById(R.id.editText_accel);
-        t10 = findViewById(R.id.editText_break);
+        tv_start = findViewById(R.id.tv_start);
+        tv_end = findViewById(R.id.tv_end);
+        tv_distance = findViewById(R.id.tv_distance);
+        tv_fuel = findViewById(R.id.tv_fuel);
+        tv_score = findViewById(R.id.tv_score);
+        tv_speed = findViewById(R.id.tv_speed);
+        tv_accel = findViewById(R.id.tv_accel);
+        tv_break = findViewById(R.id.tv_break);
+
         recordData = (RecordData)getIntent().getSerializableExtra("data");
+        Date start=null, end = null;
+        try {
+            start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(recordData.getStart_time());
+            end = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(recordData.getEnd_time());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-
-        t3.setText(recordData.getStart_time());
-        t4.setText(recordData.getEnd_time());
-        t5.setText(recordData.getDistance() + " Km");
-        t6.setText(recordData.getFuel_eft() + " Km/L");
-        t7.setText(recordData.getScore() + " 점");
-        t8.setText(recordData.getSpeed() + " Km/h");
-        t9.setText(recordData.getAccel_num() + " 번");
-        t10.setText(recordData.getBreak_num() + " 번");
+        tv_start.setText(new SimpleDateFormat("yyyy년MM월dd일 HH시mm분").format(start));
+        tv_end.setText(new SimpleDateFormat("yyyy년MM월dd일 HH시mm분").format(end));
+        tv_distance.setText(String.format("%.1f",Double.parseDouble(recordData.getDistance())) + " Km");
+        tv_fuel.setText(String.format("%.1f",Double.parseDouble(recordData.getFuel_eft())) + " Km/L");
+        tv_score.setText(recordData.getScore() + " 점");
+        tv_speed.setText(String.format("%.1f",Double.parseDouble(recordData.getSpeed())) + " Km/h");
+        tv_accel.setText(recordData.getAccel_num() + " 번");
+        tv_break.setText(recordData.getBreak_num() + " 번");
 
         FragmentManager fragmentManager = getFragmentManager();
         MapFragment mapFragment = (MapFragment)fragmentManager.findFragmentById(R.id.drive_map);
