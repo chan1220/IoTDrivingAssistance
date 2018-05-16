@@ -1,8 +1,6 @@
 package com.example.kpu.googlelogintest.activitys;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
@@ -18,16 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.kpu.googlelogintest.R;
-import com.example.kpu.googlelogintest.utills.PHPRequest;
 import com.google.firebase.auth.FirebaseAuth;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -75,22 +66,7 @@ public class MainActivity extends AppCompatActivity
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    String get_json_string = new BackgroundTask().execute(String.valueOf(data1.getText())).get();
-                    JSONArray json = new JSONArray(get_json_string);
-                    for(int i=0;i<json.length();i++) {
-                        Toast.makeText(getApplicationContext(),json.getJSONObject(i).get("START_TIME").toString(),Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getApplicationContext(),json.getJSONObject(i).get("END_TIME").toString(),Toast.LENGTH_SHORT).show();
-                    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"JSONException",Toast.LENGTH_SHORT).show();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
             }
         });
 
@@ -183,43 +159,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-    private class BackgroundTask extends AsyncTask<String,Void,String>
-    {
-        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            progressDialog.dismiss();
-        }
-
-        @Override // 여기에 할 작업
-        protected String doInBackground(String... strings) {
-            return PHPRequest.execute(getString(R.string.server_url)+"/qna.php", "Data1", strings[0]);
-
-
-        }
-        @Override
-        protected void onPreExecute() {
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Loading...");
-            progressDialog.show();
-            super.onPreExecute();
-        }
-
-    }
-
-
 
 
 

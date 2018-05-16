@@ -2,69 +2,71 @@ package com.example.kpu.googlelogintest.activitys;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.audiofx.Visualizer;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.kpu.googlelogintest.R;
 import com.example.kpu.googlelogintest.listview.DetailActivity;
 import com.example.kpu.googlelogintest.listview.RecordAdapter;
 import com.example.kpu.googlelogintest.listview.RecordData;
-import com.example.kpu.googlelogintest.utills.PHPRequest;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.example.kpu.googlelogintest.utills.DBRequester;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.Date;
-
-public class DrivingRecordActivity extends AppCompatActivity {
+public class DrivingRecordActivity extends AppCompatActivity implements DBRequester.Listener {
 
     private RecordAdapter adapter;
     private ListView listView;
     private Button button_search;
-    Button start_time, end_time;
+    private Button start_time, end_time;
+    private String usr_id;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driving_record);
 
+        // widget init
         adapter = new RecordAdapter();
         listView = findViewById(R.id.listView);
         button_search = findViewById(R.id.button_search);
         start_time = findViewById(R.id.input_start);
         end_time = findViewById(R.id.input_end);
+        progressDialog = new ProgressDialog(DrivingRecordActivity.this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("검색중입니다...");
 
         listView.setAdapter(adapter);
+
+        usr_id = getIntent().getStringExtra("id");
+
 
         DatePickerDialog.OnDateSetListener startDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                start_time.setText(i + "-" + String.format("%02d",(i1+1)) + "-" + String.format("%02d",i2));
+                start_time.setText(i + "-" + String.format("%02d", (i1 + 1)) + "-" + String.format("%02d", i2));
             }
         };
-        final DatePickerDialog startDateDialog = new DatePickerDialog(this,startDateListener,2018,03,01);
+        final DatePickerDialog startDateDialog = new DatePickerDialog(this, startDateListener, 2018, 03, 01);
 
         DatePickerDialog.OnDateSetListener endtDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                end_time.setText(i + "-" + String.format("%02d",(i1+1)) + "-" + String.format("%02d",i2));
+                end_time.setText(i + "-" + String.format("%02d", (i1 + 1)) + "-" + String.format("%02d", i2));
             }
         };
-        final DatePickerDialog endDateDialog = new DatePickerDialog(this,endtDateListener,2018,03,01);
-
+        final DatePickerDialog endDateDialog = new DatePickerDialog(this, endtDateListener, 2018, 03, 01);
 
 
         start_time.setOnClickListener(new View.OnClickListener() {
@@ -82,12 +84,26 @@ public class DrivingRecordActivity extends AppCompatActivity {
         });
 
 
-
         button_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 adapter.clearItem();
-                new BackgroundTask().execute();
+
+                try {
+                    JSONObject param = new JSONObject();
+                    param.put("usr_id", usr_id);
+                    param.put("start_date", start_time.getText().toString());
+                    param.put("end_date", end_time.getText().toString());
+                    new DBRequester.Builder(DrivingRecordActivity.this, "http://49.236.136.179:5000", DrivingRecordActivity.this)
+                            .attach("request/record")
+                            .streamPost(param)
+                            .request("request record");
+                    progressDialog.show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -105,7 +121,7 @@ public class DrivingRecordActivity extends AppCompatActivity {
                 // adapter.getItem(position)의 return 값은 Object 형
                 // 실제 Item의 자료형은 CustomDTO 형이기 때문에
                 // 형변환을 시켜야 getResId() 메소드를 호출할 수 있습니다.
-                RecordData recordData = (RecordData)adapter.getItem(position);
+                RecordData recordData = (RecordData) adapter.getItem(position);
 
                 // new Intent(현재 Activity의 Context, 시작할 Activity 클래스)
                 Intent intent = new Intent(DrivingRecordActivity.this, DetailActivity.class);
@@ -116,75 +132,53 @@ public class DrivingRecordActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
     }
 
-
-    private boolean setData() {
-        String userid = getIntent().getStringExtra("id");
-        String json_result = PHPRequest.execute(getText(R.string.server_url)+"/drive_record.php","usr_id",userid,"start_time",start_time.getText().toString(),"end_time",end_time.getText().toString());
+    @Override
+    public void onResponse(String id, JSONObject json, Object... params) {
         try {
-            JSONArray json = new JSONArray(json_result);
-            if(json.length() <= 0) {
-                //Toast.makeText(this, "찾는 결과가 없습니다.", Toast.LENGTH_LONG).show();
-                return false;
-            }
-            for(int i=0;i<json.length();i++) {
-
-                RecordData dto = new RecordData();
-                String json_position = PHPRequest.execute(getText(R.string.server_url)+"/get_position.php","car_id",json.getJSONObject(i).get("car_id").toString(),"start_time",json.getJSONObject(i).get("start_time").toString(),"end_time",json.getJSONObject(i).get("end_time").toString());
-                dto.setCar_id(json.getJSONObject(i).get("car_id").toString());
-                dto.setStart_time(json.getJSONObject(i).get("start_time").toString());
-                dto.setEnd_time(json.getJSONObject(i).get("end_time").toString());
-                dto.setFuel_eft(json.getJSONObject(i).get("fuel_efi").toString());
-                dto.setSpeed(json.getJSONObject(i).get("speed").toString());
-                dto.setRpm(json.getJSONObject(i).get("rpm").toString());
-                dto.setBreak_num(json.getJSONObject(i).get("brk_num").toString());
-                dto.setAccel_num(json.getJSONObject(i).get("acl_num").toString());
-                dto.setScore(json.getJSONObject(i).get("score").toString());
-                dto.setDistance(json.getJSONObject(i).get("distance").toString());
-                dto.setPosition_json(json_position);
-                adapter.addItem(dto);
+            if (json.getBoolean("success") == false) {
+                Toast.makeText(this, "검색 실패", Toast.LENGTH_SHORT).show();
+                return;
             }
 
+            switch (id) {
+                case "request record":
+                    JSONArray jsonArray = json.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        RecordData dto = new RecordData();
+
+                        dto.setCar_id(jsonArray.getJSONObject(i).get("car_id").toString());
+                        dto.setStart_time(jsonArray.getJSONObject(i).get("start_time").toString());
+                        dto.setEnd_time(jsonArray.getJSONObject(i).get("end_time").toString());
+                        dto.setFuel_eft(jsonArray.getJSONObject(i).get("fuel_efi").toString());
+                        dto.setSpeed(jsonArray.getJSONObject(i).get("speed").toString());
+                        dto.setRpm(jsonArray.getJSONObject(i).get("rpm").toString());
+                        dto.setBreak_num(jsonArray.getJSONObject(i).get("brk_num").toString());
+                        dto.setAccel_num(jsonArray.getJSONObject(i).get("acl_num").toString());
+                        dto.setScore(jsonArray.getJSONObject(i).get("score").toString());
+                        dto.setDistance(jsonArray.getJSONObject(i).get("distance").toString());
+                        dto.setPosition_json(jsonArray.getJSONObject(i).getJSONArray("position").toString());
+
+                        adapter.addItem(dto);
+                        adapter.notifyDataSetChanged();
+                    }
+                    progressDialog.dismiss();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-
-    public class BackgroundTask extends AsyncTask<Void, Void, Boolean>
-    {
-        ProgressDialog progressDialog = new ProgressDialog(DrivingRecordActivity.this);
-
-
-        @Override // 여기에 할 작업
-        protected Boolean doInBackground(Void... voids) {
-            return setData();
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("검색중입니다...");
-            progressDialog.show();
-        }
-
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            adapter.notifyDataSetChanged();
-            progressDialog.dismiss();
-            Log.d("Background","프로그레스 바 종료");
         }
     }
+
+    @Override
+    public void onResponse(String id, JSONArray json, Object... params) {
+
+    }
+
+    @Override
+    public void onError(String id, String message, Object... params) {
+
+    }
+
 }

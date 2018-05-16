@@ -36,7 +36,7 @@ def on_update_car():
 	ret = {'success': True}
 	try:
 		data = json.loads(request.data.decode('utf-8'))
-		ret['data'] = model.set_car(data['id'], data['uid'], data['cname'], data['volume'], data['fuel'], data['fuel_efi'])
+		ret['data'] = model.set_car(data['car_id'], data['usr_id'], data['car_name'], data['volume'], data['fuel'], data['fuel_efi'])
 	except Exception as e:
 		ret['success'] = False
 		ret['error'] = str(e)
@@ -62,7 +62,7 @@ def on_request_position():
 	ret = {'success': True}
 	try:
 		data = json.loads(request.data.decode('utf-8'))
-		ret['data'] = model.get_position(data['id'], data['start_time'], data['end_time'])
+		ret['data'] = model.get_position(data['car_id'], data['start_time'], data['end_time'])
 	except Exception as e:
 		ret['success'] = False
 		ret['error'] = str(e)
@@ -75,12 +75,26 @@ def on_request_car():
 	ret = {'success': True}
 	try:
 		data = json.loads(request.data.decode('utf-8'))
-		ret['data'] = model.get_car(data['id'])
+		ret['data'] = model.get_car(data['usr_id'])
 	except Exception as e:
 		ret['success'] = False
 		ret['error'] = str(e)
 	finally:
 		return json.dumps(ret)
+
+
+@app.route('/request/record', methods=['POST'])
+def on_request_record():
+	ret = {'success': True}
+	try:
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.get_record(data['usr_id'], data['start_date'], data['end_date'])
+	except Exception as e:
+		ret['success'] = False
+		ret['error'] = str(e)
+	finally:
+		return json.dumps(ret)
+
 
 
 @app.route('/register/user', methods=['POST'])
@@ -94,6 +108,9 @@ def on_register_user():
 		ret['error'] = str(e)
 	finally:
 		return json.dumps(ret)
+
+
+
 
 
 if __name__ == '__main__':

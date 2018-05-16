@@ -92,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="급가속 / Km" />
+            android:text="급가속 / 10Km" />
 
         <EditText
             android:id="@+id/edt_accel"
@@ -114,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="급정차 / Km" />
+            android:text="급정차 / 10Km" />
 
         <EditText
             android:id="@+id/edt_break"

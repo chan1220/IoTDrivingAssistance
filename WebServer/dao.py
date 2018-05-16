@@ -18,7 +18,7 @@ class dao(MySQL):
 
 		data = []
 		for element in cursor.fetchall():
-			data.append({'id': element[0], 'datetime': str(element[1]), 'position': {'lat': element[2], 'lon': element[3]}})
+			data.append({'id': element[0], 'datetime': str(element[1]), 'lat': element[2], 'lon': element[3]})
 
 		return data
 		
@@ -56,30 +56,30 @@ class dao(MySQL):
 		return {'id': id, 'start_time': start_time,  'fuel_efi': fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': hard_rpm, 'hard_break': hard_break, 'hard_accel': hard_accel, 'score': score, 'distance': distance}
 
 
-	def set_car(self, id, uid, cname, volume, fuel, fuel_efi):
+	def set_car(self, car_id, usr_id, car_name, volume, fuel, fuel_efi):
 		query = '''
 				INSERT INTO car (car_id, usr_id, car_name, volume, fuel, fuel_efi)
-				VALUES ('{id}', '{uid}', '{cname}', '{volume}', '{fuel}', '{fuel_efi}')
+				VALUES ('{car_id}', '{usr_id}', '{car_name}', '{volume}', '{fuel}', '{fuel_efi}')
 				ON DUPLICATE KEY UPDATE
-				car_name = '{cname}',
+				car_name = '{car_name}',
 				volume = '{volume}',
 				fuel = '{fuel}',
 				fuel_efi = '{fuel_efi}'
-				'''.format(id=id, uid=uid, cname=cname, volume=volume, fuel=fuel, fuel_efi=fuel_efi)
+				'''.format(car_id=car_id, usr_id=usr_id, car_name=car_name, volume=volume, fuel=fuel, fuel_efi=fuel_efi)
 		cursor = self.connection.cursor()
 		cursor.execute(query);
 		self.connection.commit()
-		return self.get_car()
+		return self.get_car(usr_id)
 
 		
 
-	def get_car(self, id):
+	def get_car(self, usr_id):
 		cursor = self.connection.cursor()
-		cursor.execute("SELECT * FROM car WHERE car_id LIKE %s", (id,))
+		cursor.execute("SELECT * FROM car WHERE usr_id LIKE %s", (usr_id,))
 
 		data = []
 		for element in cursor.fetchall():
-			data.append({'id': element[0], 'uname': str(element[1]), 'cname': element[2], 'volume': element[3], 'fuel': element[4], 'fuel_efi': element[5]})
+			data.append({'car_id': element[0], 'usr_id': str(element[1]), 'car_name': element[2], 'volume': element[3], 'fuel': element[4], 'fuel_efi': element[5]})
 
 		return data
 		
@@ -105,3 +105,12 @@ class dao(MySQL):
 		data = cursor.fetchone()
 		return {'id': data[0], 'name': data[1], 'token': data[2]}
 		
+		
+	def get_record(self, id, start_date, end_date):
+		cursor = self.connection.cursor()
+		cursor.execute("SELECT record.car_id, record.start_time, record.end_time, record.fuel_efi, record.speed, record.rpm, record.brk_num, record.acl_num, record.score, record.distance FROM car,record WHERE USR_ID=%s and START_TIME between %s and %s",(id, start_date + " 00:00:00", end_date + " 23:59:59") )
+		data = []
+		for element in cursor.fetchall():
+			data.append({'car_id': element[0], 'start_time': str(element[1]), 'end_time': str(element[2]), 'fuel_efi': str(element[3]), 'speed': element[4], 'rpm': element[5], 'brk_num': element[6], 'acl_num': element[7], 'score': element[8], 'distance': element[9], 'position':self.get_position(element[0], str(element[1]), str(element[2]))})
+
+		return data

@@ -4,9 +4,8 @@ from db_requester import *
 # db = db_requester('http://49.236.136.179:5000')
 # print(db.request('request/car', {'id': 'cshyeon'}))
 
-
 db = db_requester('http://49.236.136.179:5000')
-#print(db.request('register/user', {'id': '0', 'name': 'chan', 'token': '1234'}))
+# print(db.request('register/user', {'id': '0', 'name': 'chan', 'token': '1234'}))
 
 
 # 차량에서 넣는 부분
@@ -15,6 +14,7 @@ db = db_requester('http://49.236.136.179:5000')
 # print(db.request('update/record', {'id': '123', 'start_time': '2018-01-01',  'fuel_efi': 15.4, 'avr_speed': 22, 'hard_rpm': 5, 'hard_break': 6, 'hard_accel': 7, 'score': 77, 'distance': 15.6}))
 
 # print(db.request('/request/position', {'id':'09a7d17fc', 'start_time':'2018-04-02 00:00:00', 'end_time':'2018-04-20 00:00:00'}))
-# print(db.request('/request/car', {}))
+# print(db.request('/request/car', {'usr_id': '110169985313641949566'}))
 # print(db.request('/request/position', {}))
-print(db.request('/request/record', {'id':'110029081026564739847', 'start_date':'2018-04-19', 'end_date':'2018-04-19'}))
+print(db.request('/request/record', {'usr_id':'110169985313641949566', 'start_date':'2018-04-17', 'end_date':'2018-04-17'}))
+# print(db.request('/update/car', {'fuel': 'Gasoline', 'car_name': 'Kalos', 'volume': '1500', 'car_id': '09a7d17fc', 'usr_id': '110169985313641949566', 'fuel_efi': '14.2'}))

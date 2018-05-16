@@ -1,20 +1,19 @@
 package com.example.kpu.googlelogintest.activitys;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.kpu.googlelogintest.R;
-import com.example.kpu.googlelogintest.utills.PHPRequest;
+import com.example.kpu.googlelogintest.utills.DBRequester;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class CarInfoActivity extends AppCompatActivity {
-    private String id;
+public class CarInfoActivity extends AppCompatActivity implements DBRequester.Listener{
+    private String usr_id;
 
     EditText edt_name,edt_carname,edt_volume,edt_fuel,edt_fuel_efi,edt_carid;
     @Override
@@ -29,62 +28,54 @@ public class CarInfoActivity extends AppCompatActivity {
         edt_name    = findViewById(R.id.editText_username);
         edt_volume  = findViewById(R.id.editText_volum);
 
-
-        id = getIntent().getStringExtra("id");
-        new BackgroundTask().execute();
         edt_name.setText(getIntent().getStringExtra("name"));
+        usr_id = getIntent().getStringExtra("id");
+
+        // 실행!
+        try {
+            JSONObject car = new JSONObject();
+            car.put("usr_id", usr_id);
+            new DBRequester.Builder(this, "http://49.236.136.179:5000", this)
+                    .attach("request/car")
+                    .streamPost(car)
+                    .request("request car");
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
+    @Override
+    public void onResponse(String id, JSONObject json, Object... params) {
+        try {
+            if(json.getBoolean("success") == false)
+                return;
 
-
-    public class BackgroundTask extends AsyncTask<Void, Void, String>
-    {
-        ProgressDialog progressDialog = new ProgressDialog(CarInfoActivity.this);
-        String car_info_json;
-
-        @Override // 여기에 할 작업
-        protected String doInBackground(Void... voids) {
-            car_info_json = PHPRequest.execute(getString(R.string.server_url)+"/carinfo.php","id",id);
-            return null;
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("검색중입니다...");
-            progressDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            progressDialog.dismiss();
-            JSONArray json = null;
-
-            try {
-                json = new JSONArray(car_info_json);
-                if(json.length() <= 0) {
-                    Toast.makeText(getApplicationContext(), "차량이 등록되있지 않습니다. \n먼저 차량을 등록해주세요.", Toast.LENGTH_LONG).show();
-                    finish();
-                }
-                for(int i=0;i<json.length();i++) {
-                    // json을 받아서 EdtiText에 설정
-                    edt_carid.setText(json.getJSONObject(i).get("car_id").toString());
-                    edt_carname.setText(json.getJSONObject(i).get("car_name").toString());
-                    edt_volume.setText(json.getJSONObject(i).get("volume").toString() + " CC");
-                    edt_fuel.setText(json.getJSONObject(i).get("fuel").toString());
-                    edt_fuel_efi.setText(json.getJSONObject(i).get("fuel_efi").toString() + " Km/L");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
+            switch(id) {
+                case "request car":
+                    JSONArray jsonArray = json.getJSONArray("data");
+                    JSONObject data = jsonArray.getJSONObject(0);
+                    edt_carid.setText(data.getString("car_id"));
+                    edt_carname.setText(data.getString("car_name"));
+                    edt_volume.setText(data.getString("volume"));
+                    edt_fuel.setText(data.getString("fuel"));
+                    edt_fuel_efi.setText(data.getString("fuel_efi"));
+                    break;
             }
-
+        } catch (Exception e) {
+            Log.d("on response", e.getMessage());
         }
+    }
+
+    @Override
+    public void onResponse(String id, JSONArray json, Object... params) {
+
+    }
+
+    @Override
+    public void onError(String id, String message, Object... params) {
 
     }
 }
