@@ -15,6 +15,9 @@ import com.example.kpu.googlelogintest.activitys.NotifyActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by KPU on 2018-02-19.
  */
@@ -39,27 +42,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String messageBody){
         Intent intent = new Intent(this, NotifyActivity.class); // 눌렀을 때 실행할 액티비티
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("message", messageBody); //여기에 넘겨줄 데이터를 추가
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.img_doraemon)
-                .setContentTitle("주행 종료")
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+        try {
+            JSONObject jsonMeg = new JSONObject(messageBody);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.img_doraemon)
+                    .setContentTitle("주행 종료")
+                    .setContentText(String.format("주행연비 : %.2f Km/L    주행거리 : %.2f Km", jsonMeg.getDouble("fuel_efi"), jsonMeg.getDouble("distance")))
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
+                    .setContentIntent(pendingIntent);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

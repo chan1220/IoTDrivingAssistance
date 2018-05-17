@@ -53,7 +53,7 @@ class dao(MySQL):
 		cursor = self.connection.cursor()
 		cursor.execute('''INSERT INTO record (car_id, start_time, fuel_efi, speed, rpm, brk_num, acl_num, score, distance, end_time) VALUES(%s, %s, %s, %s, %s, %s ,%s, %s, %s, now())''', (id, start_time, fuel_efi, avr_speed, hard_rpm, hard_break, hard_accel, score, distance))
 		self.connection.commit()
-		return {'id': id, 'start_time': start_time,  'fuel_efi': fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': hard_rpm, 'hard_break': hard_break, 'hard_accel': hard_accel, 'score': score, 'distance': distance}
+		return {'car_id': id, 'start_time': start_time,  'fuel_efi': fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': hard_rpm, 'hard_break': hard_break, 'hard_accel': hard_accel, 'score': score, 'distance': distance}
 
 
 	def set_car(self, car_id, usr_id, car_name, volume, fuel, fuel_efi):
@@ -117,6 +117,6 @@ class dao(MySQL):
 
 	def get_token_by_carid(self, car_id):
 		cursor = self.connection.cursor()
-		cursor.execute("SELECT users.token FROM users RIGHT OUTER JOIN car ON users.usr_id = car.usr_id WHERE car.car_id = %s", (car_id, ))
+		cursor.execute("SELECT users.token FROM users RIGHT OUTER JOIN car ON users.usr_id = car.usr_id WHERE car.car_id LIKE %s", (car_id, ))
 		data = cursor.fetchone()
 		return data[0]
