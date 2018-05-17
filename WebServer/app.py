@@ -1,6 +1,7 @@
 from flask import Flask, request
 from dao import dao
 import json
+import gcm_manager
 
 app = Flask(__name__)
 model = dao(app)
@@ -50,6 +51,8 @@ def on_update_record():
 	try:
 		data = json.loads(request.data.decode('utf-8'))
 		ret['data'] = model.add_record(data['id'], data['start_time'], data['fuel_efi'], data['avr_speed'], data['hard_rpm'], data['hard_break'], data['hard_accel'], data['score'], data['distance'])
+		token = model.get_token_by_carid(data['id'])
+		gcm_manager.send_gcm_message(token, "this is test message")
 	except Exception as e:
 		ret['success'] = False
 		ret['error'] = str(e)

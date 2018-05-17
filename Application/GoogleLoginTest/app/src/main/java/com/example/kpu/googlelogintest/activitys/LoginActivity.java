@@ -7,11 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.example.kpu.googlelogintest.R;
 import com.example.kpu.googlelogintest.utills.DBRequester;
-import com.example.kpu.googlelogintest.utills.PHPRequest;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

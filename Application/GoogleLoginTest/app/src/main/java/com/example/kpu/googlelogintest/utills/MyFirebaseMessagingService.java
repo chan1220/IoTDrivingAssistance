@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.example.kpu.googlelogintest.activitys.LoginActivity;
 import com.example.kpu.googlelogintest.R;
+import com.example.kpu.googlelogintest.activitys.NotifyActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -39,15 +40,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, LoginActivity.class); // 눌렀을 때 실행할 액티비티
+        Intent intent = new Intent(this, NotifyActivity.class); // 눌렀을 때 실행할 액티비티
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("message", messageBody); //여기에 넘겨줄 데이터를 추가
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("으아 실험중")
+                .setSmallIcon(R.drawable.img_doraemon)
+                .setContentTitle("주행 종료")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

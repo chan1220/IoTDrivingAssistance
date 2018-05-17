@@ -2,10 +2,8 @@ package com.example.kpu.googlelogintest.activitys;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,7 +13,6 @@ import android.widget.Toast;
 import com.example.kpu.googlelogintest.R;
 import com.example.kpu.googlelogintest.listview.RecordData;
 import com.example.kpu.googlelogintest.utills.DBRequester;
-import com.example.kpu.googlelogintest.utills.PHPRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;

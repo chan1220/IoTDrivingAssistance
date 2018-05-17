@@ -114,3 +114,9 @@ class dao(MySQL):
 			data.append({'car_id': element[0], 'start_time': str(element[1]), 'end_time': str(element[2]), 'fuel_efi': str(element[3]), 'speed': element[4], 'rpm': element[5], 'brk_num': element[6], 'acl_num': element[7], 'score': element[8], 'distance': element[9], 'position':self.get_position(element[0], str(element[1]), str(element[2]))})
 
 		return data
+
+	def get_token_by_carid(self, car_id):
+		cursor = self.connection.cursor()
+		cursor.execute("SELECT users.token FROM users RIGHT OUTER JOIN car ON users.usr_id = car.usr_id WHERE car.car_id = %s", (car_id, ))
+		data = cursor.fetchone()
+		return data[0]
