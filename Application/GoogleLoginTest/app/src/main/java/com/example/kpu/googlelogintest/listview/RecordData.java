@@ -18,6 +18,7 @@ public class RecordData implements Serializable{
     private String score;
     private String distance;
     private String position_json;
+    private String drive_json;
     public String getCar_id() {
         return car_id;
     }
@@ -104,5 +105,13 @@ public class RecordData implements Serializable{
 
     public void setPosition_json(String position_json) {
         this.position_json = position_json;
+    }
+
+    public String getDrive_json() {
+        return drive_json;
+    }
+
+    public void setDrive_json(String drive_json) {
+        this.drive_json = drive_json;
     }
 }

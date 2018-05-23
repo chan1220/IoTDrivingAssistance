@@ -1,188 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.kpu.googlelogintest.listview.CustomScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10px"
-    tools:context="com.example.kpu.googlelogintest.listview.DetailActivity"
-    android:orientation="vertical">
+    tools:context="com.example.kpu.googlelogintest.listview.DetailActivity">
 
-
-    <fragment
-        android:id="@+id/drive_map"
-        class="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="330dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="주행 시간"
-        android:textColor="@color/fui_bgFacebook" />
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <fragment
+            android:id="@+id/drive_map"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="330dp" />
 
         <TextView
-            android:id="@+id/tv_start"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:background="#c9cff1"
-            android:gravity="center"
-            android:text="TextView"
-            android:textSize="18dp"
-            android:textStyle="bold|italic" />
+            android:text="주행 시간"
+            android:textColor="@color/fui_bgFacebook" />
 
-        <TextView
-            android:id="@+id/tv_end"
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:background="#c9cff1"
-            android:gravity="center"
-            android:text="TextView"
-            android:textSize="18dp"
-            android:textStyle="bold|italic" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="#c9cff1"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="18dp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/tv_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="#c9cff1"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="18dp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="주행 점수"
+                android:textColor="@color/fui_bgFacebook" />
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="주행 연비"
+                android:textColor="@color/fui_bgFacebook" />
+
+            <TextView
+                android:id="@+id/tv_fuel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="주행 거리"
+                android:textColor="@color/fui_bgFacebook" />
+
+            <TextView
+                android:id="@+id/tv_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="주행 속력"
+                android:textColor="@color/fui_bgFacebook" />
+
+            <TextView
+                android:id="@+id/tv_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="급 가속"
+                android:textColor="@color/fui_bgFacebook" />
+
+            <TextView
+                android:id="@+id/tv_accel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="급 정차"
+                android:textColor="@color/fui_bgFacebook" />
+
+            <TextView
+                android:id="@+id/tv_break"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/drive_chart"
+            android:layout_width="match_parent"
+            android:layout_height="330dp">
+        </com.github.mikephil.charting.charts.PieChart>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="주행 점수"
-            android:textColor="@color/fui_bgFacebook" />
-
-        <TextView
-            android:id="@+id/tv_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="13dp"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textSize="17dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="주행 연비"
-            android:textColor="@color/fui_bgFacebook" />
-
-        <TextView
-            android:id="@+id/tv_fuel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="13dp"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textSize="17dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="주행 거리"
-            android:textColor="@color/fui_bgFacebook" />
-
-        <TextView
-            android:id="@+id/tv_distance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="13dp"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textSize="17dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="주행 속력"
-            android:textColor="@color/fui_bgFacebook" />
-
-        <TextView
-            android:id="@+id/tv_speed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="13dp"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textSize="17dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="급 가속"
-            android:textColor="@color/fui_bgFacebook" />
-
-        <TextView
-            android:id="@+id/tv_accel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="13dp"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textSize="17dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="급 정차"
-            android:textColor="@color/fui_bgFacebook" />
-
-        <TextView
-            android:id="@+id/tv_break"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="13dp"
-            android:layout_weight="1"
-            android:text="TextView"
-            android:textSize="17dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-</LinearLayout>
+</com.example.kpu.googlelogintest.listview.CustomScrollView>

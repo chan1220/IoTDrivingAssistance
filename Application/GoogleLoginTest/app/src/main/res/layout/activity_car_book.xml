@@ -18,21 +18,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="2018-03-08" />
+            android:background="#444444"
+            android:text="2018-03-08"
+            android:textColor="#CCCCCC" />
 
         <Button
             android:id="@+id/end_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="2018-04-09" />
+            android:background="#444444"
+            android:text="2018-04-09"
+            android:textColor="#CCCCCC" />
 
         <Button
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Search" />
+            android:background="#444444"
+            android:text="Search"
+            android:textColor="#CCCCCC" />
 
     </LinearLayout>
 

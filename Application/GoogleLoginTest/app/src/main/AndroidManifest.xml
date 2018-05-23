@@ -46,7 +46,7 @@
 
         <activity android:name=".activitys.CarBookActivity" />
         <activity android:name=".activitys.FuelefficiencyActivity" />
-        <activity android:name=".activitys.NotifyActivity"></activity>
+        <activity android:name=".activitys.NotifyActivity" />
     </application>
 
 </manifest>

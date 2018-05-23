@@ -2,11 +2,15 @@ package com.example.kpu.googlelogintest.listview;
 
 import android.app.FragmentManager;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.kpu.googlelogintest.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -20,7 +24,9 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -28,6 +34,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     RecordData recordData;
     TextView tv_speed, tv_start, tv_end, tv_distance, tv_score, tv_accel, tv_break, tv_fuel;
     PolylineOptions polylineOptions;
+    PieChart chart_drive;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +50,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         tv_speed = findViewById(R.id.tv_speed);
         tv_accel = findViewById(R.id.tv_accel);
         tv_break = findViewById(R.id.tv_break);
+
+        chart_drive = findViewById(R.id.drive_chart);
 
         recordData = (RecordData)getIntent().getSerializableExtra("data");
         Date start=null, end = null;
@@ -65,6 +74,52 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         FragmentManager fragmentManager = getFragmentManager();
         MapFragment mapFragment = (MapFragment)fragmentManager.findFragmentById(R.id.drive_map);
         mapFragment.getMapAsync(this);
+
+
+
+
+        // 차트 테스트
+
+
+        try {
+            float idle = 0f;
+            float bottom = 0f;
+            float mid = 0f;
+            float top = 0f;
+
+            JSONArray json = new JSONArray(recordData.getDrive_json());
+            for(int i=0;i<json.length();i++) {
+                int fef = json.getJSONObject(i).getInt("fuel_efi");
+                if(fef == 0)
+                    idle++;
+                else if(fef < 10)
+                    bottom++;
+                else if(fef < 14)
+                    mid++;
+                else
+                    top++;
+            }
+
+            List<PieEntry> entries = new ArrayList<>();
+
+            entries.add(new PieEntry((idle/json.length())*100, "공회전"));
+            entries.add(new PieEntry((bottom/json.length())*100, "비경제운전"));
+            entries.add(new PieEntry((mid/json.length())*100, "보통운전"));
+            entries.add(new PieEntry((top/json.length())*100, "경제운전"));
+
+            PieDataSet pieDataSet = new PieDataSet(entries, "주행그래프");
+            PieData pieData = new PieData(pieDataSet);
+
+            int color_arr[] = { Color.BLACK, Color.RED, Color.YELLOW, Color.GREEN };
+            pieDataSet.setColors(color_arr, 60); // 속성색깔
+
+            chart_drive.setData(pieData);
+            chart_drive.animateY(2500);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

@@ -142,8 +142,9 @@
             android:id="@+id/cr_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FAE0D4"
-            android:text="등록" />
+            android:background="#444444"
+            android:text="등록"
+            android:textColor="#CCCCCC" />
 
 
 

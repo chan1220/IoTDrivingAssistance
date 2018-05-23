@@ -123,6 +123,7 @@ public class DrivingRecordActivity extends AppCompatActivity implements DBReques
                 RecordData recordData = (RecordData) adapter.getItem(position);
 
                 // new Intent(현재 Activity의 Context, 시작할 Activity 클래스)
+//                Intent intent = new Intent(DrivingRecordActivity.this, DetailActivity.class);
                 Intent intent = new Intent(DrivingRecordActivity.this, DetailActivity.class);
                 // putExtra(key, value)
                 intent.putExtra("data", recordData);
@@ -159,7 +160,7 @@ public class DrivingRecordActivity extends AppCompatActivity implements DBReques
                         dto.setScore(jsonArray.getJSONObject(i).get("score").toString());
                         dto.setDistance(jsonArray.getJSONObject(i).get("distance").toString());
                         dto.setPosition_json(jsonArray.getJSONObject(i).getJSONArray("position").toString());
-
+                        dto.setDrive_json(jsonArray.getJSONObject(i).getJSONArray("drive").toString());
                         adapter.addItem(dto);
                         adapter.notifyDataSetChanged();
                     }
