@@ -3,6 +3,7 @@ from PyQt5.QtCore import pyqtSignal
 import obd
 import time
 import datetime
+import gyroex
 
 class obdex(QtCore.QThread):
 
@@ -20,11 +21,13 @@ class obdex(QtCore.QThread):
 	on_changed_throttle     = QtCore.pyqtSignal(object)
 	on_changed_fuel_cut     = QtCore.pyqtSignal(object)
 	on_drive_terminate 		= QtCore.pyqtSignal(object)
+	on_changed_eco_das 		= QtCore.pyqtSignal(object)
 
 	def __init__(self, parent=None, engine_volume=1.5):
 		QtCore.QThread.__init__(self, parent)
-
-		self.enabled		= False
+		self.gyro 		= gyroex.gyroex()
+		self.gyro.on_changed_gyro.connect(self._on_update_eco_das)
+		self.enabled	= False
 
 		self.volume     = engine_volume     # 배기량
 
@@ -59,6 +62,7 @@ class obdex(QtCore.QThread):
 		self.enabled = False
 
 	def run(self):
+		self.gyro.start()
 		self.enabled = True
 		try:
 			self.connection = obd.Async('/dev/rfcomm0')
@@ -67,10 +71,12 @@ class obdex(QtCore.QThread):
 			self.connection.watch(obd.commands.THROTTLE_POS,    callback=self._on_update_throttle)
 			self.connection.watch(obd.commands.INTAKE_PRESSURE, callback=self._on_update_map)
 			self.connection.watch(obd.commands.INTAKE_TEMP,     callback=self._on_update_iat)
-			self.connection.watch(obd.commands.FUEL_STATUS,     callback=self._on_update_fct)
+			#self.connection.watch(obd.commands.FUEL_STATUS,     callback=self._on_update_fct)
+			self.connection.watch(obd.commands.	FUEL_PRESSURE,     callback=self._on_update_fct)
 			self.connection.start()
 			while not self.eng_stat:
-				print('wait engine start....')
+				pass
+				#print('wait engine start....')
 
 			begin_time = time.time()
 			while self.enabled and self.eng_stat:
@@ -85,8 +91,10 @@ class obdex(QtCore.QThread):
 				begin_time = time.time()
 
 			self.on_drive_terminate.emit(self)
+			
+			self.connection.stop() # obd connection stop
+			self.gyro.stop() # gyro thread stop
 			self.connection.unwatch_all()
-			self.connection.stop()
 			print("dirve finished!!")
 		except Exception as e:
 			print(e)
@@ -158,13 +166,14 @@ class obdex(QtCore.QThread):
 		if not r.is_null():
 			self.rpm = r.value.magnitude
 			self.on_changed_rpm.emit(self.rpm)
+
 			self.eng_stat = True if self.rpm > 500 else False
 			if self.eng_stat is False:
 				self.enabled = False
 
 			self._update_instance_fuel_efy()
 		else:
-			self.eng_stat = False
+			self.eng_stat = not self.connection.query(obd.commands.RPM).is_null()
 
 	def _on_update_speed(self, r):
 		if not r.is_null():
@@ -172,34 +181,51 @@ class obdex(QtCore.QThread):
 			self.on_changed_speed.emit(self.speed)
 			self._update_instance_fuel_efy()
 		else:
-			self.eng_stat = False
+			pass
 
 	def _on_update_throttle(self, r):
 		if not r.is_null():
 			self.throttle = r.value.magnitude
 			self.on_changed_throttle.emit(self.throttle)
 		else:
-			self.eng_stat = False
+			pass
 
 	def _on_update_map(self, r):
 		if not r.is_null():
 			self.map = r.value.magnitude
 			self._update_instance_fuel_efy()
 		else:
-			self.eng_stat = False
+			pass
 
 	def _on_update_iat(self, r):
 		if not r.is_null():
 			self.iat = r.value.magnitude
 			self._update_instance_fuel_efy()
 		else:
-			self.eng_stat = False
+			pass
 
+	# # Real Car
+	# def _on_update_fct(self, r):
+	# 	if not r.is_null():
+	# 		current_fct = True if 'fuel cut' in r.value[0] else False
+	# 		if self.is_fct is not current_fct:
+	# 			self.on_changed_fuel_cut.emit(current_fct)
+	# 			self.is_fct = current_fct
+	# 	else:
+	# 		self.eng_stat = False
+
+	# Simulation
 	def _on_update_fct(self, r):
 		if not r.is_null():
-			current_fct = True if 'fuel cut' in r.value[0] else False
+			current_fct = True if r.value.magnitude < 50 else False
 			if self.is_fct is not current_fct:
 				self.on_changed_fuel_cut.emit(current_fct)
 				self.is_fct = current_fct
 		else:
-			self.eng_stat = False
+			pass
+
+	def _on_update_eco_das(self, r):
+		if r > 30 and self.speed > 40 and self.rpm > 2000:
+			self.on_changed_eco_das.emit(True)
+		else:
+			self.on_changed_eco_das.emit(False)

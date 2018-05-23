@@ -27,14 +27,17 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.obd.on_changed_speed.connect(self.on_changed_speed)
 		self.sensor.obd.on_changed_throttle.connect(self.on_changed_throttle)
 		self.sensor.obd.on_changed_fuel_cut.connect(self.on_changed_fuel_cut)
+		self.sensor.obd.on_changed_eco_das.connect(self.on_changed_eco_das)
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
 		self.sensor.start()
+		self.fuel_cut = False
+
 	def on_changed_fuel_use(self, a): # 총 기름 사용량
 		self.LCD_total_fuel.display(round(float(a),2))
 		self.LCD_fuel_price.display(int(float(a) * 1550))
 
 	def on_changed_avr_fuel(self, a): # 평균연비
-		self.GAUGE_average_fuel.render(round(float(a),2))
+		self.GAUGE_average_fuel.render(round(float(a),1))
 
 	def on_changed_distance(self, a): # 주행거리
 		self.LCD_distance.display(round(float(a),2))
@@ -43,7 +46,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.LCD_save_distance.display(round(float(a),2))
 
 	def on_changed_ife(self, a): # 순간연비
-		self.GAUGE_current_fuel.render(round(float(a),2))
+		self.GAUGE_current_fuel.render(round(float(a),1))
 
 	def on_changed_hbreak_count(self, a): #급정차
 		self.LCD_hard_break.display(int(a))
@@ -68,15 +71,34 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 	def on_changed_fuel_cut(self, a): # 퓨얼 컷
 		if a:
 			# self.label_fct.setPixmap(QtGui.QPixmap('fct_on.png').scaled(100, 100))
+			self.fuel_cut = True
 			self.LCD_save_distance.setStyleSheet("color : green;")
 			self.label_15.setStyleSheet("color : green;")
 		else:
 			# self.label_fct.setPixmap(QtGui.QPixmap('fct_off.png').scaled(100, 100))
+			self.fuel_cut = False
+			self.LCD_save_distance.setStyleSheet("color : white;")
+			self.label_15.setStyleSheet("color : white;")
+
+	def on_changed_eco_das(self, a): # 에코다스
+		if a:
+			self.LCD_save_distance.setStyleSheet("color : red;")
+			self.label_15.setStyleSheet("color : red;")
+			if self.fuel_cut:
+				self.label_eco.setPixmap(QtGui.QPixmap('fct_on.png').scaled(40, 40))
+			else:
+				self.label_eco.setPixmap(QtGui.QPixmap('fct_off.png').scaled(40, 40))
+
+		else:
+			self.label_eco.clear()
 			self.LCD_save_distance.setStyleSheet("color : white;")
 			self.label_15.setStyleSheet("color : white;")
 
 	def on_changed_gps(self, position):
 		print("gps : ",position)
+
+
+
 
 		
 

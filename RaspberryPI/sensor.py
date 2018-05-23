@@ -12,6 +12,7 @@ class sensor():
 		self.gps = gpsex(parent)
 		self.gps.on_changed_gps.connect(self.on_changed_gps)
 
+
 		self.db = db_requester('http://49.236.136.179:5000') # 클라우드(웹서버) 주소
 		self.id = self._get_car_id()
 	def start(self):
