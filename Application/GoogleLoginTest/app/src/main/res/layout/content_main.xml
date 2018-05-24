@@ -14,32 +14,13 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:id="@+id/textView_greet"
             android:layout_width="match_parent"
-            android:layout_margin="30dp"
-            android:layout_height="50dp">
-
-            <TextView
-                android:id="@+id/data1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Query"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/editText"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send"
-            android:id="@+id/btn_send"
-            android:layout_gravity="center_horizontal" />
-
+            android:layout_height="46dp"
+            android:gravity="left"
+            android:padding="10dp"
+            android:text="TextView"
+            android:textSize="18sp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

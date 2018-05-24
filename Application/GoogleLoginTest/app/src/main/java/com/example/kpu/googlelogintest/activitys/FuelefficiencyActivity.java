@@ -34,7 +34,7 @@ public class FuelefficiencyActivity extends AppCompatActivity implements DBReque
         progressDialog = new ProgressDialog(FuelefficiencyActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("검색중입니다...");
-
+        setTitle("연비 확인");
 
         recordArray = new ArrayList<RecordData>();
 

@@ -186,13 +186,35 @@
                 android:text="TextView"
                 android:textSize="17dp"
                 android:textStyle="bold" />
-
         </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="50dp"
+                android:text="주행 성향 그래프"
+                android:textColor="@color/fui_bgFacebook" />
+
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/drive_chart"
             android:layout_width="match_parent"
             android:layout_height="330dp">
         </com.github.mikephil.charting.charts.PieChart>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="50dp"
+                android:text="주행 속력 그래프"
+                android:textColor="@color/fui_bgFacebook" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/speed_chart"
+                android:layout_width="match_parent"
+                android:layout_height="330dp"></com.github.mikephil.charting.charts.LineChart>
 
     </LinearLayout>
 </com.example.kpu.googlelogintest.listview.CustomScrollView>

@@ -1,6 +1,5 @@
 package com.example.kpu.googlelogintest.activitys;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,7 +22,7 @@ public class CarRegisterActivity extends AppCompatActivity implements DBRequeste
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_register);
-
+        setTitle("차량 등록");
 
         edt_usr_id = findViewById(R.id.cr_userid);
         edt_car_id = findViewById(R.id.cr_carid);

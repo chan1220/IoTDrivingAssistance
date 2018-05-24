@@ -20,7 +20,7 @@ public class CarInfoActivity extends AppCompatActivity implements DBRequester.Li
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_info);
-
+        setTitle("차량 정보");
         edt_carid   = findViewById(R.id.editText_carid);
         edt_carname = findViewById(R.id.editText_carname);
         edt_fuel    = findViewById(R.id.editText_fuel);

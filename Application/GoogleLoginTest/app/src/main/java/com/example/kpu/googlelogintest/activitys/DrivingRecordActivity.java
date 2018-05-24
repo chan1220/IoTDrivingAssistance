@@ -45,6 +45,7 @@ public class DrivingRecordActivity extends AppCompatActivity implements DBReques
         progressDialog = new ProgressDialog(DrivingRecordActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("검색중입니다...");
+        setTitle("주행 기록");
 
         listView.setAdapter(adapter);
 

@@ -32,7 +32,7 @@ public class CarBookActivity extends AppCompatActivity implements DBRequester.Li
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_book);
-
+        setTitle("차계부");
 
         start_time = findViewById(R.id.start_date);
         end_time = findViewById(R.id.end_date);

@@ -7,10 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.kpu.googlelogintest.R;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -27,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class DetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -35,6 +43,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     TextView tv_speed, tv_start, tv_end, tv_distance, tv_score, tv_accel, tv_break, tv_fuel;
     PolylineOptions polylineOptions;
     PieChart chart_drive;
+    LineChart chart_speed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +61,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         tv_break = findViewById(R.id.tv_break);
 
         chart_drive = findViewById(R.id.drive_chart);
+        chart_speed = findViewById(R.id.speed_chart);
 
         recordData = (RecordData)getIntent().getSerializableExtra("data");
         Date start=null, end = null;
@@ -87,6 +97,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             float mid = 0f;
             float top = 0f;
 
+            List<PieEntry> entries = new ArrayList<>();
+            List<Entry> speed_entries = new ArrayList<>();
+
             JSONArray json = new JSONArray(recordData.getDrive_json());
             for(int i=0;i<json.length();i++) {
                 int fef = json.getJSONObject(i).getInt("fuel_efi");
@@ -98,9 +111,11 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                     mid++;
                 else
                     top++;
+
+                speed_entries.add(new Entry(i, json.getJSONObject(i).getInt("speed")));
             }
 
-            List<PieEntry> entries = new ArrayList<>();
+
 
             entries.add(new PieEntry((idle/json.length())*100, "공회전"));
             entries.add(new PieEntry((bottom/json.length())*100, "비경제운전"));
@@ -113,8 +128,30 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             int color_arr[] = { Color.BLACK, Color.RED, Color.YELLOW, Color.GREEN };
             pieDataSet.setColors(color_arr, 60); // 속성색깔
 
+            pieData.setValueFormatter(new PercentFormatter());
             chart_drive.setData(pieData);
-            chart_drive.animateY(2500);
+            chart_drive.animateY(2000);
+
+
+            LineDataSet lineDataSet = new LineDataSet(speed_entries, "속도");
+            LineData lineData = new LineData(lineDataSet);
+            lineDataSet.setDrawCircles(false);
+            lineDataSet.setDrawFilled(true);
+
+            chart_speed.getXAxis().setValueFormatter(new IAxisValueFormatter() {
+
+                private SimpleDateFormat mFormat = new SimpleDateFormat("HH:mm:ss");
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+
+                    long millis = TimeUnit.SECONDS.toMillis((long) value - 32400);
+                    return mFormat.format(new Date(millis));
+                }
+            });
+
+
+            chart_speed.setData(lineData);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
