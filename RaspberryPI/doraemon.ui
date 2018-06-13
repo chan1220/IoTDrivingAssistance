@@ -358,64 +358,46 @@ border-radius: 15px;
 border : 1px solid black;
 </string>
     </property>
-    <widget class="RPMGauge" name="GAUGE_rpm" native="true">
+    <widget class="QLabel" name="label_stt">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>0</y>
-       <width>271</width>
+       <x>50</x>
+       <y>40</y>
+       <width>331</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_tts">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>200</y>
+       <width>321</width>
        <height>191</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">border: rgb(39, 41, 43);</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="button_next">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>20</y>
-       <width>40</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
-border: 1px solid white</string>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
      </property>
      <property name="text">
-      <string>Next</string>
+      <string>...</string>
      </property>
-    </widget>
-    <widget class="SpeedGauge" name="GAUGE_SPEED" native="true">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>180</y>
-       <width>381</width>
-       <height>251</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border: rgb(39, 41, 43);</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="button_prev">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>40</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
-border: 1px solid white</string>
-     </property>
-     <property name="text">
-      <string>Prev</string>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>
@@ -426,25 +408,13 @@ border: 1px solid white</string>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>RPMGauge</class>
-   <extends>QWidget</extends>
-   <header>RPMGauge.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SpeedGauge</class>
-   <extends>QWidget</extends>
-   <header>SpeedGauge.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>CuFEFGauge</class>
    <extends>QWidget</extends>

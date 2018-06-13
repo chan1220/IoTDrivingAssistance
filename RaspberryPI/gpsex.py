@@ -34,3 +34,8 @@ class gpsex(QtCore.QThread):
 
 			position = (data_stream.TPV['lat'], data_stream.TPV['lon'])
 			self.on_changed_gps.emit(position)
+			print(position)
+
+if __name__ == "__main__":
+	g = gpsex()
+	g.start()

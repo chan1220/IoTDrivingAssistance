@@ -2,6 +2,17 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from doraemon import *
 from sensor import sensor
 
+import snowboy.snowboydecoder as snowboydecoder
+import utils.recorder as recorder
+import utils.transcribe_streaming as transcribe_streaming
+from utils.tts import TTS
+from utils.stt import STT
+import weather.weather as weather
+import threading
+import subprocess
+import datetime
+from bs4 import BeautifulSoup
+from requests import get
 
 #
 # 이벤트 핸들러의 파라미터 이름 바꾸기
@@ -14,6 +25,12 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		QtWidgets.QMainWindow.__init__(self)
 		self.setupUi(self)
 		self.retranslateUi(self)
+		self.move(-2, 0)
+		self.verticalLayoutWidget.setGeometry(QtCore.QRect(410, 10, 385, 420))
+		self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(410, 10, 385, 420))
+		self.verticalLayoutWidget.hide()
+		self.verticalLayoutWidget_2.hide()
+		self.currentwidget = None
 		self.sensor = sensor(self)
 		self.sensor.obd.on_changed_fuel_use.connect(self.on_changed_fuel_use)
 		self.sensor.obd.on_changed_avr_fuel.connect(self.on_changed_avr_fuel)
@@ -31,6 +48,88 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
 		self.sensor.start()
 		self.fuel_cut = False
+
+		self.lat = 37.340348
+		self.lon = 126.6984882
+
+		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=0.8)
+		self.rc = recorder.Recorder()
+		self.tts = TTS()
+		self.stt = STT()
+		self.speaker = 'mijin'
+		speech_thread = threading.Thread(target=self.speechRecogStart)
+		speech_thread.daemon = True
+		speech_thread.start()
+
+	def speechRecogStart(self):
+		self.detector.start(detected_callback=self.gg, sleep_time=0.03)
+
+	def gg(self):
+		self.detector.terminate()
+		snowboydecoder.play_audio_file(snowboydecoder.DETECT_DING)
+		if self.currentwidget != None:
+			self.label_stt.setText("...")
+			self.label_tts.setText("...")
+			self.currentwidget.hide()
+		self.label_stt.show()
+		self.label_tts.show()
+		text = self.stt.get_str(self.label_stt.setText)
+		snowboydecoder.play_audio_file(snowboydecoder.DETECT_DONG)
+		self.label_stt.setText(text)
+
+		if text is None:
+			self.label_tts.setText("...")
+			self.detector.start(detected_callback=self.gg, sleep_time=0.03)
+			return
+
+		elif "안녕" in text:
+			spch = "반갑습니다."
+
+		elif "날씨" in text:
+			self.currentwidget = self.verticalLayoutWidget
+			self.wd = weather.get_weather(self.lat, self.lon)
+			spch = self.wd['str']
+			self.weatherwidget.render(self.wd)
+			self.label_stt.hide()
+			self.label_tts.hide()
+			self.currentwidget.show()
+
+		elif "속력" in text or "속도" in text:
+			self.currentwidget = self.verticalLayoutWidget_2
+			spch = "속력를 보여드릴게요."
+
+		elif "연비" in text:
+			if "평균" in text:
+				spch = "평균 연비는 {}km/l입니다.".format(self.GAUGE_average_fuel.value)
+			else:
+				spch = "실시간 연비는 {}km/l입니다.".format(self.GAUGE_current_fuel.value)
+
+		elif "점수" in text:
+			score = 100 - ((((datetime.datetime.now() - self.sensor.obd.start_time).seconds - 25553) ** 2) / (25553 ** 2) * (
+				self.sensor.obd.hard_break * 5 + self.sensor.obd.hard_rpm * 2 + self.sensor.obd.hard_accel * 5))
+			spch = "현재 주행 점수는 {}점입니다.".format(int(score))
+
+		elif "세차" in text:
+			url = 'https://weather.naver.com/life/lifeNdx.nhn?cityRgnCd=CT001000'
+			text = get(url)
+			if text.status_code == 200:
+				soup = BeautifulSoup(text.text, 'html.parser')
+				jisu, comment = soup.text.split('세차지수')[1].split('\n')[0], soup.text.split('세차지수')[1].split('\n')[1]
+				spch = "세차지수는 {0}입니다. {1}".format(jisu, comment)
+			else:
+				spch = "데이터를 불러오는데 실패했습니다."
+
+		else:
+			spch = "잘 알아듣지 못했습니다."
+
+		self.label_tts.setText(spch)
+		self.tts.play_tts(spch, self.speaker)
+		subprocess.Popen(['mpg123', '-q', "snowboy/resources/ring.mp3"]).wait()
+		if self.currentwidget != None:
+			self.label_stt.hide()
+			self.label_tts.hide()
+			self.currentwidget.show()
+		self.detector.start(detected_callback=self.gg, sleep_time=0.03)
 
 	def on_changed_fuel_use(self, a): # 총 기름 사용량
 		self.LCD_total_fuel.display(round(float(a),2))
@@ -59,10 +158,10 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		pass
 
 	def on_changed_rpm(self, a): # RPM
-		self.GAUGE_rpm.render(int(a))
+		self.gaugewidget.GAUGE_rpm.render(int(a))
 
 	def on_changed_speed(self, a):	# 속도
-		self.GAUGE_SPEED.render(int(a))
+		self.gaugewidget.GAUGE_SPEED.render(int(a))
 
 	def on_changed_throttle(self, a): # 쓰로틀 개방
 		# self.lcd_throttle.display(round(float(a),2))
@@ -96,11 +195,6 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 
 	def on_changed_gps(self, position):
 		print("gps : ",position)
-
-
-
-
-		
 
 
 if __name__ == '__main__':

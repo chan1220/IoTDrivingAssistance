@@ -23,7 +23,7 @@ class obdex(QtCore.QThread):
 	on_drive_terminate 		= QtCore.pyqtSignal(object)
 	on_changed_eco_das 		= QtCore.pyqtSignal(object)
 
-	def __init__(self, parent=None, engine_volume=1.5):
+	def __init__(self, parent=None, engine_volume=2.0):
 		QtCore.QThread.__init__(self, parent)
 		self.gyro 		= gyroex.gyroex()
 		self.gyro.on_changed_gyro.connect(self._on_update_eco_das)

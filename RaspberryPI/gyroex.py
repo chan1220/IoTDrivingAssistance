@@ -50,3 +50,4 @@ class gyroex(QtCore.QThread):
 				
 			x_rotation = self.get_x_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)
 			self.on_changed_gyro.emit(x_rotation)
+
