@@ -73,6 +73,19 @@ def on_request_position():
 		return json.dumps(ret)
 
 
+@app.route('/request/parking', methods=['POST'])
+def on_request_parking():
+	ret = {'success': True}
+	try:
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.get_parking(data['usr_id'])
+	except Exception as e:
+		ret['success'] = False
+		ret['error'] = str(e)
+	finally:
+		return json.dumps(ret)
+
+
 @app.route('/request/car', methods=['POST'])
 def on_request_car():
 	ret = {'success': True}
@@ -99,6 +112,18 @@ def on_request_record():
 		return json.dumps(ret)
 
 
+
+@app.route('/request/record_recent', methods=['POST'])
+def on_request_record_recent():
+	ret = {'success': True}
+	try:
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.get_record_recent(data['usr_id'])
+	except Exception as e:
+		ret['success'] = False
+		ret['error'] = str(e)
+	finally:
+		return json.dumps(ret)
 
 @app.route('/register/user', methods=['POST'])
 def on_register_user():

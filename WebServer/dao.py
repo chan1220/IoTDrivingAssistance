@@ -22,10 +22,21 @@ class dao(MySQL):
 
 		return data
 		
-			
-	def get_drive(self):
+
+	def get_parking(self, usr_id):
 		cursor = self.connection.cursor()
-		cursor.execute("SELECT * FROM drive")
+		cursor.execute('''SELECT car.car_id, car.car_name,position.pos_time, position.pos_x, position.pos_y FROM car,position where USR_ID = %s order by pos_time desc limit 1''', (usr_id,))
+
+		data = []
+		for element in cursor.fetchall():
+			data.append({'car_id': element[0], 'car_name': element[1], 'pos_time': str(element[2]), 'pos_x': element[3], 'pos_y': element[4]})
+
+		return data
+
+			
+	def get_drive(self, car_id, start_time, end_time):
+		cursor = self.connection.cursor()
+		cursor.execute("SELECT * FROM drive where car_id = %s and pos_time between %s and %s",(car_id, start_time, end_time))
 
 		data = []
 		for element in cursor.fetchall():
@@ -109,6 +120,16 @@ class dao(MySQL):
 	def get_record(self, id, start_date, end_date):
 		cursor = self.connection.cursor()
 		cursor.execute("SELECT record.car_id, record.start_time, record.end_time, record.fuel_efi, record.speed, record.rpm, record.brk_num, record.acl_num, record.score, record.distance FROM car,record WHERE USR_ID=%s and START_TIME between %s and %s",(id, start_date + " 00:00:00", end_date + " 23:59:59") )
+		data = []
+		for element in cursor.fetchall():
+			data.append({'car_id': element[0], 'start_time': str(element[1]), 'end_time': str(element[2]), 'fuel_efi': str(element[3]), 'speed': element[4], 'rpm': element[5], 'brk_num': element[6], 'acl_num': element[7], 'score': element[8], 'distance': element[9], 'position': self.get_position(element[0], str(element[1]), str(element[2])), 'drive': self.get_drive(element[0], str(element[1]), str(element[2]))})
+
+		return data
+
+
+	def get_record_recent(self, id):
+		cursor = self.connection.cursor()
+		cursor.execute("SELECT record.car_id, record.start_time, record.end_time, record.fuel_efi, record.speed, record.rpm, record.brk_num, record.acl_num, record.score, record.distance FROM car,record WHERE USR_ID=%s order by record.start_time desc limit 1",(id,) )
 		data = []
 		for element in cursor.fetchall():
 			data.append({'car_id': element[0], 'start_time': str(element[1]), 'end_time': str(element[2]), 'fuel_efi': str(element[3]), 'speed': element[4], 'rpm': element[5], 'brk_num': element[6], 'acl_num': element[7], 'score': element[8], 'distance': element[9], 'position':self.get_position(element[0], str(element[1]), str(element[2]))})

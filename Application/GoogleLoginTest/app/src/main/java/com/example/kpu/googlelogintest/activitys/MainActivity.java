@@ -1,6 +1,8 @@
 package com.example.kpu.googlelogintest.activitys;
 
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
@@ -15,20 +17,47 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kpu.googlelogintest.R;
+import com.example.kpu.googlelogintest.utills.DBRequester;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, DBRequester.Listener {
 
     private Intent intent;
     private TextView textView_greet;
+    private GoogleMap parking_map;
+    private GoogleMap course_map;
+    private TextView recent_drive, recent_drive_values;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         textView_greet = findViewById(R.id.textView_greet);
+        recent_drive = findViewById(R.id.textView_recent_drive);
+        recent_drive_values = findViewById(R.id.textView_recent_drive_values);
+        // google map init
+        FragmentManager fragmentManager = getFragmentManager();
+        MapFragment mapFragment1 = (MapFragment)fragmentManager.findFragmentById(R.id.parking_map);
+        mapFragment1.getMapAsync(this);
+        MapFragment mapFragment2 = (MapFragment)fragmentManager.findFragmentById(R.id.course_map);
+        mapFragment2.getMapAsync(onMapReadyCallback());
+        //
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -152,5 +181,100 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        parking_map = googleMap;
+        try {
+            JSONObject param = new JSONObject();
+            param.put("usr_id", getIntent().getStringExtra("id"));
 
+            new DBRequester.Builder(MainActivity.this, "http://49.236.136.179:5000", this)
+                    .attach("request/parking")
+                    .streamPost(param)
+                    .request("request parking");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public OnMapReadyCallback onMapReadyCallback(){
+        return new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                course_map = googleMap;
+                try {
+                    JSONObject param = new JSONObject();
+                    param.put("usr_id", getIntent().getStringExtra("id"));
+
+                    new DBRequester.Builder(MainActivity.this, "http://49.236.136.179:5000", MainActivity.this)
+                            .attach("request/record_recent")
+                            .streamPost(param)
+                            .request("request record_recent");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+    @Override
+    public void onResponse(String id, JSONObject json, Object... params) {
+        try {
+            if (json.getBoolean("success") == false) {
+                Toast.makeText(this, "로드 실패", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            switch (id) {
+                case "request parking":
+                    JSONArray jsonArray = json.getJSONArray("data");
+                    parking_map.addMarker(new MarkerOptions().position(new LatLng(jsonArray.getJSONObject(0).getDouble("pos_x"),jsonArray.getJSONObject(0).getDouble("pos_y"))).title(jsonArray.getJSONObject(0).getString("pos_time")));
+                    parking_map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(jsonArray.getJSONObject(0).getDouble("pos_x"),jsonArray.getJSONObject(0).getDouble("pos_y"))));
+                    parking_map.animateCamera(CameraUpdateFactory.zoomTo(18));
+                    break;
+
+                case "request record_recent":
+                    JSONArray jsonRecordArray = json.getJSONArray("data");
+
+
+                    PolylineOptions polylineOptions = new PolylineOptions();
+
+                    try {
+                        JSONArray recentPosition = new JSONArray(jsonRecordArray.getJSONObject(0).getString("position"));
+                        for(int i=0;i<recentPosition.length();i++) {
+                            polylineOptions.add(new LatLng(recentPosition.getJSONObject(i).getDouble("lat"),recentPosition.getJSONObject(i).getDouble("lon")));
+                        }
+                        polylineOptions.color(Color.RED);
+                        course_map.addMarker(new MarkerOptions().position(new LatLng(recentPosition.getJSONObject(0).getDouble("lat"),recentPosition.getJSONObject(0).getDouble("lon"))).title("Start!"));
+                        course_map.addMarker(new MarkerOptions().position(new LatLng(recentPosition.getJSONObject(recentPosition.length()-1).getDouble("lat"),recentPosition.getJSONObject(recentPosition.length()-1).getDouble("lon"))).title("End!"));
+                        course_map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(recentPosition.getJSONObject(recentPosition.length()-1).getDouble("lat"),recentPosition.getJSONObject(recentPosition.length()-1).getDouble("lon"))));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    course_map.animateCamera(CameraUpdateFactory.zoomTo(11));
+                    course_map.addPolyline(polylineOptions);
+                    recent_drive.setText("- 최근 주행 기록(" + jsonRecordArray.getJSONObject(0).getString("start_time") + ")");
+                    recent_drive_values.setText("거리 : " + String.format("%.2f", jsonRecordArray.getJSONObject(0).getDouble("distance")) + "km, 연비 : " + String.format("%.2f" ,jsonRecordArray.getJSONObject(0).getDouble("fuel_efi")) + "L/Km");
+                    break;
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onResponse(String id, JSONArray json, Object... params) {
+
+    }
+
+    @Override
+    public void onError(String id, String message, Object... params) {
+
+    }
 }
