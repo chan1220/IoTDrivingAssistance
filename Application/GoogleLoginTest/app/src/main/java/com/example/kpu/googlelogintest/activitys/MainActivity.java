@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     JSONArray chartJson = json.getJSONArray("data");
 
                     List<PieEntry> entries = new ArrayList<>();
-                    
+
                     entries.add(new PieEntry((float) chartJson.getJSONObject(0).getDouble("idle"), "공회전"));
                     entries.add(new PieEntry((float) chartJson.getJSONObject(0).getDouble("bad"), "비경제운전"));
                     entries.add(new PieEntry((float) chartJson.getJSONObject(0).getDouble("normal"), "보통운전"));

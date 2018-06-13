@@ -18,7 +18,7 @@ class dao(MySQL):
 
 		data = []
 		for element in cursor.fetchall():
-			data.append({'id': element[0], 'datetime': str(element[1]), 'lat': element[2], 'lon': element[3]})
+			data.append({'lat': element[2], 'lon': element[3]}) # 'id': element[0], 'datetime': str(element[1]), 
 
 		return data
 		

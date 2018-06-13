@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.kpu.googlelogintest"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:11.8.0'
 
     implementation 'com.firebaseui:firebase-ui-auth:3.1.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
+    implementation "com.google.android.gms:play-services-gcm:11.8.0"
 }
 
 // chart library
