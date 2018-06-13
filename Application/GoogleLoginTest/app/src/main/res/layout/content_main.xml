@@ -67,6 +67,21 @@
             android:text="hehe"
             android:textSize="18sp" />
 
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:gravity="left|center_vertical"
+            android:text="- 주행 성향 그래프"
+            android:textSize="18sp" />
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/drive_total_chart"
+            android:layout_width="match_parent"
+            android:layout_height="330dp">
+        </com.github.mikephil.charting.charts.PieChart>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

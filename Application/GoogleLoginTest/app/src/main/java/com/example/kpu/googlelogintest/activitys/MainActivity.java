@@ -21,6 +21,11 @@ import android.widget.Toast;
 
 import com.example.kpu.googlelogintest.R;
 import com.example.kpu.googlelogintest.utills.DBRequester;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -34,6 +39,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, DBRequester.Listener {
 
     private Intent intent;
@@ -41,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private GoogleMap parking_map;
     private GoogleMap course_map;
     private TextView recent_drive, recent_drive_values;
+    private PieChart drive_total_chart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         textView_greet = findViewById(R.id.textView_greet);
         recent_drive = findViewById(R.id.textView_recent_drive);
         recent_drive_values = findViewById(R.id.textView_recent_drive_values);
+        drive_total_chart = findViewById(R.id.drive_total_chart);
         // google map init
         FragmentManager fragmentManager = getFragmentManager();
         MapFragment mapFragment1 = (MapFragment)fragmentManager.findFragmentById(R.id.parking_map);
@@ -89,10 +99,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        try {
+            JSONObject param = new JSONObject();
+            param.put("usr_id", getIntent().getStringExtra("id"));
 
+            new DBRequester.Builder(MainActivity.this, "http://49.236.136.179:5000", this)
+                    .attach("request/chart")
+                    .streamPost(param)
+                    .request("request chart");
 
-
-
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -260,6 +278,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     recent_drive.setText("- 최근 주행 기록(" + jsonRecordArray.getJSONObject(0).getString("start_time") + ")");
                     recent_drive_values.setText("거리 : " + String.format("%.2f", jsonRecordArray.getJSONObject(0).getDouble("distance")) + "km, 연비 : " + String.format("%.2f" ,jsonRecordArray.getJSONObject(0).getDouble("fuel_efi")) + "L/Km");
                     break;
+
+                case "request chart":
+                    JSONArray chartJson = json.getJSONArray("data");
+
+                    List<PieEntry> entries = new ArrayList<>();
+                    
+                    entries.add(new PieEntry((float) chartJson.getJSONObject(0).getDouble("idle"), "공회전"));
+                    entries.add(new PieEntry((float) chartJson.getJSONObject(0).getDouble("bad"), "비경제운전"));
+                    entries.add(new PieEntry((float) chartJson.getJSONObject(0).getDouble("normal"), "보통운전"));
+                    entries.add(new PieEntry((float) chartJson.getJSONObject(0).getDouble("good"), "경제운전"));
+
+                    PieDataSet pieDataSet = new PieDataSet(entries, "주행그래프");
+                    PieData pieData = new PieData(pieDataSet);
+
+                    int color_arr[] = { Color.BLACK, Color.RED, Color.YELLOW, Color.GREEN };
+                    pieDataSet.setColors(color_arr, 60); // 속성색깔
+
+                    pieData.setValueFormatter(new PercentFormatter());
+                    drive_total_chart.setData(pieData);
+                    drive_total_chart.animateY(2000);
+
+
 
             }
         } catch (JSONException e) {

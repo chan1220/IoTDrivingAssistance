@@ -141,3 +141,28 @@ class dao(MySQL):
 		cursor.execute("SELECT users.token FROM users RIGHT OUTER JOIN car ON users.usr_id = car.usr_id WHERE car.car_id LIKE %s", (car_id, ))
 		data = cursor.fetchone()
 		return data[0]
+
+
+
+	def get_chart(self, usr_id):
+		cursor = self.connection.cursor()
+		cursor.execute("SELECT drive.fuel_efi, car.volume FROM car, drive where usr_id = %s and pos_time between %s and %s",(usr_id, '2000-01-01', '2100-12-31'))
+
+		data = {'idle':0, 'bad':0, 'normal':0, 'good':0}
+		total = 0
+		for element in cursor.fetchall():
+			total = total + 1
+			if element[0] == 0:
+				data['idle'] = data['idle'] + 1
+			elif 0 < element[0] <= (14 - int(element[1])/500):
+				data['bad'] = data['bad'] + 1 
+			elif (14 - int(element[1])/500) < element[0] <= (19 - int(element[1])/500):
+				data['normal'] = data['normal'] + 1 
+			else:
+				data['good'] = data['good'] + 1
+
+		data['idle'] = data['idle'] * 100 / total
+		data['bad'] = data['bad'] * 100 / total
+		data['normal'] = data['normal'] * 100 / total
+		data['good'] = data['good'] * 100 / total
+		return [data]
