@@ -40,7 +40,7 @@ class dao(MySQL):
 
 		data = []
 		for element in cursor.fetchall():
-			data.append({'id': element[0], 'datetime': str(element[1]), 'fuel_efi': element[2], 'speed': element[3]})
+			data.append({'fuel_efi': element[2], 'speed': element[3]}) # 'datetime': str(element[1]), 
 
 		return data
 		
