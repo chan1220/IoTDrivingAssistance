@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="연비운전 회사 송현화는 이용자의 '동의를 기반으로 개인정보를 수집,이용 및 제공'하고 있으며, '이용자의 권리 (개인정보 자기결정권)를 적극적으로 보장'합니다."
+            android:text="연비운전 도우미 회사는 이용자의 '동의를 기반으로 개인정보를 수집,이용 및 제공'하고 있으며, '이용자의 권리 (개인정보 자기결정권)를 적극적으로 보장'합니다."
             android:textSize="20dp"
             />
         <TextView

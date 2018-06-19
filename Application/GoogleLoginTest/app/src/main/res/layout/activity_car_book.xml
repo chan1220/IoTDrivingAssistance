@@ -45,6 +45,7 @@
     <LinearLayout
         android:layout_margin="15dp"
         android:gravity="center"
+        android:background="#EAEAEA"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -52,7 +53,6 @@
 
         <EditText
             android:gravity="center"
-            android:background="#FAE0D4"
             android:id="@+id/edt_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +62,6 @@
 
         <EditText
             android:gravity="center"
-            android:background="#FAF4C0"
             android:id="@+id/edt_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,7 +71,6 @@
 
         <EditText
             android:gravity="center"
-            android:background="#D4F4FA"
             android:id="@+id/edt_fef"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +80,6 @@
 
         <EditText
             android:gravity="center"
-            android:background="#E4F7BA"
             android:id="@+id/edt_fuel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
