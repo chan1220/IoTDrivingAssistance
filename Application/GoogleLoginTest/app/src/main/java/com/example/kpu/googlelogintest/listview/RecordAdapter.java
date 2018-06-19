@@ -12,9 +12,6 @@ import com.example.kpu.googlelogintest.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by KPU on 2018-03-15.
- */
 
 public class RecordAdapter extends BaseAdapter {
 

@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="30dp"
+    android:layout_margin="15dp"
     tools:context=".activitys.FuelefficiencyActivity">
-
 
     <ImageView
         android:id="@+id/imageView5"

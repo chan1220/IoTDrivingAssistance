@@ -77,4 +77,5 @@ tools:context="com.example.kpu.googlelogintest.activitys.DrivingRecordActivity">
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/editText_name" />
+
 </LinearLayout>

@@ -122,5 +122,4 @@ public class FuelefficiencyActivity extends AppCompatActivity implements DBReque
 
     }
 
-
 }

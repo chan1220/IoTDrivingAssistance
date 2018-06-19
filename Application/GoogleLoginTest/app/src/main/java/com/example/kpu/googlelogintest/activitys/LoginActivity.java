@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity implements DBRequester.List
     protected void onActivityResult( int requestCode, int resultCode, Intent data )
     {
         try {
-
             switch ( requestCode )
             {
                 case RESOLVE_CONNECTION_REQUEST_CODE:
@@ -91,8 +90,6 @@ public class LoginActivity extends AppCompatActivity implements DBRequester.List
                     name = acct.getDisplayName();
                     id = acct.getId();
                     token = FirebaseInstanceId.getInstance().getToken();
-
-
 
                     // 실행!
                     JSONObject user = new JSONObject();

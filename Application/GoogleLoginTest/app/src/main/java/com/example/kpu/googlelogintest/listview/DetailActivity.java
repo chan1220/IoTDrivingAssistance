@@ -115,8 +115,6 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                 speed_entries.add(new Entry(i, json.getJSONObject(i).getInt("speed")));
             }
 
-
-
             entries.add(new PieEntry((idle/json.length())*100, "공회전"));
             entries.add(new PieEntry((bottom/json.length())*100, "비경제운전"));
             entries.add(new PieEntry((mid/json.length())*100, "보통운전"));
