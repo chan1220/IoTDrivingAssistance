@@ -27,68 +27,72 @@
             android:id="@+id/textView_greet"
             android:layout_width="match_parent"
             android:layout_height="46dp"
-            android:layout_marginTop="50dp"
-            android:gravity="left"
+            android:layout_marginTop="70dp"
+            android:background="#D5D5D5"
+            android:gravity="center"
             android:padding="10dp"
             android:text="TextView"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginBottom="20dp"/>
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="46dp"
-            android:gravity="left|center_vertical"
-            android:text="- 내 차는 어디에 있을까?"
+            android:gravity="center"
+            android:text="차량 위치"
+            android:layout_marginBottom="20dp"
+            android:background="#D5D5D5"
             android:textSize="18sp" />
         <fragment
             android:id="@+id/parking_map"
             class="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="330dp" />
+            android:layout_height="330dp"
+            android:layout_marginBottom="50dp"/>
 
 
         <TextView
             android:id="@+id/textView_recent_drive"
             android:layout_width="match_parent"
             android:layout_height="46dp"
-            android:gravity="left|center_vertical"
-            android:text="- 최근 주행 기록"
+            android:gravity="center"
+            android:background="#D5D5D5"
+            android:text="최근 주행 기록"
+            android:layout_marginBottom="20dp"
             android:textSize="18sp" />
         <fragment
             android:id="@+id/course_map"
             class="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="330dp" />
+            android:layout_height="330dp"
+            android:layout_marginBottom="10dp"/>
         <TextView
             android:id="@+id/textView_recent_drive_values"
             android:layout_width="match_parent"
             android:layout_height="46dp"
-            android:gravity="left|center_vertical"
+            android:gravity="center"
             android:text="hehe"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginBottom="50dp"/>
 
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="46dp"
-            android:gravity="left|center_vertical"
-            android:text="- 주행 성향 그래프"
-            android:textSize="18sp" />
+            android:gravity="center"
+            android:text="주행 성향 그래프"
+            android:layout_marginBottom="20dp"
+            android:background="#D5D5D5"
+            android:textSize="25sp" />
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/drive_total_chart"
             android:layout_width="match_parent"
-            android:layout_height="330dp">
+            android:layout_height="330dp"
+            android:layout_marginBottom="50dp">
         </com.github.mikephil.charting.charts.PieChart>
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="left"
-            android:padding="10dp"
-            android:text="\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕\n안녕ㅍ"
-            android:textSize="18sp" />
     </LinearLayout>
 
 

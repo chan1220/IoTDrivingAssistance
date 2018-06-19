@@ -35,7 +35,7 @@
             <item
                 android:id="@+id/nav_info"
                 android:icon="@android:drawable/ic_menu_info_details"
-                android:title="정보" />
+                android:title="도움말" />
         </menu>
     </item>
 

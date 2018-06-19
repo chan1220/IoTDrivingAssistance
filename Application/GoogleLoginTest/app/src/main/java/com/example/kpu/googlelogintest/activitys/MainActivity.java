@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "메롱 -_-", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, getIntent().getStringExtra("name") + "님의 차량정보입니다.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     course_map.animateCamera(CameraUpdateFactory.zoomTo(11));
                     course_map.addPolyline(polylineOptions);
-                    recent_drive.setText("- 최근 주행 기록(" + jsonRecordArray.getJSONObject(0).getString("start_time") + ")");
+                    recent_drive.setText("최근 주행 기록(" + jsonRecordArray.getJSONObject(0).getString("start_time") + ")");
                     recent_drive_values.setText("거리 : " + String.format("%.2f", jsonRecordArray.getJSONObject(0).getDouble("distance")) + "km, 연비 : " + String.format("%.2f" ,jsonRecordArray.getJSONObject(0).getDouble("fuel_efi")) + "L/Km");
                     break;
 

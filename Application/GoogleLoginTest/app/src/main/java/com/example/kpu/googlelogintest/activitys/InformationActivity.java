@@ -12,6 +12,6 @@ public class InformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
-        setTitle("킹갓엠페러마제스티설현관");
+        setTitle("Information");
     }
 }

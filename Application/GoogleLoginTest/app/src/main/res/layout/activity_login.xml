@@ -5,29 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="30dp"
+    android:gravity="center"
+    android:background="#EAEAEA"
     tools:context="com.example.kpu.googlelogintest.activitys.LoginActivity"
     >
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Team Doraemon"
+        android:textColor="#6A5B81"
+        android:text="Eco Driving\nSolution Application"
+        android:layout_marginBottom="20dp"
         android:textAlignment="center"
-        android:textSize="44dp" />
+        android:textSize="35dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:text="" />
+
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="274dp"
-        app:srcCompat="@drawable/img_doraemon" />
+        app:srcCompat="@drawable/img_car2" />
 
     <TextView
         android:id="@+id/textView4"
@@ -35,10 +38,12 @@
         android:layout_height="30dp"
         android:text="" />
 
+
+
     <com.google.android.gms.common.SignInButton
+        android:layout_margin="15dp"
         android:id="@+id/button_login_google"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#444444" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

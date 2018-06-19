@@ -1,11 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.kpu.googlelogintest.activitys.InformationActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="유용한 도움말"
+            android:textSize="30dp"
+            android:layout_marginBottom="5dp"
+            android:background="#D5D5D5"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="1. 전화번호나 기기를 변경했을 때에도 앱을 사용할 수 있나요?"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="-> 차량등록과정만 거친다면 가능합니다."
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="개인정보처리방침"
+            android:textSize="30dp"
+            android:layout_marginBottom="5dp"
+            android:background="#D5D5D5"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="1. 개인정보처리방침이란?"
+            android:textColor="#000000"
+            android:layout_marginBottom="5dp"
+            android:textSize="20dp"
+        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="연비운전 회사 송현화는 이용자의 '동의를 기반으로 개인정보를 수집,이용 및 제공'하고 있으며, '이용자의 권리 (개인정보 자기결정권)를 적극적으로 보장'합니다."
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="2. 개인정보 수집"
+            android:textColor="#000000"
+            android:layout_marginBottom="5dp"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="서비스 제공을 위한 필요 최소한의 개인정보를 수집하고 있습니다."
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="3. 개인정보 이용"
+            android:textColor="#000000"
+            android:layout_marginBottom="5dp"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="회원관리, 서비스 제공 및 개선, 신규 서비스 개발 등을 위해 이용합니다."
+            android:textSize="20dp"
+            />
+    </LinearLayout>
+    <!--
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="211dp"
@@ -32,6 +127,7 @@
         android:layout_width="126dp"
         android:layout_height="192dp"
         android:layout_marginBottom="12dp"
+
         android:text="설현 \n  +\n 관"
         android:textSize="55dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
@@ -39,5 +135,6 @@
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.451" />
+       -->
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

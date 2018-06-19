@@ -145,7 +145,7 @@ public class CarBookActivity extends AppCompatActivity implements DBRequester.Li
                     }
                     progressDialog.dismiss();
 
-                    edt_date.setText(start_time.getText().toString() + " ~ " + end_time.getText().toString() + "의 기록입니다.");
+                    edt_date.setText(start_time.getText().toString() + " ~ " + end_time.getText().toString() + "기간의 기록");
                     edt_distance.setText("총 주행거리 : " + String.format("%.1f", total_dis) + " Km");
                     edt_fuel.setText("기름 사용량 : " + String.format("%.2f", total_fuel) + " L");
                     if(total_fuel == 0)
