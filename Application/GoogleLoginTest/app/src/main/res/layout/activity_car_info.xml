@@ -9,13 +9,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_gravity="center"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_gravity="center"
-        android:textSize="20dp"
+        android:layout_marginTop="25dp"
         android:text="차량의 ID 및 차량의 정보 표시"
-        android:textColor="#B5B5B5" />
+        android:textColor="#B5B5B5"
+        android:textSize="20dp" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -46,13 +46,13 @@
                 android:gravity="center" />
         </TableRow>
 
-        <TableRow>
+        <TableRow android:layout_height="23dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:background="#D5D5D5"
+                android:gravity="center"
                 android:text="차량ID"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -64,7 +64,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"
-                android:paddingTop="50dp"
+                android:paddingTop="30dp"
 
                 />
         </TableRow>
@@ -87,7 +87,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"
-                android:paddingTop="50dp" />
+                android:paddingTop="30dp" />
         </TableRow>
 
         <TableRow>
@@ -108,7 +108,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"
-                android:paddingTop="50dp" />
+                android:paddingTop="30dp" />
         </TableRow>
 
         <TableRow>
@@ -129,7 +129,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"
-                android:paddingTop="50dp" />
+                android:paddingTop="30dp" />
         </TableRow>
 
         <TableRow>
@@ -151,7 +151,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:gravity="center"
-                android:paddingTop="50dp" />
+                android:paddingTop="30dp" />
         </TableRow>
     </TableLayout>
 

@@ -75,7 +75,8 @@ class dao(MySQL):
 				car_name = '{car_name}',
 				volume = '{volume}',
 				fuel = '{fuel}',
-				fuel_efi = '{fuel_efi}'
+				fuel_efi = '{fuel_efi}',
+				usr_id = '{usr_id}'
 				'''.format(car_id=car_id, usr_id=usr_id, car_name=car_name, volume=volume, fuel=fuel, fuel_efi=fuel_efi)
 		cursor = self.connection.cursor()
 		cursor.execute(query);

@@ -15,4 +15,4 @@ def send_gcm_message(token, message):
 
 
 if __name__ == "__main__":
-	send_gcm_message("fYXvVUv-np0:APA91bFY-8KwdEvT5pZSPn6Ljh5imYf9FuBmhPLHACJtHIQaXMtN30Udl4VcN2n3_644HI8WsnTANMMt9STjzrh2471tPPKUMEb9ky4ibzcjxbUyit97H38DyGXfgRmGrinLpOiEDjjM", "test....")
+	send_gcm_message("dBrZCvlINZo:APA91bEd6jKLsRM0XWSXdZM7CLoSfVxQH2VrkVbpl9sRcm3fJLC2uM88zxuWHM9Io0rAv-lTSA-MRzVKZ8RFyHFKDlKubEIcqXYc_vT3D8XFjfutkNx9SBr45_pGHxGq0ygGWebLO7Vm", {'fuel_efi':15.3, 'distance':22.2})

@@ -7,7 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.kpu.googlelogintest.R;
 import com.example.kpu.googlelogintest.utills.DBRequester;
 import com.google.android.gms.auth.api.Auth;
@@ -71,6 +74,10 @@ public class LoginActivity extends AppCompatActivity implements DBRequester.List
             }
         } );
 
+
+        ImageView flash = findViewById(R.id.imageView_flash);
+        GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(flash);
+        Glide.with(this).load(R.drawable.flash).into(gifImage);
 
     }
 

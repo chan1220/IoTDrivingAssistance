@@ -12,7 +12,7 @@
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:srcCompat="@drawable/img_car3" />
+        app:srcCompat="@drawable/img_car_echo" />
 
     <LinearLayout
         android:layout_width="match_parent"

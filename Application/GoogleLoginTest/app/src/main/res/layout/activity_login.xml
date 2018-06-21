@@ -9,41 +9,34 @@
     android:background="#EAEAEA"
     tools:context="com.example.kpu.googlelogintest.activitys.LoginActivity"
     >
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#6A5B81"
-        android:text="Eco Driving\nSolution Application"
-        android:layout_marginBottom="20dp"
-        android:textAlignment="center"
-        android:textSize="35dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:text="" />
 
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="274dp"
-        app:srcCompat="@drawable/img_car2" />
+        android:layout_height="86dp"
+        app:srcCompat="@drawable/title" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:text="" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="By.Doraemon  "
+        android:textAlignment="textEnd"
+        android:textSize="20dp" />
 
+    <ImageView
+        android:id="@+id/imageView_flash"
+        android:layout_width="match_parent"
+        android:layout_height="309dp"
+        app:srcCompat="@drawable/flash" />
 
 
     <com.google.android.gms.common.SignInButton
-        android:layout_margin="15dp"
         android:id="@+id/button_login_google"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp" />
 
 </LinearLayout>
