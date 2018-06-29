@@ -54,7 +54,7 @@ class obdex(QtCore.QThread):
 		self.hard_rpm   = 0
 		self.hard_accel = 0
 
-
+		self.is_eco_das = False
 	def __del__(self):
 		pass
 
@@ -225,7 +225,8 @@ class obdex(QtCore.QThread):
 			pass
 
 	def _on_update_eco_das(self, r):
-		if r > 30 and self.speed > 40 and self.rpm > 2000:
-			self.on_changed_eco_das.emit(True)
-		else:
-			self.on_changed_eco_das.emit(False)
+
+		current_eco_das = True if r > 30 and self.speed > 40 and self.rpm > 2000 else False
+		if self.is_eco_das is not current_eco_das:
+			self.on_changed_eco_das.emit(current_eco_das)
+			self.is_eco_das = current_eco_das

@@ -52,7 +52,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.lat = 37.340348
 		self.lon = 126.6984882
 
-		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=0.8)
+		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=0.5)
 		self.rc = recorder.Recorder()
 		self.tts = TTS()
 		self.stt = STT()
@@ -94,9 +94,9 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.label_tts.hide()
 			self.currentwidget.show()
 
-		elif "속력" in text or "속도" in text:
+		elif "속력" in text or "속도" in text or "시속" in text:
 			self.currentwidget = self.verticalLayoutWidget_2
-			spch = "속력를 보여드릴게요."
+			spch = "속력를 보여드릴게요. 현재 속도는 " + str(self.gaugewidget.GAUGE_SPEED.value) + "km/h 입니다."
 
 		elif "연비" in text:
 			if "평균" in text:
@@ -183,8 +183,12 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		if a:
 			self.LCD_save_distance.setStyleSheet("color : red;")
 			self.label_15.setStyleSheet("color : red;")
+			t = threading.Thread(target=self.tts.play_tts, args=("관성주행이 가능합니다..", self.speaker))
+			t.start()
+
 			if self.fuel_cut:
 				self.label_eco.setPixmap(QtGui.QPixmap('fct_on.png').scaled(40, 40))
+
 			else:
 				self.label_eco.setPixmap(QtGui.QPixmap('fct_off.png').scaled(40, 40))
 
