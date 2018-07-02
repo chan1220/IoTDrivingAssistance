@@ -4,12 +4,9 @@
 #include <EEPROM.h>
 #include <ESP8266mDNS.h>
 #include <PubSubClient.h>
-// GPS
-#include <SoftwareSerial.h>
-#include <TinyGPS.h>
-TinyGPS gps;
-SoftwareSerial uart_gps(12, 13);
-void getgps(TinyGPS &gps);
+// GYRO
+#include<Wire.h>
+const int MPU = 0x68;  //MPU 6050 의 I2C 기본 주소
 
 //
 const char*   mqttServer = "49.236.136.179";
@@ -27,7 +24,7 @@ byte len;
 int relay_status = 0;
 char ssid[30];
 char password[30];
-
+char str_buff[20];
 bool captive = true;
 
 const byte DNS_PORT = 53;
@@ -54,7 +51,6 @@ String responseHTML = ""
 
 
 void setup() {
-    uart_gps.begin(9600);
     Serial.begin(9600);
     EEPROM.begin(EEPROM_LENGTH);
     pinMode(5, INPUT_PULLUP);
@@ -84,6 +80,13 @@ void setup() {
           }
         }
     }
+        //Gyro
+      Wire.begin();      //Wire 라이브러리 초기화
+      Wire.beginTransmission(MPU); //MPU로 데이터 전송 시작
+      Wire.write(0x6B);  // PWR_MGMT_1 register
+      Wire.write(0);     //MPU-6050 시작 모드로
+      Wire.endTransmission(true);
+      // -----
 }
 
 void setup_runtime() {
@@ -119,7 +122,7 @@ void setup_runtime() {
 void setup_captive() {    
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
-    WiFi.softAP("Chan_GPS");
+    WiFi.softAP("Chan_Gyro");
     
     dnsServer.start(DNS_PORT, "*", apIP);
 
@@ -136,21 +139,16 @@ void loop() {
     if (captive) { 
         dnsServer.processNextRequest();
     }
+    else
+    {
+      sprintf(str_buff, "%.2lf", getGyro());
+      client.publish("hello/world", str_buff);
+      Serial.println("published~!");
+      delay(500);
+    }
 
     webServer.handleClient();
 
-    if(uart_gps.available())     // While there is data on the RX pin...
-    {
-        int c = uart_gps.read();    // load the data into a variable...
-        if(gps.encode(c))      // if there is a new valid sentence...
-        {
-          getgps(gps);         // then grab the data.
-        }
-        else
-        {
-          Serial.write(c);
-        }
-    }
 
     client.loop();
 }
@@ -164,7 +162,6 @@ void button(){
     ESP.restart();
 }
 
-// Saves string to EEPROM
 void SaveString(int startAt, const char* id) { 
     for (byte i = 0; i <= strlen(id); i++) {
         EEPROM.write(i + startAt, (uint8_t) id[i]);
@@ -172,7 +169,6 @@ void SaveString(int startAt, const char* id) {
     EEPROM.commit();
 }
 
-// Reads string from EEPROM
 void ReadString(byte startAt, byte bufor) {
     for (byte i = 0; i <= bufor; i++) {
         eRead[i] = (char)EEPROM.read(i + startAt);
@@ -185,40 +181,24 @@ void handleNotFound(){
     webServer.send(404, "text/plain", message);
 }
 
-
-void getgps(TinyGPS &gps)
+float getGyro()
 {
-  float latitude, longitude;
-  gps.f_get_position(&latitude, &longitude);
-  Serial.print("Lat/Long: "); 
-  Serial.print(latitude,5); 
-  Serial.print(", "); 
-//
-//  gps.crack_datetime(&year,&month,&day,&hour,&minute,&second,&hundredths);
-//  // Print data and time
-//  Serial.print("Date: "); Serial.print(month, DEC); Serial.print("/"); 
-//  Serial.print(day, DEC); Serial.print("/"); Serial.print(year);
-//  Serial.print("  Time: "); Serial.print(hour, DEC); Serial.print(":"); 
-//  Serial.print(minute, DEC); Serial.print(":"); Serial.print(second, DEC); 
-//  Serial.print("."); Serial.println(hundredths, DEC);
-//  //Since month, day, hour, minute, second, and hundr
-//  
-//  // Here you can print the altitude and course values directly since 
-//  // there is only one value for the function
-//  Serial.print("Altitude (meters): "); Serial.println(gps.f_altitude());  
-//  // Same goes for course
-//  Serial.print("Course (degrees): "); Serial.println(gps.f_course()); 
-//  // And same goes for speed
-//  Serial.print("Speed(kmph): "); Serial.println(gps.f_speed_kmph());
-//  Serial.println();
-  
-  unsigned long chars;
-  unsigned short sentences, failed_checksum;
-  gps.stats(&chars, &sentences, &failed_checksum);
-  char pub_str[30];
-  sprintf(pub_str, "(%f, %f)", latitude, longitude);
-  client.publish("hello/world", pub_str);
+  int16_t AcX, AcY, AcZ;
+  Wire.beginTransmission(MPU);    //데이터 전송시작
+  Wire.write(0x3B);               // register 0x3B (ACCEL_XOUT_H), 큐에 데이터 기록
+  Wire.endTransmission(false);    //연결유지
+  Wire.requestFrom(MPU, 6, true); //MPU에 데이터 요청
+
+  AcX = Wire.read() << 8 | Wire.read();  // 0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
+  AcY = Wire.read() << 8 | Wire.read();  // 0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
+  AcZ = Wire.read() << 8 | Wire.read();  // 0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
+
+  float RADIAN_TO_DEGREES = 180 / 3.141592;
+  float val_y = atan(AcX / sqrt(pow(AcY, 2) + pow(AcZ, 2))) * RADIAN_TO_DEGREES;
+  float val_x = atan(AcY / sqrt(pow(AcX, 2) + pow(AcZ, 2))) * RADIAN_TO_DEGREES;
+
+  Serial.println(val_y);
+
+  //  delay(10);
+  return val_y;
 }
-
-
-
