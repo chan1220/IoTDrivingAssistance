@@ -6,17 +6,17 @@
 #include <PubSubClient.h>
 // GPS
 #include <SoftwareSerial.h>
-#include <TinyGPS.h>
-TinyGPS gps;
+#include <TinyGPS++.h>
+TinyGPSPlus gps;
 SoftwareSerial uart_gps(12, 13);
-void getgps(TinyGPS &gps);
+void getgps(TinyGPSPlus &gps);
 
 //
 const char*   mqttServer = "49.236.136.179";
 const int     mqttPort = 1883;
 const char*   mqttUser = "yhur";
 const char*   mqttPassword = "hi";
-
+bool          isReset = false;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -36,17 +36,19 @@ DNSServer dnsServer;
 ESP8266WebServer webServer(80);
 
 void GPIO5() {
+    Serial.println("Flushing EEPROM....");
     SaveString(0, ""); // blank out the SSID field in EEPROM
+    isReset = true;
 }
 
 String responseHTML = ""
-    "<!DOCTYPE html><html><head><title>CaptivePortal</title></head><body><center>"
-    "<p>Captive Sample Server App</p>"
+    "<!DOCTYPE html><html><head><title>GPS Setting Page</title></head><body><center>"
+    "<p>GPS Setting Page</p>"
     "<form action='/button'>"
     "<p><input type='text' name='ssid' placeholder='SSID' onblur='this.value=removeSpaces(this.value);'></p>"
     "<p><input type='text' name='password' placeholder='WLAN Password'></p>"
     "<p><input type='submit' value='Submit'></p></form>"
-    "<p>This is a captive portal example</p></center></body>"
+    "<p>This is GPS Setting Page</p></center></body>"
     "<script>function removeSpaces(string) {"
     "   return string.split(' ').join('');"
     "}</script></html>";
@@ -76,6 +78,7 @@ void setup() {
           if (client.connect("chan_publisher", mqttUser, mqttPassword )) 
           {
             Serial.println("connected");
+            client.publish("status/gps", "success");
           } 
           else 
           {
@@ -96,6 +99,7 @@ void setup_runtime() {
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
         Serial.print(".");
+        yield;
         if(i++ > 30) {
             captive = true;
             setup_captive();
@@ -139,20 +143,25 @@ void loop() {
 
     webServer.handleClient();
 
-    if(uart_gps.available())     // While there is data on the RX pin...
+    if(uart_gps.available())
     {
-        int c = uart_gps.read();    // load the data into a variable...
-        if(gps.encode(c))      // if there is a new valid sentence...
+      if(gps.encode(uart_gps.read()))
+      {
+        if(gps.location.isValid())
         {
-          getgps(gps);         // then grab the data.
+          char mqtt_buf[20];
+          sprintf(mqtt_buf, "%f %f", gps.location.lat(), gps.location.lng());
+          Serial.print(mqtt_buf);Serial.println("is published!!");
+          yield;
+          client.publish("hello/world", mqtt_buf);
         }
-        else
-        {
-          Serial.write(c);
-        }
-    }
+      }
 
+    }
     client.loop();
+
+    if(isReset)
+      ESP.restart();
 }
 
 void button(){
@@ -184,41 +193,4 @@ void handleNotFound(){
     String message = "File Not Found\n\n";
     webServer.send(404, "text/plain", message);
 }
-
-
-void getgps(TinyGPS &gps)
-{
-  float latitude, longitude;
-  gps.f_get_position(&latitude, &longitude);
-  Serial.print("Lat/Long: "); 
-  Serial.print(latitude,5); 
-  Serial.print(", "); 
-//
-//  gps.crack_datetime(&year,&month,&day,&hour,&minute,&second,&hundredths);
-//  // Print data and time
-//  Serial.print("Date: "); Serial.print(month, DEC); Serial.print("/"); 
-//  Serial.print(day, DEC); Serial.print("/"); Serial.print(year);
-//  Serial.print("  Time: "); Serial.print(hour, DEC); Serial.print(":"); 
-//  Serial.print(minute, DEC); Serial.print(":"); Serial.print(second, DEC); 
-//  Serial.print("."); Serial.println(hundredths, DEC);
-//  //Since month, day, hour, minute, second, and hundr
-//  
-//  // Here you can print the altitude and course values directly since 
-//  // there is only one value for the function
-//  Serial.print("Altitude (meters): "); Serial.println(gps.f_altitude());  
-//  // Same goes for course
-//  Serial.print("Course (degrees): "); Serial.println(gps.f_course()); 
-//  // And same goes for speed
-//  Serial.print("Speed(kmph): "); Serial.println(gps.f_speed_kmph());
-//  Serial.println();
-  
-  unsigned long chars;
-  unsigned short sentences, failed_checksum;
-  gps.stats(&chars, &sentences, &failed_checksum);
-  char pub_str[30];
-  sprintf(pub_str, "(%f, %f)", latitude, longitude);
-  client.publish("hello/world", pub_str);
-}
-
-
 
