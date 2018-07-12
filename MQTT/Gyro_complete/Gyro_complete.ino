@@ -24,9 +24,10 @@ byte len;
 int relay_status = 0;
 char ssid[30];
 char password[30];
+char id[30];
 char str_buff[20];
 bool captive = true;
-
+char topic[100];
 const byte DNS_PORT = 53;
 IPAddress apIP(192, 168, 1, 1);
 DNSServer dnsServer;
@@ -42,6 +43,7 @@ String responseHTML = ""
     "<form action='/button'>"
     "<p><input type='text' name='ssid' placeholder='SSID' onblur='this.value=removeSpaces(this.value);'></p>"
     "<p><input type='text' name='password' placeholder='WLAN Password'></p>"
+    "<p><input type='text' name='id' placeholder='Car ID'></p>"
     "<p><input type='submit' value='Submit'></p></form>"
     "<p>This is a captive portal example</p></center></body>"
     "<script>function removeSpaces(string) {"
@@ -64,12 +66,18 @@ void setup() {
         strcpy(ssid, eRead);
         ReadString(30, 30);
         strcpy(password, eRead);
+        ReadString(60, 30);
+        strcpy(id, eRead);
+        // 토픽 만들기
+        strcat(topic, id);
+        strcat(topic, "/gyro");
+        //
         setup_runtime();  
         client.setServer(mqttServer, mqttPort);
         while (!client.connected()) 
         {
           Serial.println("Connecting to MQTT...");
-          if (client.connect("chan_publisher", mqttUser, mqttPassword )) 
+          if (client.connect("Chan_Gyro", mqttUser, mqttPassword )) 
           {
             Serial.println("connected");
           } 
@@ -109,7 +117,7 @@ void setup_runtime() {
     Serial.print("Connected to "); Serial.println(ssid);
     Serial.print("IP address: "); Serial.println(WiFi.localIP());
 
-    if (MDNS.begin("ChanPark")) {
+    if (MDNS.begin("Chan_Gyro")) {
        Serial.println("MDNS responder started");
     }
     
@@ -142,7 +150,7 @@ void loop() {
     else
     {
       sprintf(str_buff, "%.2lf", getGyro());
-      client.publish("hello/world", str_buff);
+      client.publish(topic, str_buff);
       Serial.println("published~!");
       delay(500);
     }
@@ -158,6 +166,7 @@ void button(){
     Serial.println(webServer.arg("ssid"));
     SaveString( 0, (webServer.arg("ssid")).c_str());
     SaveString(30, (webServer.arg("password")).c_str());
+    SaveString(60, (webServer.arg("id")).c_str());
     webServer.send(200, "text/plain", "OK");
     ESP.restart();
 }
