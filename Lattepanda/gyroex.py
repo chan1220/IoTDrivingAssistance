@@ -1,12 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import paho.mqtt.client as mqtt
-
-def on_connect(client, userdata, rc, hehe):
-	print("Connected with result code "+str(rc))
-	client.subscribe("hello/world")
- 
-def on_message(client, userdata, msg):
-	print(msg.topic + " : " + msg.payload.decode('utf-8'))
+import time
+import threading
 
 class gyroex(QtCore.QThread):
 
@@ -20,7 +15,7 @@ class gyroex(QtCore.QThread):
 		self.client.connect("49.236.136.179", 1883, 60)
 
 	def on_connect(self, client, userdata, rc, hehe):
-		self.client.subscribe("hello/world")
+		self.client.subscribe("SHK/gyro")
 
 	def on_message(self, client, userdata, msg):
 		print(msg.topic + " : " + msg.payload.decode('utf-8'))

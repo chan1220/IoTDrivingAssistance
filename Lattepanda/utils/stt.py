@@ -16,7 +16,7 @@ from six.moves import queue
 
 # Audio recording parameters
 RATE = 16000
-CHUNK = int(RATE / 10)  # 100ms
+CHUNK = int(RATE / 10)  # 100ms origin:10
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/admin/MyMic.json'
 
 class MicrophoneStream(object):
@@ -89,27 +89,27 @@ class MicrophoneStream(object):
 
 
 def listen_print_loop(responses, callback):
-
 	num_chars_printed = 0
+	transcript = ''
 	for response in responses:
+		if response.speech_event_type == 1:
+			print('인식 종료 :', transcript)
+			return transcript
+
 		if not response.results:
 			continue
 
 		result = response.results[0]
+
 		if not result.alternatives:
 			continue
 
 		transcript = result.alternatives[0].transcript
 
-		overwrite_chars = ' ' * (num_chars_printed - len(transcript))
-
 		if not result.is_final:
-			# sys.stdout.write(transcript + overwrite_chars + '\r')
-			# sys.stdout.flush()
-			# print(transcript)
 			callback(transcript)
 			num_chars_printed = len(transcript)
-		
+
 		else:
 			return transcript
 
@@ -123,6 +123,7 @@ class STT():
 			language_code=language_code)
 		self.streaming_config = types.StreamingRecognitionConfig(
 			config=config,
+			single_utterance=True,
 			interim_results=True)
 
 	def get_str(self, callback):
@@ -137,6 +138,11 @@ class STT():
 			return listen_print_loop(responses, callback)
 
 if __name__ == '__main__':
+
+	def print_str(speech):
+		print("인식중:", speech)
+
 	stt = STT()
 	while True:
-		print('문장 : ',stt.get_str())
+		print('인식된문장 : ',stt.get_str(print_str))
+
