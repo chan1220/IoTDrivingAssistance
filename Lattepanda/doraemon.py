@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'doraemon.ui'
+# Form implementation generated from reading ui file 'Doraemon.ui'
 #
 # Created by: PyQt5 UI code generator 5.10.1
 #
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 480)
+        MainWindow.resize(826, 480)
         MainWindow.setStyleSheet("QMainWindow\n"
 "{\n"
 " background-image : url(bg.jpg);\n"
@@ -137,10 +137,6 @@ class Ui_MainWindow(object):
         self.GAUGE_current_fuel.setGeometry(QtCore.QRect(0, 0, 385, 85))
         self.GAUGE_current_fuel.setStyleSheet("")
         self.GAUGE_current_fuel.setObjectName("GAUGE_current_fuel")
-        self.label_eco = QtWidgets.QLabel(self.GAUGE_current_fuel)
-        self.label_eco.setGeometry(QtCore.QRect(125, 5, 40, 40))
-        self.label_eco.setText("")
-        self.label_eco.setObjectName("label_eco")
         self.av_wraper = QtWidgets.QWidget(self.widget_5)
         self.av_wraper.setGeometry(QtCore.QRect(2, 100, 385, 85))
         self.av_wraper.setStyleSheet("background: white;\n"
@@ -152,57 +148,40 @@ class Ui_MainWindow(object):
         self.GAUGE_average_fuel.setGeometry(QtCore.QRect(0, 0, 385, 85))
         self.GAUGE_average_fuel.setStyleSheet("")
         self.GAUGE_average_fuel.setObjectName("GAUGE_average_fuel")
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(440, 20, 161, 361))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout_weather = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout_weather.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_weather.setObjectName("verticalLayout_weather")
-        self.weatherwidget = WeatherWidget(self.verticalLayoutWidget)
-        self.weatherwidget.setStyleSheet("")
-        self.weatherwidget.setObjectName("weatherwidget")
-        self.verticalLayout_weather.addWidget(self.weatherwidget)
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(410, 10, 385, 420))
-        self.label.setStyleSheet("QLabel#label{background: rgb(39, 41, 43);\n"
-"border-radius: 15px;\n"
-"border : 1px solid black;}")
-        self.label.setText("")
-        self.label.setObjectName("label")
-        self.label_stt = QtWidgets.QLabel(self.centralwidget)
-        self.label_stt.setGeometry(QtCore.QRect(450, 60, 330, 120))
+        self.widget_8 = QtWidgets.QWidget(self.centralwidget)
+        self.widget_8.setGeometry(QtCore.QRect(410, 10, 385, 420))
+        self.widget_8.setStyleSheet("QWidget#widget_8{\n"
+"    background: rgb(39, 41, 43);\n"
+"    border-radius: 15px;\n"
+"    border : 1px solid black;\n"
+"}")
+        self.widget_8.setObjectName("widget_8")
+        self.label_stt = QtWidgets.QLabel(self.widget_8)
+        self.label_stt.setGeometry(QtCore.QRect(50, 40, 331, 131))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(20)
         self.label_stt.setFont(font)
         self.label_stt.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.label_stt.setWordWrap(True)
         self.label_stt.setObjectName("label_stt")
-        self.label_tts = QtWidgets.QLabel(self.centralwidget)
-        self.label_tts.setGeometry(QtCore.QRect(420, 230, 330, 150))
+        self.label_tts = QtWidgets.QLabel(self.widget_8)
+        self.label_tts.setGeometry(QtCore.QRect(10, 200, 321, 191))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(20)
         self.label_tts.setFont(font)
         self.label_tts.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.label_tts.setWordWrap(True)
         self.label_tts.setObjectName("label_tts")
-        self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(610, 40, 171, 341))
-        self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
-        self.verticalLayout_gauge = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
-        self.verticalLayout_gauge.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_gauge.setObjectName("verticalLayout_gauge")
-        self.gaugewidget = GaugeWidget(self.verticalLayoutWidget_2)
+        self.gaugewidget = GaugeWidget(self.widget_8)
+        self.gaugewidget.setGeometry(QtCore.QRect(0, 0, 391, 421))
         self.gaugewidget.setObjectName("gaugewidget")
-        self.verticalLayout_gauge.addWidget(self.gaugewidget)
-        self.label.raise_()
-        self.widget_5.raise_()
-        self.verticalLayoutWidget.raise_()
-        self.label_stt.raise_()
-        self.label_tts.raise_()
-        self.verticalLayoutWidget_2.raise_()
+        self.diagnosticwidget = DiagnosticWidget(self.widget_8)
+        self.diagnosticwidget.setGeometry(QtCore.QRect(-1, -1, 391, 421))
+        self.diagnosticwidget.setObjectName("diagnosticwidget")
+        self.weatherwidget = WeatherWidget(self.widget_8)
+        self.weatherwidget.setGeometry(QtCore.QRect(-1, -1, 391, 421))
+        self.weatherwidget.setObjectName("weatherwidget")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 826, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -228,6 +207,7 @@ from AvFEFGauge import AvFEFGauge
 from CuFEFGauge import CuFEFGauge
 from widget.gauge.GaugeWidget import GaugeWidget
 from widget.weather.WeatherWidget import WeatherWidget
+from widget.diagnostic.DiagnosticWidget import DiagnosticWidget
 
 if __name__ == "__main__":
     import sys

@@ -2,6 +2,7 @@ from obdex import *
 from gpsex import *
 from db_requester import db_requester
 import datetime
+from uuid import getnode as get_mac
 
 class sensor():
 	def __init__(self, parent=None):
@@ -15,6 +16,7 @@ class sensor():
 
 		self.db = db_requester('http://49.236.136.179:5000') # 클라우드(웹서버) 주소
 		self.id = self._get_car_id()
+		print('당신의 차량 id : ',self.id)
 	def start(self):
 		self.obd.start()
 		self.gps.start()
@@ -24,10 +26,7 @@ class sensor():
 		self.gps.stop()
 
 	def _get_car_id(self): # 차량 id 얻기
-		with open('/proc/cpuinfo', 'r') as f:
-			for line in f:
-				if line[0:6] == 'Serial':
-					return str(line[17:26])
+		return(str(get_mac()))
 
 	def on_obd_updated(self, obd): # 매 초당 주행 정보
 		self.db.request('update/drive', {'id': self.id, 'fuel_efi': obd.ife, 'speed': obd.speed})

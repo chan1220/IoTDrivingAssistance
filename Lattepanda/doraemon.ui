@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>826</width>
     <height>480</height>
    </rect>
   </property>
@@ -353,10 +353,11 @@ border : 1px solid white;
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background: rgb(39, 41, 43);
-border-radius: 15px;
-border : 1px solid black;
-</string>
+     <string notr="true">QWidget#widget_8{
+	background: rgb(39, 41, 43);
+	border-radius: 15px;
+	border : 1px solid black;
+}</string>
     </property>
     <widget class="QLabel" name="label_stt">
      <property name="geometry">
@@ -400,6 +401,38 @@ border : 1px solid black;
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
+    <widget class="GaugeWidget" name="gaugewidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>391</width>
+       <height>421</height>
+      </rect>
+     </property>
+     <zorder>weatherwidget</zorder>
+     <zorder>diagnosticwidget</zorder>
+    </widget>
+    <widget class="DiagnosticWidget" name="diagnosticwidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>-1</x>
+       <y>-1</y>
+       <width>391</width>
+       <height>421</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="WeatherWidget" name="weatherwidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>-1</x>
+       <y>-1</y>
+       <width>391</width>
+       <height>421</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -407,8 +440,8 @@ border : 1px solid black;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>26</height>
+     <width>826</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -425,6 +458,24 @@ border : 1px solid black;
    <class>AvFEFGauge</class>
    <extends>QWidget</extends>
    <header>AvFEFGauge.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DiagnosticWidget</class>
+   <extends>QWidget</extends>
+   <header>DiagnosticWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GaugeWidget</class>
+   <extends>QWidget</extends>
+   <header>GaugeWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WeatherWidget</class>
+   <extends>QWidget</extends>
+   <header>WeatherWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -14,9 +14,6 @@ from bs4 import BeautifulSoup
 from requests import get
 import time
 #
-# 이벤트 핸들러의 파라미터 이름 바꾸기
-# gps의 on_changed_gps에 연결한 mainform의 이벤트랑, sensor.py에서 연결한 이벤트가 둘 다 호출이 되는지 확인
-# qtdesigner를 이용해서 디자인 원래 구성했던대로 설정
 #
 
 class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -25,10 +22,16 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.setupUi(self)
 		self.retranslateUi(self)
 		self.move(-2, 0)
-		self.verticalLayoutWidget.setGeometry(QtCore.QRect(410, 10, 385, 420))
-		self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(410, 10, 385, 420))
-		self.verticalLayoutWidget.hide()
-		self.verticalLayoutWidget_2.hide()
+		# self.verticalLayoutWidget.setGeometry(QtCore.QRect(410, 10, 385, 420))
+		# self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(410, 10, 385, 420))
+		# self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(410, 10, 385, 420))
+		# self.verticalLayoutWidget.hide()
+		# self.verticalLayoutWidget_2.hide()
+		# self.verticalLayoutWidget_3.hide()
+		self.weatherwidget.hide()
+		self.gaugewidget.hide()
+		self.diagnosticwidget.hide()
+
 		self.currentwidget = None
 		self.sensor = sensor(self)
 		self.sensor.obd.on_changed_fuel_use.connect(self.on_changed_fuel_use)
@@ -44,7 +47,10 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.obd.on_changed_throttle.connect(self.on_changed_throttle)
 		self.sensor.obd.on_changed_fuel_cut.connect(self.on_changed_fuel_cut)
 		self.sensor.obd.on_changed_eco_das.connect(self.on_changed_eco_das)
+		self.sensor.obd.on_changed_dtc.connect(self.on_changed_dtc)
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
+
+
 		self.sensor.start()
 		self.fuel_cut = False
 
@@ -86,7 +92,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			spch = "반갑습니다."
 
 		elif "날씨" in text:
-			self.currentwidget = self.verticalLayoutWidget
+			self.currentwidget = self.weatherwidget
 			self.wd = weather.get_weather(self.lat, self.lon)
 			spch = self.wd['str']
 			self.weatherwidget.render(self.wd)
@@ -95,7 +101,8 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.currentwidget.show()
 
 		elif "속력" in text or "속도" in text or "시속" in text:
-			self.currentwidget = self.verticalLayoutWidget_2
+			self.currentwidget = self.gaugewidget
+			self.currentwidget.show()
 			spch = "속력를 보여드릴게요. 현재 속도는 " + str(self.gaugewidget.GAUGE_SPEED.value) + "km/h 입니다."
 
 		elif "연비" in text:
@@ -199,6 +206,13 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 
 	def on_changed_gps(self, position):
 		print("gps : ",position)
+
+	def on_changed_dtc(self, a):
+		print("고장코드!!")
+		self.currentwidget = self.diagnosticwidget
+		self.diagnosticwidget.render(a)
+		self.currentwidget.show()
+
 
 
 if __name__ == '__main__':

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>600</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(39, 41, 43);</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="14" column="2" colspan="2">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="3">
+      <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">font: 11pt &quot;HY헤드라인M&quot;;
+color : rgb(24, 136, 255);
+border : 1px solid rgb(24, 136, 255);
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 102, 255), stop:0.15 rgba(235, 148, 61, 255), stop:0.78 rgba(0, 0, 0, 128), stop:1 rgba(0, 0, 0, 0));
+</string>
+       </property>
+       <property name="text">
+        <string>   [차량 진단]</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2" colspan="2">
+      <widget class="QLabel" name="label_13">
+       <property name="styleSheet">
+        <string notr="true">font: 13pt &quot;HY헤드라인M&quot;;
+color: rgb(0, 85, 255);</string>
+       </property>
+       <property name="text">
+        <string>[Description]</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1" rowspan="6">
+      <widget class="QLabel" name="label_code">
+       <property name="styleSheet">
+        <string notr="true">font: 10pt &quot;HY헤드라인M&quot;;
+color: rgb(255, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string>발견된 고장 코드가 없습니다.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1" colspan="3">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLabel" name="label_12">
+       <property name="styleSheet">
+        <string notr="true">font: 13pt &quot;HY헤드라인M&quot;;
+color: rgb(0, 85, 255);</string>
+       </property>
+       <property name="text">
+        <string>[Error Code]</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="2" rowspan="6" colspan="2">
+      <widget class="QLabel" name="label_description">
+       <property name="styleSheet">
+        <string notr="true">font: 10pt &quot;HY헤드라인M&quot;;
+color: rgb(0, 255, 0);</string>
+       </property>
+       <property name="text">
+        <string>차량이 정상입니다.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">image: url(car_scan.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="1" colspan="3">
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
