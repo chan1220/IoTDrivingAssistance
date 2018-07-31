@@ -151,9 +151,20 @@ def on_register_user():
 	finally:
 		return json.dumps(ret)
 
-
+@app.route('/update/code', methods=['POST'])
+def on_update_code():
+	ret = {'success': True}
+	try:
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.add_code(data['id'], data['code'], data['description'])
+	except Exception as e:
+		ret['success'] = False
+		ret['error'] = str(e)
+	finally:
+		return json.dumps(ret)
 
 
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')
+ 

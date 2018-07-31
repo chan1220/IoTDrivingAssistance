@@ -80,7 +80,6 @@ class obdex(QtCore.QThread):
 			while self.connection.query(obd.commands.GET_DTC).is_null():
 				print('Scanning trouble code..')
 				time.sleep(1)
-			print(self.connection.query(obd.commands.GET_DTC))
 			self.on_changed_dtc.emit(self.connection.query(obd.commands.GET_DTC).value)
 			
 			self.connection.stop()

@@ -19,7 +19,7 @@ class gyroex(QtCore.QThread):
 		self.client.subscribe(str(get_mac()) + "/gyro")
 
 	def on_message(self, client, userdata, msg):
-		print(msg.topic + " : " + msg.payload.decode('utf-8'))
+		# print(msg.topic + " : " + msg.payload.decode('utf-8'))
 		self.on_changed_gyro.emit(float(msg.payload.decode('utf-8')))
 	
 	def stop(self):

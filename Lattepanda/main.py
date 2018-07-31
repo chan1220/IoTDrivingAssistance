@@ -22,12 +22,6 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.setupUi(self)
 		self.retranslateUi(self)
 		self.move(-2, 0)
-		# self.verticalLayoutWidget.setGeometry(QtCore.QRect(410, 10, 385, 420))
-		# self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(410, 10, 385, 420))
-		# self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(410, 10, 385, 420))
-		# self.verticalLayoutWidget.hide()
-		# self.verticalLayoutWidget_2.hide()
-		# self.verticalLayoutWidget_3.hide()
 		self.weatherwidget.hide()
 		self.gaugewidget.hide()
 		self.diagnosticwidget.hide()
@@ -48,7 +42,9 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.obd.on_changed_fuel_cut.connect(self.on_changed_fuel_cut)
 		self.sensor.obd.on_changed_eco_das.connect(self.on_changed_eco_das)
 		self.sensor.obd.on_changed_dtc.connect(self.on_changed_dtc)
+		self.sensor.obd.on_drive_terminate.connect(self.on_obd_drive_terminate)
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
+
 
 
 		self.sensor.start()
@@ -205,16 +201,15 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.label_15.setStyleSheet("color : white;")
 
 	def on_changed_gps(self, position):
-		print("gps : ",position)
+		self.lat ,self.lon = position
 
 	def on_changed_dtc(self, a):
-		print("고장코드!!")
 		self.currentwidget = self.diagnosticwidget
 		self.diagnosticwidget.render(a)
 		self.currentwidget.show()
 
-
-
+	def on_obd_drive_terminate(self, obd): # 주행이 종료됬을 때 한번만 호출
+		msg = QtWidgets.QMessageBox.about(self ,"주행이 종료되었습니다", "주행이 종료되었습니다.")
 if __name__ == '__main__':
 	import sys
 	app = QtWidgets.QApplication(sys.argv)

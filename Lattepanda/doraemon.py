@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Doraemon.ui'
+# Form implementation generated from reading ui file 'doraemon.ui'
 #
 # Created by: PyQt5 UI code generator 5.10.1
 #
@@ -157,27 +157,29 @@ class Ui_MainWindow(object):
 "}")
         self.widget_8.setObjectName("widget_8")
         self.label_stt = QtWidgets.QLabel(self.widget_8)
-        self.label_stt.setGeometry(QtCore.QRect(50, 40, 331, 131))
+        self.label_stt.setGeometry(QtCore.QRect(70, 40, 290, 180))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.label_stt.setFont(font)
         self.label_stt.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_stt.setWordWrap(True)
         self.label_stt.setObjectName("label_stt")
         self.label_tts = QtWidgets.QLabel(self.widget_8)
-        self.label_tts.setGeometry(QtCore.QRect(10, 200, 321, 191))
+        self.label_tts.setGeometry(QtCore.QRect(20, 210, 290, 180))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.label_tts.setFont(font)
         self.label_tts.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_tts.setWordWrap(True)
         self.label_tts.setObjectName("label_tts")
         self.gaugewidget = GaugeWidget(self.widget_8)
-        self.gaugewidget.setGeometry(QtCore.QRect(0, 0, 391, 421))
+        self.gaugewidget.setGeometry(QtCore.QRect(0, 0, 385, 420))
         self.gaugewidget.setObjectName("gaugewidget")
         self.diagnosticwidget = DiagnosticWidget(self.widget_8)
-        self.diagnosticwidget.setGeometry(QtCore.QRect(-1, -1, 391, 421))
+        self.diagnosticwidget.setGeometry(QtCore.QRect(-1, -1, 385, 420))
         self.diagnosticwidget.setObjectName("diagnosticwidget")
         self.weatherwidget = WeatherWidget(self.widget_8)
-        self.weatherwidget.setGeometry(QtCore.QRect(-1, -1, 391, 421))
+        self.weatherwidget.setGeometry(QtCore.QRect(-1, -1, 385, 420))
         self.weatherwidget.setObjectName("weatherwidget")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -203,11 +205,11 @@ class Ui_MainWindow(object):
         self.label_stt.setText(_translate("MainWindow", "..."))
         self.label_tts.setText(_translate("MainWindow", "..."))
 
-from AvFEFGauge import AvFEFGauge
-from CuFEFGauge import CuFEFGauge
+from widget.gauge.AvFEFGauge import AvFEFGauge
+from widget.gauge.CuFEFGauge import CuFEFGauge
+from widget.diagnostic.DiagnosticWidget import DiagnosticWidget
 from widget.gauge.GaugeWidget import GaugeWidget
 from widget.weather.WeatherWidget import WeatherWidget
-from widget.diagnostic.DiagnosticWidget import DiagnosticWidget
 
 if __name__ == "__main__":
     import sys

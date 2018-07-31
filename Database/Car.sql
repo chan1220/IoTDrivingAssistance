@@ -35,6 +35,14 @@ CREATE TABLE record (
   end_time datetime
 );
 
+CREATE TABLE code (
+  car_id varchar(30) NOT NULL,
+  code_time datetime,
+  code varchar(30) NOT NULL,
+  description varchar(150) NOT NULL
+);
+
+
 CREATE TABLE car (
   car_id varchar(30) NOT NULL,
   usr_id varchar(30) NOT NULL,

@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import time
 import threading
 import paho.mqtt.client as mqtt
+from uuid import getnode as get_mac
 
 class gpsex(QtCore.QThread):
 
@@ -15,14 +16,12 @@ class gpsex(QtCore.QThread):
 		self.client.connect("49.236.136.179", 1883, 60)
 
 	def on_connect(self, client, userdata, rc, hehe):
-		self.client.subscribe("SHK/GPS")
+		self.client.subscribe(str(get_mac()) + "/gps")
 
 	def on_message(self, client, userdata, msg):
-		print(msg.topic + " : " + msg.payload.decode('utf-8'))
-		gps_str = msg.payload.decode('utf-8')
-		gps_tuple = gps_str.split()
-		gps_tuple = (float(gps_tuple[0]), float(gps_tuple[1]))
-		self.on_changed_gps.emit(float())
+		# print(msg.topic + " : " + msg.payload.decode('utf-8'))
+		latlon = list(map(float, msg.payload.decode('utf-8').split()))
+		self.on_changed_gps.emit(latlon)
 	
 	def stop(self):
 		self.enabled = False

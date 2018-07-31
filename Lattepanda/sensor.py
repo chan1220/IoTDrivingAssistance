@@ -9,6 +9,7 @@ class sensor():
 		self.obd = obdex(parent)
 		self.obd.on_updated.connect(self.on_obd_updated)
 		self.obd.on_drive_terminate.connect(self.on_obd_drive_terminate)
+		self.obd.on_changed_dtc.connect(self.on_changed_dtc)
 
 		self.gps = gpsex(parent)
 		self.gps.on_changed_gps.connect(self.on_changed_gps)
@@ -44,3 +45,7 @@ class sensor():
 		if score < 0:
 			score = 0
 		self.db.request('update/record', {'id': self.id, 'start_time': obd.start_time.strftime("%Y-%m-%d %H:%M:%S"), 'fuel_efi': avr_fuel_efi, 'avr_speed': avr_speed, 'hard_rpm': obd.hard_rpm, 'hard_break': obd.hard_break, 'hard_accel': obd.hard_accel, 'score': score, 'distance': obd.distance})
+
+	def on_changed_dtc(self, code_list):
+		for code in code_list:
+			self.db.request('update/code', {'id': self.id, 'code': code[0], 'description': code[1]})

@@ -52,7 +52,11 @@ class dao(MySQL):
 		self.connection.commit()
 		return {'id': id, 'position': {'lat': lat, 'lon': lon}}
 		
-
+	def add_code(self, id, code, description):
+		cursor = self.connection.cursor()
+		cursor.execute('''INSERT INTO code (car_id, code_time, code, description) VALUES(%s, now(), %s, %s)''', (id, code, description))
+		self.connection.commit()
+		return {'id': id, 'code': code, 'description': description}
 
 	def add_drive(self, id, fuel_efi, speed):
 		cursor = self.connection.cursor()
