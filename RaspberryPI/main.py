@@ -3,7 +3,6 @@ from doraemon import *
 from sensor import sensor
 
 import snowboy.snowboydecoder as snowboydecoder
-import utils.recorder as recorder
 import utils.transcribe_streaming as transcribe_streaming
 from utils.tts import TTS
 from utils.stt import STT
@@ -13,11 +12,8 @@ import subprocess
 import datetime
 from bs4 import BeautifulSoup
 from requests import get
-
+import time
 #
-# 이벤트 핸들러의 파라미터 이름 바꾸기
-# gps의 on_changed_gps에 연결한 mainform의 이벤트랑, sensor.py에서 연결한 이벤트가 둘 다 호출이 되는지 확인
-# qtdesigner를 이용해서 디자인 원래 구성했던대로 설정
 #
 
 class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -26,10 +22,10 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.setupUi(self)
 		self.retranslateUi(self)
 		self.move(-2, 0)
-		self.verticalLayoutWidget.setGeometry(QtCore.QRect(410, 10, 385, 420))
-		self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(410, 10, 385, 420))
-		self.verticalLayoutWidget.hide()
-		self.verticalLayoutWidget_2.hide()
+		self.weatherwidget.hide()
+		self.gaugewidget.hide()
+		self.diagnosticwidget.hide()
+
 		self.currentwidget = None
 		self.sensor = sensor(self)
 		self.sensor.obd.on_changed_fuel_use.connect(self.on_changed_fuel_use)
@@ -45,23 +41,29 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.obd.on_changed_throttle.connect(self.on_changed_throttle)
 		self.sensor.obd.on_changed_fuel_cut.connect(self.on_changed_fuel_cut)
 		self.sensor.obd.on_changed_eco_das.connect(self.on_changed_eco_das)
+		self.sensor.obd.on_changed_dtc.connect(self.on_changed_dtc)
+		self.sensor.obd.on_drive_terminate.connect(self.on_obd_drive_terminate)
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
+
+
+
 		self.sensor.start()
 		self.fuel_cut = False
 
 		self.lat = 37.340348
 		self.lon = 126.6984882
 
-		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=0.5)
-		self.rc = recorder.Recorder()
+		
 		self.tts = TTS()
 		self.stt = STT()
 		self.speaker = 'mijin'
+		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=1)
 		speech_thread = threading.Thread(target=self.speechRecogStart)
 		speech_thread.daemon = True
 		speech_thread.start()
 
 	def speechRecogStart(self):
+		
 		self.detector.start(detected_callback=self.gg, sleep_time=0.03)
 
 	def gg(self):
@@ -86,7 +88,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			spch = "반갑습니다."
 
 		elif "날씨" in text:
-			self.currentwidget = self.verticalLayoutWidget
+			self.currentwidget = self.weatherwidget
 			self.wd = weather.get_weather(self.lat, self.lon)
 			spch = self.wd['str']
 			self.weatherwidget.render(self.wd)
@@ -95,7 +97,8 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.currentwidget.show()
 
 		elif "속력" in text or "속도" in text or "시속" in text:
-			self.currentwidget = self.verticalLayoutWidget_2
+			self.currentwidget = self.gaugewidget
+			self.currentwidget.show()
 			spch = "속력를 보여드릴게요. 현재 속도는 " + str(self.gaugewidget.GAUGE_SPEED.value) + "km/h 입니다."
 
 		elif "연비" in text:
@@ -198,9 +201,15 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.label_15.setStyleSheet("color : white;")
 
 	def on_changed_gps(self, position):
-		print("gps : ",position)
+		self.lat ,self.lon = position
 
+	def on_changed_dtc(self, a):
+		self.currentwidget = self.diagnosticwidget
+		self.diagnosticwidget.render(a)
+		self.currentwidget.show()
 
+	def on_obd_drive_terminate(self, obd): # 주행이 종료됬을 때 한번만 호출
+		msg = QtWidgets.QMessageBox.about(self ,"주행이 종료되었습니다", "주행이 종료되었습니다.")
 if __name__ == '__main__':
 	import sys
 	app = QtWidgets.QApplication(sys.argv)

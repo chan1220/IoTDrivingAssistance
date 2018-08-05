@@ -1,7 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from gps3 import gps3
 import time
 import threading
+import paho.mqtt.client as mqtt
+from uuid import getnode as get_mac
 
 class gpsex(QtCore.QThread):
 
@@ -9,33 +10,22 @@ class gpsex(QtCore.QThread):
 
 	def __init__(self, parent=None):
 		QtCore.QThread.__init__(self, parent)
-		self.enabled = False
+		self.client = mqtt.Client()
+		self.client.on_connect = self.on_connect
+		self.client.on_message = self.on_message
+		self.client.connect("49.236.136.179", 1883, 60)
 
+	def on_connect(self, client, userdata, rc, hehe):
+		self.client.subscribe(str(get_mac()) + "/gps")
+
+	def on_message(self, client, userdata, msg):
+		# print(msg.topic + " : " + msg.payload.decode('utf-8'))
+		latlon = list(map(float, msg.payload.decode('utf-8').split()))
+		self.on_changed_gps.emit(latlon)
+	
 	def stop(self):
 		self.enabled = False
 
 	def run(self):
 		self.enabled = True
-		gps_socket = gps3.GPSDSocket()
-		data_stream = gps3.DataStream()
-		gps_socket.connect()
-		gps_socket.watch()
-
-		for new_data in gps_socket:
-			if self.enabled is False:
-				break
-
-			if new_data is None:
-				continue
-
-			data_stream.unpack(new_data)
-			if data_stream.TPV['lat'] == 'n/a':
-				continue
-
-			position = (data_stream.TPV['lat'], data_stream.TPV['lon'])
-			self.on_changed_gps.emit(position)
-			print(position)
-
-if __name__ == "__main__":
-	g = gpsex()
-	g.start()
+		self.client.loop_forever()

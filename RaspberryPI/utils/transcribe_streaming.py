@@ -27,7 +27,7 @@ import os
 import sys
 # [END import_libraries]
 
-google_json_key_path = '/home/pi/MyMic-b737a86ac104.json'
+google_json_key_path = '/home/admin/MyMic.json'
 
 def transcribe_streaming(audio_file):
 	"""Streams transcription of the given audio file."""

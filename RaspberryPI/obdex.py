@@ -22,6 +22,7 @@ class obdex(QtCore.QThread):
 	on_changed_fuel_cut     = QtCore.pyqtSignal(object)
 	on_drive_terminate 		= QtCore.pyqtSignal(object)
 	on_changed_eco_das 		= QtCore.pyqtSignal(object)
+	on_changed_dtc 			= QtCore.pyqtSignal(object)
 
 	def __init__(self, parent=None, engine_volume=2.0):
 		QtCore.QThread.__init__(self, parent)
@@ -65,18 +66,37 @@ class obdex(QtCore.QThread):
 		self.gyro.start()
 		self.enabled = True
 		try:
-			self.connection = obd.Async('/dev/rfcomm0')
+			self.connection = obd.Async()
+			while not self.connection.is_connected() or not self.connection.status() == obd.OBDStatus.CAR_CONNECTED:
+				self.connection.stop()
+				print('Connection failed : Wait 5 seconds...')
+				time.sleep(5)
+				self.connection = obd.Async()
+			print('connection success!')
+
+			self.connection.watch(obd.commands.GET_DTC)
+			self.connection.start()
+
+			while self.connection.query(obd.commands.GET_DTC).is_null():
+				print('Scanning trouble code..')
+				time.sleep(1)
+			self.on_changed_dtc.emit(self.connection.query(obd.commands.GET_DTC).value)
+			
+			self.connection.stop()
+			self.connection.unwatch(obd.commands.GET_DTC, callback=None)
 			self.connection.watch(obd.commands.RPM,             callback=self._on_update_rpm)
 			self.connection.watch(obd.commands.SPEED,           callback=self._on_update_speed)
 			self.connection.watch(obd.commands.THROTTLE_POS,    callback=self._on_update_throttle)
 			self.connection.watch(obd.commands.INTAKE_PRESSURE, callback=self._on_update_map)
 			self.connection.watch(obd.commands.INTAKE_TEMP,     callback=self._on_update_iat)
 			#self.connection.watch(obd.commands.FUEL_STATUS,     callback=self._on_update_fct)
-			self.connection.watch(obd.commands.	FUEL_PRESSURE,     callback=self._on_update_fct)
+			self.connection.watch(obd.commands.	FUEL_PRESSURE,  callback=self._on_update_fct)
 			self.connection.start()
+			
 			while not self.eng_stat:
-				pass
-				#print('wait engine start....')
+				print('Wait Engine Start...')
+				time.sleep(1)
+			print('Engine start!')
 
 			begin_time = time.time()
 			while self.enabled and self.eng_stat:

@@ -41,8 +41,8 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
 
-from RPMGauge import RPMGauge
-from SpeedGauge import SpeedGauge
+from widget.gauge.RPMGauge import RPMGauge
+from widget.gauge.SpeedGauge import SpeedGauge
 
 if __name__ == "__main__":
     import sys
