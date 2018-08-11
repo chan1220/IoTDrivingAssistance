@@ -38,7 +38,9 @@ public class DetailTroubleActivity extends Activity {
 //        webView.loadUrl("https://www.obd-codes.com/"+ troubleData.getTroubleCode());
 
         webView.loadUrl("https://translate.google.com/translate?hl=en&tl=ko&u=https://www.obd-codes.com/" + troubleData.getTroubleCode());
-//        Toast.makeText(this, troubleData.getTroubleCode(), Toast.LENGTH_SHORT).show();
+        webView.setHorizontalScrollBarEnabled(false);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        //        Toast.makeText(this, troubleData.getTroubleCode(), Toast.LENGTH_SHORT).show();
 
     }
 }
