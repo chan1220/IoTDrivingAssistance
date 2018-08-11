@@ -13,9 +13,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.kpu.googlelogintest.R;
-import com.example.kpu.googlelogintest.listview.DetailActivity;
-import com.example.kpu.googlelogintest.listview.RecordAdapter;
-import com.example.kpu.googlelogintest.listview.RecordData;
+import com.example.kpu.googlelogintest.listview.record.DetailActivity;
+import com.example.kpu.googlelogintest.listview.record.RecordAdapter;
+import com.example.kpu.googlelogintest.listview.record.RecordData;
 import com.example.kpu.googlelogintest.utills.DBRequester;
 
 import org.json.JSONArray;

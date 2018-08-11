@@ -132,6 +132,16 @@ class dao(MySQL):
 		return data
 
 
+	def get_code(self, id):
+		cursor = self.connection.cursor()
+		cursor.execute("SELECT code.car_id, code.code, code.code_time, code.description FROM car,code WHERE USR_ID=%s",(id, ))
+		data = []
+		for element in cursor.fetchall():
+			data.append({'car_id': element[0], 'code': str(element[1]), 'code_time': str(element[2]), 'description': str(element[3])})
+
+		return data
+
+
 	def get_record_recent(self, id):
 		cursor = self.connection.cursor()
 		cursor.execute("SELECT record.car_id, record.start_time, record.end_time, record.fuel_efi, record.speed, record.rpm, record.brk_num, record.acl_num, record.score, record.distance FROM car,record WHERE USR_ID=%s order by record.start_time desc limit 1",(id,) )

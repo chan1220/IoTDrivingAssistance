@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.example.kpu.googlelogintest.R;
 import com.example.kpu.googlelogintest.utills.DBRequester;
 import com.google.android.gms.auth.api.Auth;
@@ -76,7 +76,8 @@ public class LoginActivity extends AppCompatActivity implements DBRequester.List
 
 
         ImageView flash = findViewById(R.id.imageView_flash);
-        GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(flash);
+
+        DrawableImageViewTarget gifImage = new DrawableImageViewTarget(flash);
         Glide.with(this).load(R.drawable.flash).into(gifImage);
 
     }

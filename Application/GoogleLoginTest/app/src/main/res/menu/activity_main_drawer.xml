@@ -21,9 +21,9 @@
             android:icon="@android:drawable/ic_menu_search"
             android:title="연비 확인" />
         <item
-            android:id="@+id/nav_score"
+            android:id="@+id/nav_toruble"
             android:icon="@android:drawable/btn_star"
-            android:title="운전지수" />
+            android:title="고장 정보" />
         <item
             android:id="@+id/nav_book"
             android:icon="?android:attr/actionModePasteDrawable"
