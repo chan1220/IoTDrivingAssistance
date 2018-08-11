@@ -21,7 +21,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		QtWidgets.QMainWindow.__init__(self)
 		self.setupUi(self)
 		self.retranslateUi(self)
-		self.move(-2, 0)
+		self.move(-2, -30)
 		self.weatherwidget.hide()
 		self.gaugewidget.hide()
 		self.diagnosticwidget.hide()
@@ -46,7 +46,6 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
 
 
-
 		self.sensor.start()
 		self.fuel_cut = False
 
@@ -57,7 +56,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.tts = TTS()
 		self.stt = STT()
 		self.speaker = 'mijin'
-		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=1)
+		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=0.7)
 		speech_thread = threading.Thread(target=self.speechRecogStart)
 		speech_thread.daemon = True
 		speech_thread.start()
