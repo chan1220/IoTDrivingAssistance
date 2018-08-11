@@ -1,6 +1,5 @@
-package com.example.kpu.googlelogintest.listview;
-
-import android.util.Log;
+package com.example.kpu.googlelogintest.listview.trouble;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,29 +11,32 @@ import com.example.kpu.googlelogintest.R;
 
 import java.util.ArrayList;
 
-
-public class RecordAdapter extends BaseAdapter {
-
-    private ArrayList<RecordData> listCustom = new ArrayList<>();
-
+public class TroubleAdapter extends BaseAdapter{
+    private ArrayList<TroubleData> listCustom = new ArrayList<>();
     @Override
     public int getCount() {
         return listCustom.size();
     }
 
-    // 하나의 Item(ImageView 1, TextView 2)
     @Override
     public Object getItem(int position) {
         return listCustom.get(position);
     }
 
-    // Item의 id : Item을 구별하기 위한 것으로 position 사용
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
-    // 실제로 Item이 보여지는 부분
+    public void addItem(TroubleData dto) {
+        listCustom.add(dto);
+    }
+
+    public void clearItem()
+    {
+        listCustom.clear();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CustomViewHolder holder;
@@ -50,27 +52,21 @@ public class RecordAdapter extends BaseAdapter {
         } else {
             holder = (CustomViewHolder) convertView.getTag();
         }
-        RecordData dto = listCustom.get(position);
+        TroubleData dto = listCustom.get(position);
 
-        holder.textTitle.setText(dto.getStart_time());
-        holder.textContent.setText(dto.getEnd_time());
+        holder.textTitle.setText("날짜 : "+dto.getTroubleTime());
+        holder.textTitle.setTextColor(Color.rgb(217,67,116));
+        holder.textContent.setText("코드 : " + dto.getTroubleCode());
+        holder.textContent.setTextColor(Color.rgb(67,116,217));
+        holder.imageView.setImageResource(R.drawable.car_scan);
 
         return convertView;
     }
 
-    class CustomViewHolder {
+
+    class CustomViewHolder{
         ImageView imageView;
         TextView textTitle;
         TextView textContent;
-    }
-
-    // MainActivity에서 Adapter에있는 ArrayList에 data를 추가시켜주는 함수
-    public void addItem(RecordData dto) {
-        listCustom.add(dto);
-    }
-
-    public void clearItem()
-    {
-        listCustom.clear();
     }
 }

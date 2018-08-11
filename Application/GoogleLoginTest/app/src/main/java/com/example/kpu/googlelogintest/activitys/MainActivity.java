@@ -179,8 +179,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent_fef=new Intent(MainActivity.this, FuelefficiencyActivity.class);
             intent_fef.putExtra("id",intent.getStringExtra("id"));
             startActivity(intent_fef);
-        } else if (id == R.id.nav_score) {
+        } else if (id == R.id.nav_toruble) {
             // 주행 점수
+            Intent intent_trouble=new Intent(MainActivity.this, TroubleActivity.class);
+            intent_trouble.putExtra("id",intent.getStringExtra("id"));
+            startActivity(intent_trouble);
         } else if (id == R.id.nav_book) {
             // 차계부
             Intent intent_carbook=new Intent(MainActivity.this, CarBookActivity.class);

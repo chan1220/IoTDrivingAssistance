@@ -139,6 +139,21 @@ def on_request_record_recent():
 	finally:
 		return json.dumps(ret)
 
+
+
+@app.route('/request/code', methods=['POST'])
+def on_request_code():
+	ret = {'success': True}
+	try:
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.get_code(data['usr_id'])
+	except Exception as e:
+		ret['success'] = False
+		ret['error'] = str(e)
+	finally:
+		return json.dumps(ret)
+
+
 @app.route('/register/user', methods=['POST'])
 def on_register_user():
 	ret = {'success': True}

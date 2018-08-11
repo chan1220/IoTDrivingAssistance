@@ -14,12 +14,14 @@
         android:layout_marginRight="8dp"
         android:text="알림왓숑"
         app:layout_constraintEnd_toStartOf="parent"
-        tools:layout_editor_absoluteY="33dp" />
+        tools:layout_editor_absoluteY="33dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/text_message"
         android:layout_width="377dp"
         android:layout_height="316dp"
         tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="109dp" />
+        tools:layout_editor_absoluteY="109dp"
+        tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>

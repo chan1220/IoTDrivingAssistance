@@ -1,4 +1,4 @@
-package com.example.kpu.googlelogintest.listview;
+package com.example.kpu.googlelogintest.listview.record;
 
 import android.app.FragmentManager;
 import android.graphics.Color;
