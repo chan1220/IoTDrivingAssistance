@@ -6,7 +6,12 @@
 #include <PubSubClient.h>
 #include <DHT11.h>
 #define   EEPROM_LENGTH 1024
-
+// CO2 sensor init
+#define   RLOAD 10.0
+#define   RZERO 206.85
+#define   PARA 116.6020682
+#define   PARB 2.769034857
+//
 const char*   mqttServer = "49.236.136.179";
 const int     mqttPort = 1883;
 const char*   mqttUser = "chan";
@@ -22,7 +27,7 @@ char topic[100];
 
 char topic_temp[100];
 char topic_humi[100];
-
+char topic_co2[100];
 bool captive = true;
 
 DHT11 dht11(2);
@@ -34,14 +39,14 @@ DNSServer dnsServer;
 ESP8266WebServer webServer(80);
 
 String responseHTML = ""
-    "<!DOCTYPE html><html><head><title>DHT Setting Page</title></head><body><center>"
-    "<p>DHT Setting Page</p>"
+    "<!DOCTYPE html><html><head><title>AIR sensor Setting Page</title></head><body><center>"
+    "<p>Air sensor Setting Page</p>"
     "<form action='/button'>"
     "<p><input type='text' name='ssid' placeholder='SSID' onblur='this.value=removeSpaces(this.value);'></p>"
     "<p><input type='text' name='password' placeholder='WLAN Password'></p>"
     "<p><input type='text' name='id' placeholder='Car ID'></p>"
     "<p><input type='submit' value='Submit'></p></form>"
-    "<p>This is DHT Setting Page</p></center></body>"
+    "<p>This is Air Sensor Setting Page</p></center></body>"
     "<script>function removeSpaces(string) {"
     "   return string.split(' ').join('');"
     "}</script></html>";
@@ -69,8 +74,10 @@ void setup()
     strcat(topic, id);
     strcpy(topic_temp, topic);
     strcpy(topic_humi, topic);
+    strcpy(topic_co2, topic);
     strcat(topic_temp, "/temperature");
     strcat(topic_humi, "/humidity");
+    strcat(topic_co2, "/co2");
     Serial.println(topic);
     // -------------
     setup_runtime();  
@@ -78,10 +85,11 @@ void setup()
     while (!client.connected()) 
     {
       Serial.println("Connecting to MQTT...");
-      if (client.connect("Chan_DHT", mqttUser, mqttPassword )) 
+      if (client.connect("Chan_AIR", mqttUser, mqttPassword )) 
       {
         Serial.println("connected");
         client.publish("DHT/status", topic);
+        client.publish("co2/status", topic_co2);
       } 
       else 
       {
@@ -102,9 +110,8 @@ void loop() {
   {
     yield;
     delay(5000);
-    int err;
     float temp, humi;
-    if((err=dht11.read(humi, temp))==0)
+    if(dht11.read(humi, temp)==0)
     {
       char temp_buf[10];
       char humi_buf[10];
@@ -115,6 +122,18 @@ void loop() {
       client.publish(topic_humi, humi_buf);
       client.publish(topic_temp, temp_buf);
     }
+    // co2
+    int val = analogRead(0);
+    val = (1023./(float)val) * 5. - 1.* RLOAD;
+    float Resistance;
+    Resistance = val;
+    float PPM;
+    PPM = PARA * pow((Resistance/RZERO), -PARB);
+    Serial.println(PPM,1);
+    char buf[10];
+    sprintf(buf, "%.2f", PPM);
+    client.publish(topic_co2, buf);
+
   }
   
   client.loop();
@@ -143,7 +162,7 @@ void setup_runtime() {
   Serial.print("Connected to "); Serial.println(ssid);
   Serial.print("IP address: "); Serial.println(WiFi.localIP());
 
-  if (MDNS.begin("Chan_DHT")) {
+  if (MDNS.begin("Chan_AIR")) {
    Serial.println("MDNS responder started");
   }
   
@@ -156,7 +175,7 @@ void setup_runtime() {
 void setup_captive() {    
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
-  WiFi.softAP("Chan_DHT");
+  WiFi.softAP("Chan_AIR");
   
   dnsServer.start(DNS_PORT, "*", apIP);
 
@@ -206,6 +225,7 @@ void initDevice() {
     SaveString(0, "");
     ESP.restart();
 }
+
 
 
 
