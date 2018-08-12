@@ -25,6 +25,8 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.weatherwidget.hide()
 		self.gaugewidget.hide()
 		self.diagnosticwidget.hide()
+		self.label_tts.hide()
+		self.label_stt.hide()
 
 		self.currentwidget = None
 		self.sensor = sensor(self)
@@ -45,6 +47,9 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.obd.on_drive_terminate.connect(self.on_obd_drive_terminate)
 		self.sensor.gps.on_changed_gps.connect(self.on_changed_gps)
 
+		self.sensor.air.on_changed_co2.connect(self.on_changed_co2)
+		self.sensor.air.on_changed_temperature.connect(self.on_changed_temperature)
+		self.sensor.air.on_changed_humidity.connect(self.on_changed_humidity)
 
 		self.sensor.start()
 		self.fuel_cut = False
@@ -190,7 +195,6 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 
 			if self.fuel_cut:
 				self.label_eco.setPixmap(QtGui.QPixmap('fct_on.png').scaled(40, 40))
-
 			else:
 				self.label_eco.setPixmap(QtGui.QPixmap('fct_off.png').scaled(40, 40))
 
@@ -209,6 +213,17 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 
 	def on_obd_drive_terminate(self, obd): # 주행이 종료됬을 때 한번만 호출
 		msg = QtWidgets.QMessageBox.about(self ,"주행이 종료되었습니다", "주행이 종료되었습니다.")
+
+
+	def on_changed_co2(self, value):
+		self.label_CO2.setText(str(int(value)) + " ppm")
+
+	def on_changed_temperature(self, value):
+		self.label_temperature.setText(str(int(value)) + " ℃")
+
+	def on_changed_humidity(self, value):
+		self.label_humidity.setText(str(int(value)) + " %")
+
 if __name__ == '__main__':
 	import sys
 	app = QtWidgets.QApplication(sys.argv)

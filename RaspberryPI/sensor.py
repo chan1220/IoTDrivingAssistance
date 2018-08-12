@@ -1,5 +1,6 @@
 from obdex import *
 from gpsex import *
+from airex import *
 from db_requester import db_requester
 import datetime
 from uuid import getnode as get_mac
@@ -14,6 +15,10 @@ class sensor():
 		self.gps = gpsex(parent)
 		self.gps.on_changed_gps.connect(self.on_changed_gps)
 
+		self.air = airex(parent)
+		# self.ari.on_changed_humidity.connect(self.on_changed_humidity)
+		# self.ari.on_changed_temperature.connect(self.on_changed_temperature)
+		# self.ari.on_changed_co2.connect(self.on_changed_co2)
 
 		self.db = db_requester('http://49.236.136.179:5000') # 클라우드(웹서버) 주소
 		self.id = self._get_car_id()
@@ -21,10 +26,12 @@ class sensor():
 	def start(self):
 		self.obd.start()
 		self.gps.start()
+		self.air.start()
 
 	def stop(self):
 		self.obd.stop()
 		self.gps.stop()
+		self.air.stop()
 
 	def _get_car_id(self): # 차량 id 얻기
 		return(str(get_mac()))
@@ -49,3 +56,13 @@ class sensor():
 	def on_changed_dtc(self, code_list):
 		for code in code_list:
 			self.db.request('update/code', {'id': self.id, 'code': code[0], 'description': code[1]})
+
+	def on_changed_co2(self, value):
+		pass
+
+	def on_changed_temperature(self, value):
+		pass
+
+	def on_changed_co2(self, value):
+		pass
+
