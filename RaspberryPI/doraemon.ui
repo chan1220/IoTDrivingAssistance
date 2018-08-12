@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>826</width>
+    <width>800</width>
     <height>480</height>
    </rect>
   </property>
@@ -41,20 +41,21 @@ QGraphicsView
       <x>10</x>
       <y>10</y>
       <width>390</width>
-      <height>420</height>
+      <height>460</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background: rgb(39, 41, 43);
+     <string notr="true">QWidget#widget_5{
+background: rgb(39, 41, 43);
 border-radius: 15px;
 border : 1px solid black;
-</string>
+}</string>
     </property>
     <widget class="QWidget" name="widget_6" native="true">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>300</y>
+       <y>340</y>
        <width>385</width>
        <height>100</height>
       </rect>
@@ -172,7 +173,7 @@ border-top: 1px solid white;</string>
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>200</y>
+       <y>240</y>
        <width>385</width>
        <height>100</height>
       </rect>
@@ -288,14 +289,15 @@ border-bottom: 1px solid white;</string>
      <property name="geometry">
       <rect>
        <x>2</x>
-       <y>10</y>
+       <y>50</y>
        <width>385</width>
        <height>85</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">background: white;
-border-radius: 15px;
+border-top-left-radius: 15px;
+border-top-right-radius: 15px;
 border : 1px solid white;
 </string>
      </property>
@@ -317,16 +319,16 @@ border : 1px solid white;
      <property name="geometry">
       <rect>
        <x>2</x>
-       <y>100</y>
+       <y>140</y>
        <width>385</width>
        <height>85</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">background: white;
-border-radius: 15px;
-border : 1px solid white;
-</string>
+border-bottom-left-radius: 15px;
+border-bottom-right-radius: 15px;
+border : 1px solid white;</string>
      </property>
      <widget class="AvFEFGauge" name="GAUGE_average_fuel" native="true">
       <property name="geometry">
@@ -342,6 +344,154 @@ border : 1px solid white;
       </property>
      </widget>
     </widget>
+    <widget class="QLabel" name="label_temperature_img">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>35</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>temperature.png</pixmap>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_humidity_img">
+     <property name="geometry">
+      <rect>
+       <x>142</x>
+       <y>10</y>
+       <width>35</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>humidity.png</pixmap>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_temperature">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>15</y>
+       <width>75</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel#label_temperature{
+background-color: rgb(91, 146, 174);
+border-top-right-radius: 10px;
+border-bottom-right-radius: 10px;
+}</string>
+     </property>
+     <property name="text">
+      <string>999</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_humidity">
+     <property name="geometry">
+      <rect>
+       <x>172</x>
+       <y>15</y>
+       <width>75</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel#label_humidity{
+background-color: rgb(91, 146, 174);
+border-top-right-radius: 10px;
+border-bottom-right-radius: 10px;
+}</string>
+     </property>
+     <property name="text">
+      <string>100</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_CO2_img">
+     <property name="geometry">
+      <rect>
+       <x>275</x>
+       <y>10</y>
+       <width>35</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>CO2.png</pixmap>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_CO2">
+     <property name="geometry">
+      <rect>
+       <x>305</x>
+       <y>15</y>
+       <width>75</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel#label_CO2{
+background-color: rgb(91, 146, 174);
+border-top-right-radius: 10px;
+border-bottom-right-radius: 10px;
+}</string>
+     </property>
+     <property name="text">
+      <string>100</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <zorder>widget_6</zorder>
+    <zorder>widget_7</zorder>
+    <zorder>cf_wraper</zorder>
+    <zorder>av_wraper</zorder>
+    <zorder>label_temperature</zorder>
+    <zorder>label_temperature_img</zorder>
+    <zorder>label_humidity</zorder>
+    <zorder>label_humidity_img</zorder>
+    <zorder>label_CO2</zorder>
+    <zorder>label_CO2_img</zorder>
    </widget>
    <widget class="QWidget" name="widget_8" native="true">
     <property name="geometry">
@@ -349,7 +499,7 @@ border : 1px solid white;
       <x>410</x>
       <y>10</y>
       <width>385</width>
-      <height>420</height>
+      <height>460</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -426,7 +576,9 @@ border : 1px solid white;
        <height>420</height>
       </rect>
      </property>
-     <zorder>weatherwidget</zorder>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(100, 100, 100);</string>
+     </property>
     </widget>
     <widget class="WeatherWidget" name="weatherwidget" native="true">
      <property name="geometry">
@@ -445,42 +597,41 @@ border : 1px solid white;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>826</width>
-     <height>21</height>
+     <width>800</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
   <customwidget>
    <class>CuFEFGauge</class>
    <extends>QWidget</extends>
-   <header>CuFEFGauge.h</header>
+   <header>widget.gauge.CuFEFGauge.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>AvFEFGauge</class>
    <extends>QWidget</extends>
-   <header>AvFEFGauge.h</header>
+   <header>widget.gauge.AvFEFGauge.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DiagnosticWidget</class>
    <extends>QWidget</extends>
-   <header>DiagnosticWidget.h</header>
+   <header>widget.diagnostic.DiagnosticWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>GaugeWidget</class>
    <extends>QWidget</extends>
-   <header>GaugeWidget.h</header>
+   <header>widget.gauge.GaugeWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>WeatherWidget</class>
    <extends>QWidget</extends>
-   <header>WeatherWidget.h</header>
+   <header>widget.weather.WeatherWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

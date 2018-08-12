@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'doraemon.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(826, 480)
+        MainWindow.resize(800, 480)
         MainWindow.setStyleSheet("QMainWindow\n"
 "{\n"
 " background-image : url(bg.jpg);\n"
@@ -34,14 +34,15 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.widget_5 = QtWidgets.QWidget(self.centralwidget)
-        self.widget_5.setGeometry(QtCore.QRect(10, 10, 390, 420))
-        self.widget_5.setStyleSheet("background: rgb(39, 41, 43);\n"
+        self.widget_5.setGeometry(QtCore.QRect(10, 10, 390, 460))
+        self.widget_5.setStyleSheet("QWidget#widget_5{\n"
+"background: rgb(39, 41, 43);\n"
 "border-radius: 15px;\n"
 "border : 1px solid black;\n"
-"")
+"}")
         self.widget_5.setObjectName("widget_5")
         self.widget_6 = QtWidgets.QWidget(self.widget_5)
-        self.widget_6.setGeometry(QtCore.QRect(0, 300, 385, 100))
+        self.widget_6.setGeometry(QtCore.QRect(0, 340, 385, 100))
         self.widget_6.setStyleSheet("border-radius: 0px;\n"
 "border : solid ;\n"
 "")
@@ -85,7 +86,7 @@ class Ui_MainWindow(object):
 "")
         self.label_17.setObjectName("label_17")
         self.widget_7 = QtWidgets.QWidget(self.widget_5)
-        self.widget_7.setGeometry(QtCore.QRect(0, 200, 385, 100))
+        self.widget_7.setGeometry(QtCore.QRect(0, 240, 385, 100))
         self.widget_7.setStyleSheet("border-radius: 0px;\n"
 "border : solid ;\n"
 "")
@@ -127,9 +128,10 @@ class Ui_MainWindow(object):
         self.label_20.setFont(font)
         self.label_20.setObjectName("label_20")
         self.cf_wraper = QtWidgets.QWidget(self.widget_5)
-        self.cf_wraper.setGeometry(QtCore.QRect(2, 10, 385, 85))
+        self.cf_wraper.setGeometry(QtCore.QRect(2, 50, 385, 85))
         self.cf_wraper.setStyleSheet("background: white;\n"
-"border-radius: 15px;\n"
+"border-top-left-radius: 15px;\n"
+"border-top-right-radius: 15px;\n"
 "border : 1px solid white;\n"
 "")
         self.cf_wraper.setObjectName("cf_wraper")
@@ -138,18 +140,85 @@ class Ui_MainWindow(object):
         self.GAUGE_current_fuel.setStyleSheet("")
         self.GAUGE_current_fuel.setObjectName("GAUGE_current_fuel")
         self.av_wraper = QtWidgets.QWidget(self.widget_5)
-        self.av_wraper.setGeometry(QtCore.QRect(2, 100, 385, 85))
+        self.av_wraper.setGeometry(QtCore.QRect(2, 140, 385, 85))
         self.av_wraper.setStyleSheet("background: white;\n"
-"border-radius: 15px;\n"
-"border : 1px solid white;\n"
-"")
+"border-bottom-left-radius: 15px;\n"
+"border-bottom-right-radius: 15px;\n"
+"border : 1px solid white;")
         self.av_wraper.setObjectName("av_wraper")
         self.GAUGE_average_fuel = AvFEFGauge(self.av_wraper)
         self.GAUGE_average_fuel.setGeometry(QtCore.QRect(0, 0, 385, 85))
         self.GAUGE_average_fuel.setStyleSheet("")
         self.GAUGE_average_fuel.setObjectName("GAUGE_average_fuel")
+        self.label_temperature_img = QtWidgets.QLabel(self.widget_5)
+        self.label_temperature_img.setGeometry(QtCore.QRect(10, 10, 35, 35))
+        self.label_temperature_img.setText("")
+        self.label_temperature_img.setPixmap(QtGui.QPixmap("temperature.png"))
+        self.label_temperature_img.setObjectName("label_temperature_img")
+        self.label_humidity_img = QtWidgets.QLabel(self.widget_5)
+        self.label_humidity_img.setGeometry(QtCore.QRect(142, 10, 35, 35))
+        self.label_humidity_img.setText("")
+        self.label_humidity_img.setPixmap(QtGui.QPixmap("humidity.png"))
+        self.label_humidity_img.setObjectName("label_humidity_img")
+        self.label_temperature = QtWidgets.QLabel(self.widget_5)
+        self.label_temperature.setGeometry(QtCore.QRect(40, 15, 75, 25))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_temperature.setFont(font)
+        self.label_temperature.setStyleSheet("QLabel#label_temperature{\n"
+"background-color: rgb(91, 146, 174);\n"
+"border-top-right-radius: 10px;\n"
+"border-bottom-right-radius: 10px;\n"
+"}")
+        self.label_temperature.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_temperature.setObjectName("label_temperature")
+        self.label_humidity = QtWidgets.QLabel(self.widget_5)
+        self.label_humidity.setGeometry(QtCore.QRect(172, 15, 75, 25))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_humidity.setFont(font)
+        self.label_humidity.setStyleSheet("QLabel#label_humidity{\n"
+"background-color: rgb(91, 146, 174);\n"
+"border-top-right-radius: 10px;\n"
+"border-bottom-right-radius: 10px;\n"
+"}")
+        self.label_humidity.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_humidity.setObjectName("label_humidity")
+        self.label_CO2_img = QtWidgets.QLabel(self.widget_5)
+        self.label_CO2_img.setGeometry(QtCore.QRect(275, 10, 35, 35))
+        self.label_CO2_img.setText("")
+        self.label_CO2_img.setPixmap(QtGui.QPixmap("CO2.png"))
+        self.label_CO2_img.setObjectName("label_CO2_img")
+        self.label_CO2 = QtWidgets.QLabel(self.widget_5)
+        self.label_CO2.setGeometry(QtCore.QRect(305, 15, 75, 25))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_CO2.setFont(font)
+        self.label_CO2.setStyleSheet("QLabel#label_CO2{\n"
+"background-color: rgb(91, 146, 174);\n"
+"border-top-right-radius: 10px;\n"
+"border-bottom-right-radius: 10px;\n"
+"}")
+        self.label_CO2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_CO2.setObjectName("label_CO2")
+        self.widget_6.raise_()
+        self.widget_7.raise_()
+        self.cf_wraper.raise_()
+        self.av_wraper.raise_()
+        self.label_temperature.raise_()
+        self.label_temperature_img.raise_()
+        self.label_humidity.raise_()
+        self.label_humidity_img.raise_()
+        self.label_CO2.raise_()
+        self.label_CO2_img.raise_()
         self.widget_8 = QtWidgets.QWidget(self.centralwidget)
-        self.widget_8.setGeometry(QtCore.QRect(410, 10, 385, 420))
+        self.widget_8.setGeometry(QtCore.QRect(410, 10, 385, 460))
         self.widget_8.setStyleSheet("QWidget#widget_8{\n"
 "    background: rgb(39, 41, 43);\n"
 "    border-radius: 15px;\n"
@@ -177,18 +246,16 @@ class Ui_MainWindow(object):
         self.gaugewidget.setObjectName("gaugewidget")
         self.diagnosticwidget = DiagnosticWidget(self.widget_8)
         self.diagnosticwidget.setGeometry(QtCore.QRect(-1, -1, 385, 420))
+        self.diagnosticwidget.setStyleSheet("color: rgb(100, 100, 100);")
         self.diagnosticwidget.setObjectName("diagnosticwidget")
         self.weatherwidget = WeatherWidget(self.widget_8)
         self.weatherwidget.setGeometry(QtCore.QRect(-1, -1, 385, 420))
         self.weatherwidget.setObjectName("weatherwidget")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 826, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -202,12 +269,15 @@ class Ui_MainWindow(object):
         self.label_18.setText(_translate("MainWindow", "주행거리(Km)"))
         self.label_19.setText(_translate("MainWindow", "기름소모량(L)"))
         self.label_20.setText(_translate("MainWindow", "사용 유류비(원)"))
+        self.label_temperature.setText(_translate("MainWindow", "999"))
+        self.label_humidity.setText(_translate("MainWindow", "100"))
+        self.label_CO2.setText(_translate("MainWindow", "100"))
         self.label_stt.setText(_translate("MainWindow", "..."))
         self.label_tts.setText(_translate("MainWindow", "..."))
 
+from widget.diagnostic.DiagnosticWidget import DiagnosticWidget
 from widget.gauge.AvFEFGauge import AvFEFGauge
 from widget.gauge.CuFEFGauge import CuFEFGauge
-from widget.diagnostic.DiagnosticWidget import DiagnosticWidget
 from widget.gauge.GaugeWidget import GaugeWidget
 from widget.weather.WeatherWidget import WeatherWidget
 
