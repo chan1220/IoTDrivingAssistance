@@ -61,7 +61,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.tts = TTS()
 		self.stt = STT()
 		self.speaker = 'mijin'
-		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=0.7)
+		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=0.55)
 		speech_thread = threading.Thread(target=self.speechRecogStart)
 		speech_thread.daemon = True
 		speech_thread.start()
@@ -92,12 +92,13 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			spch = "반갑습니다."
 
 		elif "날씨" in text:
+			self.label_stt.hide()
+			self.label_tts.hide()
 			self.currentwidget = self.weatherwidget
 			self.wd = weather.get_weather(self.lat, self.lon)
 			spch = self.wd['str']
 			self.weatherwidget.render(self.wd)
-			self.label_stt.hide()
-			self.label_tts.hide()
+
 			self.currentwidget.show()
 
 		elif "속력" in text or "속도" in text or "시속" in text:
@@ -213,7 +214,6 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 
 	def on_obd_drive_terminate(self, obd): # 주행이 종료됬을 때 한번만 호출
 		msg = QtWidgets.QMessageBox.about(self ,"주행이 종료되었습니다", "주행이 종료되었습니다.")
-
 
 	def on_changed_co2(self, value):
 		self.label_CO2.setText(str(int(value)) + " ppm")

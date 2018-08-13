@@ -89,8 +89,8 @@ class obdex(QtCore.QThread):
 			self.connection.watch(obd.commands.THROTTLE_POS,    callback=self._on_update_throttle)
 			self.connection.watch(obd.commands.INTAKE_PRESSURE, callback=self._on_update_map)
 			self.connection.watch(obd.commands.INTAKE_TEMP,     callback=self._on_update_iat)
-			self.connection.watch(obd.commands.FUEL_STATUS,     callback=self._on_update_fct)
-			# self.connection.watch(obd.commands.	FUEL_PRESSURE,  callback=self._on_update_fct)
+			# self.connection.watch(obd.commands.FUEL_STATUS,     callback=self._on_update_fct)
+			self.connection.watch(obd.commands.	FUEL_PRESSURE,  callback=self._on_update_fct)
 			self.connection.start()
 			
 			while not self.eng_stat:
@@ -225,24 +225,24 @@ class obdex(QtCore.QThread):
 			pass
 
 	# # Real Car
-	def _on_update_fct(self, r):
-		if not r.is_null():
-			current_fct = True if 'fuel cut' in r.value[0] else False
-			if self.is_fct is not current_fct:
-				self.on_changed_fuel_cut.emit(current_fct)
-				self.is_fct = current_fct
+	# def _on_update_fct(self, r):
+	# 	if not r.is_null():
+	# 		current_fct = True if 'fuel cut' in r.value[0] else False
+	# 		if self.is_fct is not current_fct:
+	# 			self.on_changed_fuel_cut.emit(current_fct)
+	# 			self.is_fct = current_fct
 		# else:
 		# 	self.eng_stat = False
 
 	# Simulation
-	# def _on_update_fct(self, r):
-	# 	if not r.is_null():
-	# 		current_fct = True if r.value.magnitude < 50 else False
-	# 		if self.is_fct is not current_fct:
-	# 			self.on_changed_fuel_cut.emit(current_fct)
-	# 			self.is_fct = current_fct
-	# 	else:
-	# 		pass
+	def _on_update_fct(self, r):
+		if not r.is_null():
+			current_fct = True if r.value.magnitude < 50 else False
+			if self.is_fct is not current_fct:
+				self.on_changed_fuel_cut.emit(current_fct)
+				self.is_fct = current_fct
+		else:
+			pass
 
 	def _on_update_eco_das(self, r):
 		current_eco_das = True if r > 30 and self.speed > 40 and self.rpm > 2000 else False

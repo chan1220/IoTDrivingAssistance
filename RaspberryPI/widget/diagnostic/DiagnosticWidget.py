@@ -7,14 +7,14 @@ class DiagnosticWidget(QWidget, Ui_Form):
 	def __init__(self, parent):
 		QWidget.__init__(self, parent)
 		self.setupUi(self)
-		self.label_title.setPixmap(QPixmap("widget/diagnostic/logo.png"))
+		self.label_title.setPixmap(QPixmap("widget/diagnostic/title.png"))
 		self.label_img.setPixmap(QPixmap("widget/diagnostic/good.png"))
 		self.label_button.setPixmap(QPixmap("widget/diagnostic/button.png"))
 		self.label_button.mousePressEvent = self.onClickLabel
 
 	def render(self, error_list):
 		if len(error_list) <= 0:
-			self.pushButton.hide()
+			self.label_button.hide()
 			return
 		else:
 			self.label_img.setPixmap(QPixmap("widget/diagnostic/broken.png"))
