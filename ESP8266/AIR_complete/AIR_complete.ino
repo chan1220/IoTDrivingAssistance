@@ -5,12 +5,12 @@
 #include <ESP8266mDNS.h>
 #include <PubSubClient.h>
 #include <DHT11.h>
+
 #define   EEPROM_LENGTH 1024
 // CO2 sensor init
-#define   RLOAD 10.0
-#define   RZERO 206.85
-#define   PARA 116.6020682
-#define   PARB 2.769034857
+#include <MQ135.h>
+#include "MQ135.h" 
+MQ135 gasSensor = MQ135(A0); 
 //
 const char*   mqttServer = "49.236.136.179";
 const int     mqttPort = 1883;
@@ -123,15 +123,9 @@ void loop() {
       client.publish(topic_temp, temp_buf);
     }
     // co2
-    int val = analogRead(0);
-    val = (1023./(float)val) * 5. - 1.* RLOAD;
-    float Resistance;
-    Resistance = val;
-    float PPM;
-    PPM = PARA * pow((Resistance/RZERO), -PARB);
-    Serial.println(PPM,1);
+    float PPM = gasSensor.getPPM();
     char buf[10];
-    sprintf(buf, "%.2f", PPM);
+    sprintf(buf, "%.2f", PPM*100);
     client.publish(topic_co2, buf);
 
   }
