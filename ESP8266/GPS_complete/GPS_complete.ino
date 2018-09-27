@@ -14,7 +14,7 @@ void getgps(TinyGPSPlus &gps);
 //
 const char*   mqttServer = "49.236.136.179";
 const int     mqttPort = 1883;
-const char*   mqttUser = "yhur";
+const char*   mqttUser = "chan";
 const char*   mqttPassword = "hi";
 bool          isReset = false;
 WiFiClient espClient;
@@ -61,8 +61,8 @@ void setup() {
     uart_gps.begin(9600);
     Serial.begin(9600);
     EEPROM.begin(EEPROM_LENGTH);
-    pinMode(5, INPUT_PULLUP);
-    attachInterrupt(5, GPIO5,FALLING);
+    pinMode(0, INPUT_PULLUP);
+    attachInterrupt(0, GPIO5,FALLING);
 
     ReadString(0, 30);
     if (!strcmp(eRead, "")) {
@@ -84,7 +84,7 @@ void setup() {
         while (!client.connected()) 
         {
           Serial.println("Connecting to MQTT...");
-          if (client.connect("Chan_GPS", mqttUser, mqttPassword )) 
+          if (client.connect("Doraemon_GPS", mqttUser, mqttPassword )) 
           {
             Serial.println("connected");
             client.publish("gps/status", topic);
@@ -119,7 +119,7 @@ void setup_runtime() {
     Serial.print("Connected to "); Serial.println(ssid);
     Serial.print("IP address: "); Serial.println(WiFi.localIP());
 
-    if (MDNS.begin("Chan_GPS")) {
+    if (MDNS.begin("Doraemon_GPS")) {
        Serial.println("MDNS responder started");
     }
     
@@ -132,7 +132,7 @@ void setup_runtime() {
 void setup_captive() {    
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
-    WiFi.softAP("Chan_GPS");
+    WiFi.softAP("Doraemon_GPS");
     
     dnsServer.start(DNS_PORT, "*", apIP);
 

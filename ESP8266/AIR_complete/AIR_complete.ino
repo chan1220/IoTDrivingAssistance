@@ -56,8 +56,8 @@ void setup()
 {
   Serial.begin(9600);
   EEPROM.begin(EEPROM_LENGTH);
-  pinMode(5, INPUT_PULLUP);
-  attachInterrupt(5, initDevice, FALLING);
+  pinMode(0, INPUT_PULLUP);
+  attachInterrupt(0, initDevice, FALLING);
 
   ReadString(0, 30);
   if (!strcmp(eRead, ""))
@@ -85,7 +85,7 @@ void setup()
     while (!client.connected()) 
     {
       Serial.println("Connecting to MQTT...");
-      if (client.connect("Chan_AIR", mqttUser, mqttPassword )) 
+      if (client.connect("Doraemon_AIR", mqttUser, mqttPassword )) 
       {
         Serial.println("connected");
         client.publish("DHT/status", topic);
@@ -156,7 +156,7 @@ void setup_runtime() {
   Serial.print("Connected to "); Serial.println(ssid);
   Serial.print("IP address: "); Serial.println(WiFi.localIP());
 
-  if (MDNS.begin("Chan_AIR")) {
+  if (MDNS.begin("Doraemon_AIR")) {
    Serial.println("MDNS responder started");
   }
   
@@ -169,7 +169,7 @@ void setup_runtime() {
 void setup_captive() {    
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
-  WiFi.softAP("Chan_AIR");
+  WiFi.softAP("Doraemon_AIR");
   
   dnsServer.start(DNS_PORT, "*", apIP);
 
