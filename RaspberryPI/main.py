@@ -13,6 +13,7 @@ import datetime
 from bs4 import BeautifulSoup
 from requests import get
 import time
+from uuid import getnode as get_mac # get id
 #
 #
 
@@ -116,6 +117,12 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			score = 100 - ((((datetime.datetime.now() - self.sensor.obd.start_time).seconds - 25553) ** 2) / (25553 ** 2) * (
 				self.sensor.obd.hard_break * 5 + self.sensor.obd.hard_rpm * 2 + self.sensor.obd.hard_accel * 5))
 			spch = "현재 주행 점수는 {}점입니다.".format(int(score))
+
+		elif "아이디" in text:
+			temp_str = ''
+			for i in str(get_mac()):
+				temp_str = temp_str + i + ' '
+			spch = '당신의 ID는 \n'+ temp_str + '\n입니다.'
 
 		elif "세차" in text:
 			url = 'https://weather.naver.com/life/lifeNdx.nhn?cityRgnCd=CT001000'

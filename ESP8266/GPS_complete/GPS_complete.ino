@@ -154,16 +154,20 @@ void loop() {
 
     if(uart_gps.available())
     {
+      yield;
+      Serial.write(uart_gps.read());
       if(gps.encode(uart_gps.read()))
       {
+        yield;
         if(gps.location.isValid())
         {
           char mqtt_buf[20];
           sprintf(mqtt_buf, "%f %f", gps.location.lat(), gps.location.lng());
+          yield;
           Serial.print(mqtt_buf);Serial.println("is published!!");
           yield;
           client.publish(topic, mqtt_buf);
-          delay(1000);
+          yield;
         }
       }
 
