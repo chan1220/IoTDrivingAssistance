@@ -155,13 +155,14 @@ void loop() {
     if(uart_gps.available())
     {
       yield;
-      Serial.write(uart_gps.read());
       if(gps.encode(uart_gps.read()))
       {
         yield;
-        if(gps.location.isValid())
+        char mqtt_buf[20];
+        float gps_lat = gps.location.lat();
+        float gps_lon = gps.location.lng();
+        if(gps_lat && gps_lon)
         {
-          char mqtt_buf[20];
           sprintf(mqtt_buf, "%f %f", gps.location.lat(), gps.location.lng());
           yield;
           Serial.print(mqtt_buf);Serial.println("is published!!");
@@ -169,6 +170,9 @@ void loop() {
           client.publish(topic, mqtt_buf);
           yield;
         }
+        else
+          Serial.print("GPS is empty!");
+        delay(1000);
       }
 
     }

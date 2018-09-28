@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, rc, hehe):
 	print("Connected with result code "+str(rc))
-	client.subscribe("+")
+	client.subscribe("#")
  
 def on_message(client, userdata, msg):
 	print(msg.topic + " : " + msg.payload.decode('utf-8'))
