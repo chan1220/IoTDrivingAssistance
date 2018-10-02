@@ -72,17 +72,21 @@ class dao(MySQL):
 
 
 	def set_car(self, car_id, usr_id, car_name, volume, fuel, fuel_efi):
+		cursor = self.connection.cursor()
+		cursor.execute('''DELETE FROM car WHERE usr_id = %s ''', (usr_id,))
+		self.connection.commit()
 		query = '''
 				INSERT INTO car (car_id, usr_id, car_name, volume, fuel, fuel_efi)
 				VALUES ('{car_id}', '{usr_id}', '{car_name}', '{volume}', '{fuel}', '{fuel_efi}')
 				ON DUPLICATE KEY UPDATE
+				car_id = '{car_id}',
 				car_name = '{car_name}',
 				volume = '{volume}',
 				fuel = '{fuel}',
 				fuel_efi = '{fuel_efi}',
 				usr_id = '{usr_id}'
 				'''.format(car_id=car_id, usr_id=usr_id, car_name=car_name, volume=volume, fuel=fuel, fuel_efi=fuel_efi)
-		cursor = self.connection.cursor()
+		
 		cursor.execute(query);
 		self.connection.commit()
 		return self.get_car(usr_id)

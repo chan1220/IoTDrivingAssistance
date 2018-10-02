@@ -10,6 +10,9 @@
     <height>480</height>
    </rect>
   </property>
+  <property name="cursor">
+   <cursorShape>BlankCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>도라에몽</string>
   </property>

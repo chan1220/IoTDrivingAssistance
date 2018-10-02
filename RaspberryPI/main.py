@@ -103,9 +103,11 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.currentwidget.show()
 
 		elif "속력" in text or "속도" in text or "시속" in text:
+			self.label_stt.hide()
+			self.label_tts.hide()
 			self.currentwidget = self.gaugewidget
 			self.currentwidget.show()
-			spch = "속력를 보여드릴게요. 현재 속도는 " + str(self.gaugewidget.GAUGE_SPEED.value) + "km/h 입니다."
+			spch = "속력을 보여드릴게요. 현재 속도는 " + str(self.gaugewidget.GAUGE_SPEED.value) + "km/h 입니다."
 
 		elif "연비" in text:
 			if "평균" in text:
@@ -220,7 +222,10 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.currentwidget.show()
 
 	def on_obd_drive_terminate(self, obd): # 주행이 종료됬을 때 한번만 호출
-		msg = QtWidgets.QMessageBox.about(self ,"주행이 종료되었습니다", "주행이 종료되었습니다.")
+		msg = QtWidgets.QMessageBox()
+		msg.setStyleSheet("color: rgb(0, 0, 0);")
+		msg.information(self, "주행이 종료되었습니다", "주행이 종료되었습니다.")
+		# msg = QtWidgets.QMessageBox.about(self ,"주행이 종료되었습니다", "주행이 종료되었습니다.")
 
 	def on_changed_co2(self, value):
 		self.label_CO2.setText(str(int(value)) + " ppm")
