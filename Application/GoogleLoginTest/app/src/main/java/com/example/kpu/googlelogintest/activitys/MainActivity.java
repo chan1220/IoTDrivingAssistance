@@ -1,6 +1,7 @@
 package com.example.kpu.googlelogintest.activitys;
 
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -45,7 +47,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, DBRequester.Listener {
 
     private Intent intent;
-    private TextView textView_greet;
     private GoogleMap parking_map;
     private GoogleMap course_map;
     private TextView recent_drive, recent_drive_values;
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView_greet = findViewById(R.id.textView_greet);
         recent_drive = findViewById(R.id.textView_recent_drive);
         recent_drive_values = findViewById(R.id.textView_recent_drive_values);
         drive_total_chart = findViewById(R.id.drive_total_chart);
@@ -90,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        textView_greet.setText(getIntent().getStringExtra("name")+" 님 환영합니다!");
-
 
 
         intent = new Intent(this.getIntent());
@@ -112,6 +110,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        FragmentManager fragmentManager = getFragmentManager();
+        MapFragment mapFragment1 = (MapFragment)fragmentManager.findFragmentById(R.id.parking_map);
+        mapFragment1.getMapAsync(this);
+        MapFragment mapFragment2 = (MapFragment)fragmentManager.findFragmentById(R.id.course_map);
+        mapFragment2.getMapAsync(onMapReadyCallback());
+
+
+        try {
+            JSONObject param = new JSONObject();
+            param.put("usr_id", getIntent().getStringExtra("id"));
+
+            new DBRequester.Builder(MainActivity.this, "http://49.236.136.179:5000", this)
+                    .attach("request/chart")
+                    .streamPost(param)
+                    .request("request chart");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -244,8 +267,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onResponse(String id, JSONObject json, Object... params) {
         try {
             if (json.getBoolean("success") == false) {
-                Toast.makeText(this, "로드 실패", Toast.LENGTH_SHORT).show();
-                return;
+//                Toast.makeText(this, "차량이 등록되어있지 않거나 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder alert_confirm = new AlertDialog.Builder(MainActivity.this);
+                alert_confirm.setMessage("차량이 등록되어있지 않거나 올바르지 않습니다.\n 차량 등록화면으로 이동하시겠습니까?").setCancelable(false).setPositiveButton("네",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 'YES'
+                                Intent intent_reg=new Intent(MainActivity.this, CarRegisterActivity.class);
+                                intent_reg.putExtra("id",intent.getStringExtra("id"));
+                                startActivity(intent_reg);
+                                return;
+                            }
+                        }).setNegativeButton("아니요",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+//                                finish();
+                                return;
+                            }
+                        });
+                AlertDialog alert = alert_confirm.create();
+                alert.show();
+
             }
 
             switch (id) {
@@ -278,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     course_map.animateCamera(CameraUpdateFactory.zoomTo(11));
                     course_map.addPolyline(polylineOptions);
-                    recent_drive.setText("최근 주행 기록(" + jsonRecordArray.getJSONObject(0).getString("start_time") + ")");
+                    recent_drive.setText("최근 주행 기록\n[" + jsonRecordArray.getJSONObject(0).getString("start_time") + "]");
                     recent_drive_values.setText("거리 : " + String.format("%.2f", jsonRecordArray.getJSONObject(0).getDouble("distance")) + "km, 연비 : " + String.format("%.2f" ,jsonRecordArray.getJSONObject(0).getDouble("fuel_efi")) + "L/Km");
                     break;
 

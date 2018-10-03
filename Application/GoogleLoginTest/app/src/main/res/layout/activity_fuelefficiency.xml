@@ -12,7 +12,7 @@
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:srcCompat="@drawable/img_car_echo" />
+        app:srcCompat="@drawable/img_doraemon" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,18 +24,22 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginRight="7dp"
-            android:gravity="center"
             android:layout_weight="2"
-            android:background="#D5D5D5"
-            android:text="평균 누적 연비" />
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  평균 누적 연비"
+            android:textSize="18sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/edt_fef"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,22 +49,25 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView15"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:gravity="center"
-            android:background="#D5D5D5"
             android:layout_marginRight="7dp"
             android:layout_weight="2"
-            android:text="평균 주행 점수" />
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  평균 주행 점수"
+            android:textSize="18sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/edt_score"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -73,19 +80,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2"
-            android:gravity="center"
             android:layout_marginRight="7dp"
-            android:background="#D5D5D5"
-            android:text="누적 주행거리" />
+            android:layout_weight="2"
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  누적 주행거리"
+            android:textSize="18sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/edt_distance"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
 
@@ -98,19 +110,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2"
-            android:gravity="center"
             android:layout_marginRight="7dp"
-            android:background="#D5D5D5"
-            android:text="급가속 / 10Km" />
+            android:layout_weight="2"
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  급가속 / 10Km"
+            android:textSize="18sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/edt_accel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -123,19 +139,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2"
-            android:gravity="center"
             android:layout_marginRight="7dp"
-            android:background="#D5D5D5"
-            android:text="급정차 / 10Km" />
+            android:layout_weight="2"
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  급정차 / 10Km"
+            android:textSize="18sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/edt_break"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

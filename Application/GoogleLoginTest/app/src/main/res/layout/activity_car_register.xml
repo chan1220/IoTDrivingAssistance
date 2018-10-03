@@ -24,7 +24,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="사용자"
+                android:text=" 사용자"
+                android:fontFamily="@font/nanum_pen_big"
+                android:background="@drawable/edittext_maintag"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -35,6 +37,7 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:textSize="14sp"
+                android:fontFamily="@font/nanum_pen_big"
                 android:textStyle="italic" />
         </LinearLayout>
 
@@ -48,7 +51,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="차량ID"
+                android:text=" 차량ID"
+                android:textColor="#FF0000"
+                android:fontFamily="@font/nanum_pen_big"
+                android:background="@drawable/edittext_maintag"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -57,7 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="text"
-                android:text="09a7d17fc" />
+                android:fontFamily="@font/nanum_pen_big"
+                android:text="202481588519593" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,7 +77,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="차량명"
+                android:text=" 차량명"
+                android:fontFamily="@font/nanum_pen_big"
+                android:background="@drawable/edittext_maintag"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -78,7 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="차량명"
+                android:hint="스포티지"
+                android:fontFamily="@font/nanum_pen_big"
                 android:inputType="textCapWords" />
 
         </LinearLayout>
@@ -93,7 +103,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="배기량"
+                android:text=" 배기량"
+                android:fontFamily="@font/nanum_pen_big"
+                android:background="@drawable/edittext_maintag"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -101,7 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="2200 cc"
+                android:hint="2000 cc"
+                android:fontFamily="@font/nanum_pen_big"
                 android:inputType="number" />
         </LinearLayout>
 
@@ -115,7 +128,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="연료 종류"
+                android:text=" 연료"
+                android:fontFamily="@font/nanum_pen_big"
+                android:background="@drawable/edittext_maintag"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -125,7 +140,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Gasoline" />
+                android:fontFamily="@font/nanum_pen_big"
+                android:text="가솔린" />
 
         </LinearLayout>
 
@@ -139,7 +155,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="공인연비"
+                android:text=" 공인연비"
+                android:fontFamily="@font/nanum_pen_big"
+                android:background="@drawable/edittext_maintag"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -147,7 +165,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="15.4 km/l"
+                android:hint="12.1 Km/L"
+                android:fontFamily="@font/nanum_pen_big"
                 android:inputType="numberDecimal" />
         </LinearLayout>
 
@@ -156,9 +175,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:background="#444444"
+            android:background="@color/colorPrimary"
             android:text="등록"
-            android:textColor="#CCCCCC" />
+            android:fontFamily="@font/nanum_pen_big"/>
 
 
     </LinearLayout>

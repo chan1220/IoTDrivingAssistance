@@ -55,7 +55,7 @@ public class CarBookActivity extends AppCompatActivity implements DBRequester.Li
                 start_time.setText(i + "-" + String.format("%02d", (i1 + 1)) + "-" + String.format("%02d", i2));
             }
         };
-        final DatePickerDialog startDateDialog = new DatePickerDialog(this, startDateListener, 2018, 03, 01);
+        final DatePickerDialog startDateDialog = new DatePickerDialog(this, startDateListener, 2018, 9, 01);
 
         DatePickerDialog.OnDateSetListener endtDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -63,7 +63,7 @@ public class CarBookActivity extends AppCompatActivity implements DBRequester.Li
                 end_time.setText(i + "-" + String.format("%02d", (i1 + 1)) + "-" + String.format("%02d", i2));
             }
         };
-        final DatePickerDialog endDateDialog = new DatePickerDialog(this, endtDateListener, 2018, 03, 01);
+        final DatePickerDialog endDateDialog = new DatePickerDialog(this, endtDateListener, 2018, 9, 31);
 
 
         start_time.setOnClickListener(new View.OnClickListener() {

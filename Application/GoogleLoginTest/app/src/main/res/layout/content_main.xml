@@ -7,14 +7,6 @@
     android:layout_height="match_parent"
     android:layout_margin="10px"
     tools:context="com.example.kpu.googlelogintest.activitys.MainActivity">
-<!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-    <!--tools:context="com.example.kpu.googlelogintest.activitys.MainActivity"-->
-    <!--tools:showIn="@layout/app_bar_main">-->
 
 
     <LinearLayout
@@ -23,27 +15,17 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
+
         <TextView
-            android:id="@+id/textView_greet"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="46dp"
             android:layout_marginTop="70dp"
-            android:background="#D5D5D5"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:layout_marginBottom="20dp"/>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edittext_maintag"
             android:gravity="center"
             android:text="차량 위치"
-            android:layout_marginBottom="20dp"
-            android:background="#D5D5D5"
-            android:textSize="18sp" />
+            android:fontFamily="@font/nanum_pen_big"
+            android:textSize="20sp" />
         <fragment
             android:id="@+id/parking_map"
             class="com.google.android.gms.maps.MapFragment"
@@ -54,12 +36,13 @@
 
         <TextView
             android:id="@+id/textView_recent_drive"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="46dp"
-            android:gravity="center"
-            android:background="#D5D5D5"
-            android:text="최근 주행 기록"
             android:layout_marginBottom="20dp"
+            android:background="@drawable/edittext_maintag"
+            android:gravity="center"
+            android:text="최근 주행 기록"
+            android:fontFamily="@font/nanum_pen_big"
             android:textSize="18sp" />
         <fragment
             android:id="@+id/course_map"
@@ -73,19 +56,20 @@
             android:layout_height="46dp"
             android:gravity="center"
             android:text="hehe"
-            android:textSize="18sp"
+            android:textSize="20sp"
+            android:fontFamily="@font/nanum_pen_big"
             android:layout_marginBottom="50dp"/>
 
 
-
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="46dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edittext_maintag"
             android:gravity="center"
             android:text="주행 성향 그래프"
-            android:layout_marginBottom="20dp"
-            android:background="#D5D5D5"
-            android:textSize="25sp" />
+            android:fontFamily="@font/nanum_pen_big"
+            android:textSize="20sp" />
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/drive_total_chart"
             android:layout_width="match_parent"

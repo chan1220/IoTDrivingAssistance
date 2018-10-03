@@ -18,27 +18,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#444444"
-            android:text="2018-03-08"
-            android:textColor="#CCCCCC" />
+            android:background="@drawable/button_search"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="2018-10-01" />
 
         <Button
             android:id="@+id/end_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#444444"
-            android:text="2018-04-09"
-            android:textColor="#CCCCCC" />
+            android:background="@drawable/button_search"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="2018-10-31" />
 
         <Button
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#444444"
+            android:background="@drawable/button_search"
+            android:fontFamily="@font/nanum_pen_big"
             android:text="Search"
-            android:textColor="#CCCCCC" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -49,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:fontFamily="@font/nanum_pen_big"
         android:orientation="vertical">
 
         <EditText
@@ -58,6 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:enabled="false"
+            android:fontFamily="@font/nanum_pen_big"
             android:inputType="textPersonName" />
 
         <EditText
@@ -67,6 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:enabled="false"
+            android:fontFamily="@font/nanum_pen_big"
             android:inputType="textPersonName" />
 
         <EditText
@@ -76,6 +82,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:enabled="false"
+            android:fontFamily="@font/nanum_pen_big"
             android:inputType="textPersonName" />
 
         <EditText
@@ -85,6 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:enabled="false"
+            android:fontFamily="@font/nanum_pen_big"
             android:inputType="textPersonName" />
     </LinearLayout>
 

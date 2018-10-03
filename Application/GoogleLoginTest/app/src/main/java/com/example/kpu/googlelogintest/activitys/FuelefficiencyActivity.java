@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kpu.googlelogintest.R;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class FuelefficiencyActivity extends AppCompatActivity implements DBRequester.Listener{
 
-    private EditText edt_fef, edt_score, edt_break, edt_accel, edt_distance;
+    private TextView edt_fef, edt_score, edt_break, edt_accel, edt_distance;
     private ArrayList<RecordData> recordArray;
     private ProgressDialog progressDialog;
     @Override
@@ -101,11 +102,11 @@ public class FuelefficiencyActivity extends AppCompatActivity implements DBReque
                         total_break += Double.parseDouble(rd.getBreak_num());
                     }
                     progressDialog.dismiss();
-                    edt_fef.setText("" + String.format("%.2f", total_dis / total_fuel));
-                    edt_score.setText(""+total_score / recordArray.size());
-                    edt_break.setText(""+ String.format("%.2f", total_break * 10 / total_dis));
-                    edt_accel.setText(""+ String.format("%.2f", total_accel * 10 / total_dis));
-                    edt_distance.setText("" + String.format("%.2f", total_dis));
+                    edt_fef.setText("" + String.format("%.2f", total_dis / total_fuel) + " Km/L  ");
+                    edt_score.setText(""+total_score / recordArray.size() + " 점  ");
+                    edt_break.setText(""+ String.format("%.2f", total_break * 10 / total_dis) + " 번/100Km  ");
+                    edt_accel.setText(""+ String.format("%.2f", total_accel * 10 / total_dis) + " 번/100Km  ");
+                    edt_distance.setText("" + String.format("%.2f", total_dis) + " Km  ");
             }
         } catch (JSONException e) {
             e.printStackTrace();

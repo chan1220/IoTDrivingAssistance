@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#EAEAEA"
+    android:background="#0E8296"
     tools:context="com.example.kpu.googlelogintest.activitys.LoginActivity"
     >
 
@@ -14,17 +14,8 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="86dp"
+        android:layout_height="134dp"
         app:srcCompat="@drawable/title" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="By.Doraemon  "
-        android:textAlignment="textEnd"
-        android:textSize="20dp" />
 
     <ImageView
         android:id="@+id/imageView_flash"

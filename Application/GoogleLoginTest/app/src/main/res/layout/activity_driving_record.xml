@@ -22,9 +22,10 @@ tools:context="com.example.kpu.googlelogintest.activitys.DrivingRecordActivity">
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="#444444"
-            android:text="2018-03-01"
-            android:textColor="#CCCCCC"
+            android:background="#AA2CAABE"
+            android:text="2018-10-01"
+            android:fontFamily="@font/nanum_pen_big"
+            android:textColor="#555555"
             android:textSize="17dp" />
 
         <Button
@@ -37,14 +38,15 @@ tools:context="com.example.kpu.googlelogintest.activitys.DrivingRecordActivity">
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="#444444"
+            android:background="#AA2CAABE"
             android:padding="0dp"
             android:paddingBottom="0dp"
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:paddingTop="0dp"
-            android:text="2018-09-01"
-            android:textColor="#CCCCCC"
+            android:text="2018-10-10"
+            android:fontFamily="@font/nanum_pen_big"
+            android:textColor="#555555"
             android:textSize="17dp" />
 
         <Button
@@ -53,14 +55,16 @@ tools:context="com.example.kpu.googlelogintest.activitys.DrivingRecordActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#444444"
+            android:background="@drawable/button_search"
             android:layout_margin="5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
+            android:fontFamily="@font/nanum_pen_big"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
+
             android:text="검색"
-            android:textColor="#CCCCCC" />
+            android:textColor="#555555" />
 
     </LinearLayout>
 
