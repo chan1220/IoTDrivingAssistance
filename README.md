@@ -1,6 +1,12 @@
 ### IoT 기반 운전보조 시스템
 ## Driving assistance system based on IoT
 
+## Function
+   1. OBD2와 센서를 이용하여 최적의 연비운전 환경 제공
+   2. 차량의 고장을 모니터링하여 차량 고장을 조기에 발견
+   3. 음성인식 기능을 통해 운전자가 운전 중에도 손쉽게 기능을 사용
+   4. Android APP 이용하여 언제 어디서나 차량의 정보를 확인
+
 ## Hardware
   1. Raspberry PI 3 Model B
   2. Raspberry PI Public 7' Touch Screen
