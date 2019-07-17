@@ -224,7 +224,7 @@ class obdex(QtCore.QThread):
 		else:
 			pass
 
-	# # Real Car
+	# Real Car 
 	# def _on_update_fct(self, r):
 	# 	if not r.is_null():
 	# 		current_fct = True if 'fuel cut' in r.value[0] else False
