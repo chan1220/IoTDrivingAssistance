@@ -20,7 +20,7 @@ class sensor():
 		# self.ari.on_changed_temperature.connect(self.on_changed_temperature)
 		# self.ari.on_changed_co2.connect(self.on_changed_co2)
 
-		self.db = db_requester('http://49.236.136.179:5000') # 클라우드(웹서버) 주소
+		self.db = db_requester('http://15.164.149.11:5000') # 클라우드(웹서버) 주소
 		self.id = self._get_car_id()
 		print('당신의 차량 id : ',self.id)
 	def start(self):

@@ -12,7 +12,7 @@ SoftwareSerial uart_gps(12, 13);
 void getgps(TinyGPSPlus &gps);
 
 //
-const char*   mqttServer = "49.236.136.179";
+const char*   mqttServer = "15.164.149.11";
 const int     mqttPort = 1883;
 const char*   mqttUser = "chan";
 const char*   mqttPassword = "hi";

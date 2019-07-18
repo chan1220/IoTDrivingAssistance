@@ -12,7 +12,7 @@
 #include "MQ135.h" 
 MQ135 gasSensor = MQ135(A0); 
 //
-const char*   mqttServer = "49.236.136.179";
+const char*   mqttServer = "15.164.149.11";
 const int     mqttPort = 1883;
 const char*   mqttUser = "chan";
 const char*   mqttPassword = "chan";

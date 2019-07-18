@@ -13,7 +13,7 @@ class gyroex(QtCore.QThread):
 		self.client = mqtt.Client()
 		self.client.on_connect = self.on_connect
 		self.client.on_message = self.on_message
-		self.client.connect("49.236.136.179", 1883, 60)
+		self.client.connect("15.164.149.11", 1883, 60)
 
 	def on_connect(self, client, userdata, rc, hehe):
 		self.client.subscribe(str(get_mac()) + "/gyro")

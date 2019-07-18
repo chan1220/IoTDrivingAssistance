@@ -9,7 +9,7 @@
 
 const int MPU = 0x68;  //MPU 6050 의 I2C 기본 주소
 
-const char*   mqttServer = "49.236.136.179";
+const char*   mqttServer = "15.164.149.11";
 const int     mqttPort = 1883;
 const char*   mqttUser = "chan";
 const char*   mqttPassword = "chan";
