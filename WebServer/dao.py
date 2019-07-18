@@ -4,7 +4,7 @@ import datetime
 
 
 class dao(MySQL):
-	def __init__(self, app, host='localhost', port=3306, uname='root', upw='doraemon', dbname='doraemon'):
+	def __init__(self, app, host='localhost', port=3306, uname='doraemon', upw='doraemon', dbname='doraemon'):
 		app.config['MYSQL_HOST'] = host
 		app.config['MYSQL_PORT'] = port
 		app.config['MYSQL_DB']   = dbname
