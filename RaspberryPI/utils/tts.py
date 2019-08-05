@@ -1,4 +1,4 @@
-import json
+﻿import json
 import urllib.request
 import subprocess
 
@@ -7,8 +7,8 @@ class TTS():
 		subprocess.Popen(['mpg123', '-q', path]).wait()
 
 	def play_tts(self, text, speaker='mijin'):
-		client_id = "0q3bfmoxfq"           # <= 변경 
-		client_secret = "BZmuC2syLUFzfZhqZhQYGKXCtmxl4Dnvq4cWnVGb" # <= 변경
+		client_id = "67zyvca5yy"           # <= 변경 
+		client_secret = "POIL6v8UJMgD7AvkB1gChNX7U7AmfWXMyOPzqace" # <= 변경
 		encText = urllib.parse.quote(text)
 		data = "speaker=" + speaker + "&speed=0&text=" + encText; # jinho,mijin, clara, matt, shinji, yuri
 		url = "https://naveropenapi.apigw.ntruss.com/voice/v1/tts"
