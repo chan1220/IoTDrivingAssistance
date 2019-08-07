@@ -16,7 +16,7 @@ def get_addr(lat, lon):
 		get_json = json.loads(response_body)
 		#print(response_body)
 
-		print(get_json['results'][1]['region']['area1']['name'] + ' ' + get_json['results'][1]['region']['area2']['name'] + ' ' + get_json['results'][1]['region']['area3']['name'])
+		return get_json['results'][1]['region']['area1']['name'] + ' ' + get_json['results'][1]['region']['area2']['name'] + ' ' + get_json['results'][1]['region']['area3']['name']
 	else:
 		print("Error Code:" + rescode)
 		return 'error'

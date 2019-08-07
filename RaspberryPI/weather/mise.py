@@ -15,3 +15,6 @@ def get_mise(city):
 	return (data["list"][1]["pm10Value"], convert_dust_level[data["list"][1]["pm10Grade"]])
 
 	
+
+if __name__ == "__main__":
+	print(get_mise('석촌동'))

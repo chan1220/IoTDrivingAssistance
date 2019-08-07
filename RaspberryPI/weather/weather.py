@@ -9,12 +9,21 @@ import weather.mise as mise
 # import pos
 import weather.pos as pos
 
+# 수형아
+# 열심이 해라
+# 2019-08-07
+# 오늘은 석촌 호수에 다녀왔다.
+# 날씨가 29.7도라고 한다.
+# Goose island 맥주는 개 맛이없다.
+# 먹지마라
+# 이상
+
 sky_dict = {'SKY_D01': "맑은 날씨", 'SKY_D02': '구름이 조금 있는 날씨', 'SKY_D03': '구름이 많은 날씨', 'SKY_D04': '흐린 날씨', 'SKY_D05': '비가 오는 날씨', 'SKY_D06': '눈이 오는 날씨', 'SKY_D07': '비 또는 눈이 오는 날씨'}
 tomorrow_sky_dict = {'SKY_M01': "맑은 날씨", 'SKY_M02': '구름이 조금 있는 날씨', 'SKY_M03': '구름이 많은 날씨', 'SKY_M04': '흐린 날씨', 'SKY_M05': '비가 오는 날씨', 'SKY_M06': '눈이 오는 날씨', 'SKY_M07': '비 또는 눈이 오는 날씨'}
 
 def get_weather_str(addr, temp, tmax, tmin, sky, dust, dust_str):
 	weather_str = "{}의 현재 온도는 {} 도 이고, 오늘의 최고 기온은 {} 도, 최저 기온은 {} 도 이며, {}입니다. ".format(addr, round(float(temp),1), round(float(tmax),1), round(float(tmin),1), sky)
-	weather_str = weather_str + "또한 미세먼지 농도는 {}마이크로그램 퍼 제곱미터 이고, 상태는 {}입니다.".format(dust, dust_str)
+	weather_str = weather_str + "또한 미세먼지 농도는 {}마이크로그램 퍼 제곱미터 이고, 날씨 상태는 {}입니다.".format(dust, dust_str)
 	return weather_str
 
 
@@ -49,4 +58,4 @@ def get_weather(lat, lon):
 	return info_dict
 
 if __name__ == "__main__":
-	print(get_weather(37,127))
+	print(get_weather(37.502,127.097))
