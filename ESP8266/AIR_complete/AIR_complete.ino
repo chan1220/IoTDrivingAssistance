@@ -1,10 +1,14 @@
+#include <MQ135.h>
+
+#include <DHTesp.h>
+
 #include <ESP8266WiFi.h>
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
 #include <EEPROM.h>
 #include <ESP8266mDNS.h>
 #include <PubSubClient.h>
-#include <DHT11.h>
+//#include <DHT.h>
 
 #define   EEPROM_LENGTH 1024
 // CO2 sensor init
@@ -30,7 +34,8 @@ char topic_humi[100];
 char topic_co2[100];
 bool captive = true;
 
-DHT11 dht11(2);
+DHTesp dht11;
+//DHT11 dht11(2);
 WiFiClient espClient;
 PubSubClient client(espClient);
 const byte DNS_PORT = 53;
@@ -58,7 +63,7 @@ void setup()
   EEPROM.begin(EEPROM_LENGTH);
   pinMode(0, INPUT_PULLUP);
   attachInterrupt(0, initDevice, FALLING);
-
+  dht11.setup(2, DHTesp::DHT11);
   ReadString(0, 30);
   if (!strcmp(eRead, ""))
     setup_captive();
@@ -110,8 +115,9 @@ void loop() {
   {
     yield;
     delay(5000);
-    float temp, humi;
-    if(dht11.read(humi, temp)==0)
+    float temp = dht11.getTemperature();
+    float humi = dht11.getHumidity();
+    if(humi != 0 && temp != 0)
     {
       char temp_buf[10];
       char humi_buf[10];
@@ -219,8 +225,3 @@ void initDevice() {
     SaveString(0, "");
     ESP.restart();
 }
-
-
-
-
-
