@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="15dp"
+    tools:context="com.example.ecodora.FuelefficiencyActivity">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/img_doraemon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="2"
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  평균 누적 연비"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/edt_fef"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="2"
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  평균 주행 점수"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/edt_score"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="2"
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  누적 주행거리"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/edt_distance"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="2"
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  급가속 / 10Km"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/edt_accel"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="2"
+            android:background="@drawable/edittext_maintag"
+            android:fontFamily="@font/nanum_pen_big"
+            android:text="  급정차 / 10Km"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/edt_break"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="@drawable/textview_info"
+            android:fontFamily="@font/nanum_pen_big"
+            android:gravity="right"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

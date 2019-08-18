@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fuel_attr">
+        <item >Gasoline</item>
+        <item >Diesel</item>
+        <item >LPG</item>
+        <item >Hybrid</item>
+    </string-array>
+
+</resources>

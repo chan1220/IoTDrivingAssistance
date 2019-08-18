@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "130077675998",
+    "firebase_url": "https://ecodora-2f075.firebaseio.com",
+    "project_id": "ecodora-2f075",
+    "storage_bucket": "ecodora-2f075.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130077675998:android:96ed8507d7be384c",
+        "android_client_info": {
+          "package_name": "com.example.ecodora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130077675998-e3g0ktcaitd9lo2avd0pgrojuko3f41u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ecodora",
+            "certificate_hash": "e27e13610428a53ad25d578dfa32d9fd35dc4556"
+          }
+        },
+        {
+          "client_id": "130077675998-3p706jtjpf903jpmcnodo5q6ueqd4dvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5pfVL4wI34NAucgbn9PDeVMz0MsaALz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130077675998-3p706jtjpf903jpmcnodo5q6ueqd4dvb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
