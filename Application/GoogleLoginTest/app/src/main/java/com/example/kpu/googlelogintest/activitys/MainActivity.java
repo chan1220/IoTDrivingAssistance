@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             JSONObject param = new JSONObject();
             param.put("usr_id", getIntent().getStringExtra("id"));
 
-            new DBRequester.Builder(MainActivity.this, "http://49.236.136.179:5000", this)
+            new DBRequester.Builder(MainActivity.this, getString(R.string.server_url), this)
                     .attach("request/chart")
                     .streamPost(param)
                     .request("request chart");
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             JSONObject param = new JSONObject();
             param.put("usr_id", getIntent().getStringExtra("id"));
 
-            new DBRequester.Builder(MainActivity.this, "http://49.236.136.179:5000", this)
+            new DBRequester.Builder(MainActivity.this, getString(R.string.server_url), this)
                     .attach("request/chart")
                     .streamPost(param)
                     .request("request chart");
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             JSONObject param = new JSONObject();
             param.put("usr_id", getIntent().getStringExtra("id"));
 
-            new DBRequester.Builder(MainActivity.this, "http://49.236.136.179:5000", this)
+            new DBRequester.Builder(MainActivity.this, getString(R.string.server_url), this)
                     .attach("request/parking")
                     .streamPost(param)
                     .request("request parking");
@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     JSONObject param = new JSONObject();
                     param.put("usr_id", getIntent().getStringExtra("id"));
 
-                    new DBRequester.Builder(MainActivity.this, "http://49.236.136.179:5000", MainActivity.this)
+                    new DBRequester.Builder(MainActivity.this, getString(R.string.server_url), MainActivity.this)
                             .attach("request/record_recent")
                             .streamPost(param)
                             .request("request record_recent");

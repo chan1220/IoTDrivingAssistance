@@ -42,7 +42,7 @@ public class CarRegisterActivity extends AppCompatActivity implements DBRequeste
         try {
             JSONObject car = new JSONObject();
             car.put("usr_id", getIntent().getStringExtra("id"));
-            new DBRequester.Builder(this, "http://49.236.136.179:5000", this)
+            new DBRequester.Builder(this, getString(R.string.server_url), this)
                     .attach("request/car")
                     .streamPost(car)
                     .request("request car");
@@ -66,7 +66,7 @@ public class CarRegisterActivity extends AppCompatActivity implements DBRequeste
                     car.put("fuel_efi", edt_fuel_efi.getText());
                     car.put("fuel", edt_fuel.getText());
 
-                    new DBRequester.Builder(CarRegisterActivity.this, "http://49.236.136.179:5000", CarRegisterActivity.this)
+                    new DBRequester.Builder(CarRegisterActivity.this, getString(R.string.server_url), CarRegisterActivity.this)
                             .attach("update/car")
                             .streamPost(car)
                             .request("update car");

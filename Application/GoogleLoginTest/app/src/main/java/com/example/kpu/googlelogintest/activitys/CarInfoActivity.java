@@ -35,7 +35,7 @@ public class CarInfoActivity extends AppCompatActivity implements DBRequester.Li
         try {
             JSONObject car = new JSONObject();
             car.put("usr_id", usr_id);
-            new DBRequester.Builder(this, "http://49.236.136.179:5000", this)
+            new DBRequester.Builder(this, getString(R.string.server_url), this)
                     .attach("request/car")
                     .streamPost(car)
                     .request("request car");

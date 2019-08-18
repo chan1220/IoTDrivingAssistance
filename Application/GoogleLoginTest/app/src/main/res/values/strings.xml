@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ECO-DORA</string>
     <string name="title_activity_car_register">CarRegister</string>
-    <string name="server_url">http://49.236.136.179</string>
+    <string name="server_url">"http://15.164.149.11:5000"</string>
     <string name="server_url_rasp">http://49.236.136.179</string>
     <string name="title_activity_main">  </string>
 

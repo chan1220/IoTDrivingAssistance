@@ -15,6 +15,38 @@
       },
       "oauth_client": [
         {
+          "client_id": "31997933503-acbv8u48cqkfqrh917h22upbjg9ocqsk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kpu.googlelogintest",
+            "certificate_hash": "e27e13610428a53ad25d578dfa32d9fd35dc4556"
+          }
+        },
+        {
+          "client_id": "31997933503-rj36fpp9lf9io6m8d8a9n97k7h8ad5rb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kpu.googlelogintest",
+            "certificate_hash": "d98c8d1cfc2511b352cd217d659b6519d2e8e076"
+          }
+        },
+        {
+          "client_id": "31997933503-eckau3p8f1ghcsrra7ucpqlrnqjhafcm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kpu.googlelogintest",
+            "certificate_hash": "0f3627572e8bbcfbadc7a11d82373b107905c3cf"
+          }
+        },
+        {
+          "client_id": "31997933503-eba04787o7e673sbm8dgu7i90vmcnteh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kpu.googlelogintest",
+            "certificate_hash": "2a550d731cc06d7ea9967ee885b54ab037f805d3"
+          }
+        },
+        {
           "client_id": "31997933503-l4dia2e6uvj77oqn6b9ev25jpj3is63a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -49,20 +81,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "31997933503-n8o213jdcln0g8ipr39s5ak93kdv1mi8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

@@ -102,9 +102,12 @@ public class LoginActivity extends AppCompatActivity implements DBRequester.List
                     // 실행!
                     JSONObject user = new JSONObject();
                     user.put("id", id);
-                    user.put("name", name);
+                    user.put("name", "chan");
                     user.put("token", token);
-                    new DBRequester.Builder(this, "http://49.236.136.179:5000", this)
+                    Log.e("ParkChan", id);
+                    Log.e("ParkChan", name);
+                    Log.e("ParkChan", token);
+                    new DBRequester.Builder(this, getString(R.string.server_url), this)
                             .attach("register/user")
                             .streamPost(user)
                             .request("register user");
@@ -138,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements DBRequester.List
                     Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                     intent.putExtra("name",uname);
                     intent.putExtra("id",uid);
-
+                    Log.e("ParkChan", "Get Data!!!!");
                     startActivity(intent);
                     finish();
                     break;

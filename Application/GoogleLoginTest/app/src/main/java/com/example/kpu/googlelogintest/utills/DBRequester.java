@@ -1,6 +1,7 @@
 package com.example.kpu.googlelogintest.utills;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -128,8 +129,8 @@ public class DBRequester {
                 });
 
             } catch (Exception e) {
-
-                Toast.makeText(_activity, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("ParkChan", e.getMessage());
+                /*Toast.makeText(_activity, e.getMessage(), Toast.LENGTH_SHORT).show();*/
 
             }
         }

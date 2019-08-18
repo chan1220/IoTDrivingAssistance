@@ -94,7 +94,7 @@ public class DrivingRecordActivity extends AppCompatActivity implements DBReques
                     param.put("usr_id", usr_id);
                     param.put("start_date", start_time.getText().toString());
                     param.put("end_date", end_time.getText().toString());
-                    new DBRequester.Builder(DrivingRecordActivity.this, "http://49.236.136.179:5000", DrivingRecordActivity.this)
+                    new DBRequester.Builder(DrivingRecordActivity.this, getString(R.string.server_url), DrivingRecordActivity.this)
                             .attach("request/record")
                             .streamPost(param)
                             .request("request record");

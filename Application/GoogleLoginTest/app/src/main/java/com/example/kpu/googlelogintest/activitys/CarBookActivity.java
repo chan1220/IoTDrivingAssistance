@@ -91,7 +91,7 @@ public class CarBookActivity extends AppCompatActivity implements DBRequester.Li
                     param.put("start_date", start_time.getText().toString());
                     param.put("end_date", end_time.getText().toString());
 
-                    new DBRequester.Builder(CarBookActivity.this, "http://49.236.136.179:5000", CarBookActivity.this)
+                    new DBRequester.Builder(CarBookActivity.this, getString(R.string.server_url), CarBookActivity.this)
                             .attach("request/record")
                             .streamPost(param)
                             .request("request record");

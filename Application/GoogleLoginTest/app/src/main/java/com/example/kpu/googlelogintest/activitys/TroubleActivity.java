@@ -46,7 +46,7 @@ public class TroubleActivity extends AppCompatActivity implements DBRequester.Li
         try {
             JSONObject param = new JSONObject();
             param.put("usr_id", userID);
-            new DBRequester.Builder(TroubleActivity.this, "http://49.236.136.179:5000", TroubleActivity.this)
+            new DBRequester.Builder(TroubleActivity.this, getString(R.string.server_url), TroubleActivity.this)
                     .attach("request/code")
                     .streamPost(param)
                     .request("request trouble");

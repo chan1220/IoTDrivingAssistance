@@ -46,7 +46,7 @@ public class FuelefficiencyActivity extends AppCompatActivity implements DBReque
             param.put("start_date", "1981-12-20");
             param.put("end_date", "2100-12-20");
 
-            new DBRequester.Builder(this, "http://49.236.136.179:5000", this)
+            new DBRequester.Builder(this, getString(R.string.server_url), this)
                     .attach("request/record")
                     .streamPost(param)
                     .request("request record");
