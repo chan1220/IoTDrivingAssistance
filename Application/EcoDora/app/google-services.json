@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "130077675998-pgg07d6jf3boed8qech6kbvs9tkouo0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ecodora",
+            "certificate_hash": "5c617565b1831359b1f771bcdebd411e5cf22006"
+          }
+        },
+        {
           "client_id": "130077675998-e3g0ktcaitd9lo2avd0pgrojuko3f41u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
