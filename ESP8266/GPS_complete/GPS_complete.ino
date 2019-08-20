@@ -36,7 +36,7 @@ IPAddress apIP(192, 168, 1, 1);
 DNSServer dnsServer;
 ESP8266WebServer webServer(80);
 
-void GPIO5() {
+ICACHE_RAM_ATTR void GPIO5() {
     Serial.println("Flushing EEPROM....");
     SaveString(0, ""); // blank out the SSID field in EEPROM
     isReset = true;
@@ -62,8 +62,8 @@ void setup() {
     Serial.begin(9600);
     EEPROM.begin(EEPROM_LENGTH);
     pinMode(0, INPUT_PULLUP);
-    attachInterrupt(0, GPIO5,FALLING);
-
+    //attachInterrupt(0, GPIO5,FALLING);
+    attachInterrupt(0, GPIO5, FALLING);
     ReadString(0, 30);
     if (!strcmp(eRead, "")) {
         setup_captive();
@@ -212,4 +212,3 @@ void handleNotFound(){
     String message = "File Not Found\n\n";
     webServer.send(404, "text/plain", message);
 }
-

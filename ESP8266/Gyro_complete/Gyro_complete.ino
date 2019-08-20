@@ -193,7 +193,7 @@ void handleNotFound()
   webServer.send(404, "text/plain", message);
 }
 
-void initDevice() {
+ICACHE_RAM_ATTR void initDevice() {
     Serial.println("Flushing EEPROM....");
     SaveString(0, "");
     ESP.restart();
@@ -221,7 +221,3 @@ float getGyro()
   //  delay(10);
   return val_x;
 }
-
-
-
-
