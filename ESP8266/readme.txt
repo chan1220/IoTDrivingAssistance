@@ -1,0 +1,1 @@
+pip3 install paho-mqtt python-etcd
