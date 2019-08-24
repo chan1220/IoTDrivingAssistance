@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+
 import com.example.ecodora.R;
 import com.example.ecodora.NotifyActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -68,19 +70,33 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
+/*
         try {
             JSONObject jsonMeg = new JSONObject(messageBody);
-            Notification notification = new Notification.Builder(this)
+            NotificationCompat.Builder notificationBuilder =
+                    new NotificationCompat.Builder(this, CHANNEL_ID)
+                            .setSmallIcon(R.drawable.img_car)
+                            .setContentTitle("주행 종료??")
+                            //.setContentText(String.format("주행연비 : %.2f Km/L    주행거리 : %.2f Km", jsonMeg.getDouble("fuel_efi"), jsonMeg.getDouble("distance")))
+                            .setContentText("Hello World!")
+                            .setAutoCancel(true)
+                            .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+            mNotificationManager.notify(notifyID, notificationBuilder.build());
+
+*/
+/*            Notification notification = new Notification.Builder(this)
                     .setContentTitle("주행 종료")
                     .setContentText(String.format("주행연비 : %.2f Km/L    주행거리 : %.2f Km", jsonMeg.getDouble("fuel_efi"), jsonMeg.getDouble("distance")))
                     .setSmallIcon(R.drawable.img_car)
                     .setChannelId(CHANNEL_ID)
                     .build();
-            mNotificationManager.notify(notifyID, notification);
+            mNotificationManager.notify(notifyID, notification);*//*
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+*/
 
 
     }

@@ -84,8 +84,10 @@ public class CarRegisterActivity extends AppCompatActivity implements DBRequeste
 
             switch (id){
                 case "update car":
-                    if(json.getBoolean("success") == false)
+                    if(json.getBoolean("success") == false) {
                         Toast.makeText(this, "등록 실패", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, json.getString("error"), Toast.LENGTH_SHORT).show();
+                    }
                     else{
                         Toast.makeText(this, "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
                         finish();
@@ -119,7 +121,7 @@ public class CarRegisterActivity extends AppCompatActivity implements DBRequeste
                         edt_car_id.setText(data.getString("car_id"));
                         edt_car_name.setText(data.getString("car_name"));
                         edt_volum.setText(data.getString("volume"));
-//                        edt_fuel.setText(data.getString("fuel"));
+                        edt_fuel.setText(data.getString("fuel"));
                         edt_fuel_efi.setText(data.getString("fuel_efi"));
                     }
                     break;

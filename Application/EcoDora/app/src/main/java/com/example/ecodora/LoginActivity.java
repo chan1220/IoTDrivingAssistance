@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements DBRequester.List
                     // 실행!
                     JSONObject user = new JSONObject();
                     user.put("id", id);
-                    user.put("name", "chan");
+                    user.put("name", name);
                     user.put("token", token);
                     new DBRequester.Builder(this, "http://15.164.149.11:5000", this)
                             .attach("register/user")

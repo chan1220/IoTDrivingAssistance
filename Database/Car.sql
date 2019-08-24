@@ -1,3 +1,4 @@
+CREATE DATABASE doraemon CHARACTER SET utf8;
 USE doraemon;
 
 
