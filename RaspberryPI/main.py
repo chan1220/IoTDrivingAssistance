@@ -62,7 +62,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.tts = TTS()
 		self.stt = STT()
 		self.speaker = 'mijin'
-		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/이놈아.pmdl', sensitivity=0.55)
+		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=0.55)
 		speech_thread = threading.Thread(target=self.speechRecogStart)
 		speech_thread.daemon = True
 		speech_thread.start()
