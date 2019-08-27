@@ -23,4 +23,4 @@ db = db_requester('http://15.164.149.11:5000')
 # print(db.request('/request/record_recent', {'usr_id':'110169985313641949566'}))
 # print(db.request('/request/chart', {'usr_id':'110169985313641949566'}))
 # print(db.request('/update/car', {'car_id':'149767337947949', 'usr_id':'110169985313641949566', 'car_name':'789', 'volume':'10', 'fuel':'가솔린', 'fuel_efi':"12"}))
-print(db.request('/delete/car'. {'car_id':'149767337947949'})
+print(db.request('/delete/car', {'car_id':'149767337947949'}));

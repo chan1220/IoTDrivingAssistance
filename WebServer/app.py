@@ -178,6 +178,17 @@ def on_update_code():
 	finally:
 		return json.dumps(ret)
 
+@app.route('/delete/car', methods=['POST'])
+def on_delete_car():
+	ret = {'success': True}
+	try:
+		data = json.loads(request.data.decode('utf-8'))
+		ret['data'] = model.delete_car(data['car_id'])
+	except Exception as e:
+		ret['success'] = False
+		ret['error'] = str(e)
+	finally:
+		return json.dumps(ret)
 
 
 if __name__ == '__main__':

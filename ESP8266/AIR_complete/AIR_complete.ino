@@ -127,7 +127,7 @@ void loop() {
       client.publish(topic_humi, humi_buf);
       client.publish(topic_temp, temp_buf);
     }
-    sprintf(co2_buf, "%.2f", ppm);
+    sprintf(co2_buf, "%.2f", ppm*100);
     client.publish(topic_co2, co2_buf);
     Serial.print("CO2 value : ");Serial.println(ppm);
     Serial.print("Temperature value : ");Serial.println(temp);

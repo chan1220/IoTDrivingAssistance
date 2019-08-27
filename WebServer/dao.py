@@ -189,4 +189,4 @@ class dao(MySQL):
 		cursor = self.connection.cursor()
 		cursor.execute('''DELETE FROM car WHERE car_id = %s ''', (car_id,))
 		self.connection.commit()
-		return car_id
+		return {'car_id' : car_id}
