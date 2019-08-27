@@ -18,7 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CarRegisterActivity extends AppCompatActivity implements DBRequester.Listener {
-    private Button btn_submit;
+    private Button btn_submit, btn_delete;
     private EditText edt_usr_id, edt_car_id, edt_car_name, edt_volum, edt_fuel_efi, edt_fuel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class CarRegisterActivity extends AppCompatActivity implements DBRequeste
         edt_fuel = findViewById(R.id.cr_fuel);
 
         btn_submit = findViewById(R.id.cr_submit);
-
+        btn_delete = findViewById(R.id.cr_delete);
 
         edt_usr_id.setText(getIntent().getStringExtra("id"));
 
@@ -76,6 +76,24 @@ public class CarRegisterActivity extends AppCompatActivity implements DBRequeste
                 }
             }
         });
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    JSONObject car = new JSONObject();
+                    car.put("car_id", edt_car_id.getText());
+
+                    new DBRequester.Builder(CarRegisterActivity.this, getString(R.string.server_ip_port), CarRegisterActivity.this)
+                            .attach("delete/car")
+                            .streamPost(car)
+                            .request("delete car");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -90,6 +108,17 @@ public class CarRegisterActivity extends AppCompatActivity implements DBRequeste
                     }
                     else{
                         Toast.makeText(this, "정상적으로 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                    break;
+
+                case "delete car":
+                    if(json.getBoolean("success") == false) {
+                        Toast.makeText(this, "차량 삭제 실패", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, json.getString("error"), Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(this, "정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                     break;

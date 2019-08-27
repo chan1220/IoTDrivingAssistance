@@ -179,6 +179,13 @@
             android:text="등록"
             android:fontFamily="@font/nanum_pen_big"/>
 
+        <Button
+            android:id="@+id/cr_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="등록 차량 삭제"
+            android:fontFamily="@font/nanum_pen_big"/>
 
     </LinearLayout>
 </RelativeLayout>
