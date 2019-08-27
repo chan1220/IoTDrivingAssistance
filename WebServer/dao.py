@@ -43,8 +43,6 @@ class dao(MySQL):
 			data.append({'fuel_efi': element[2], 'speed': element[3]}) # 'datetime': str(element[1]), 
 
 		return data
-		
-			
 
 	def add_position(self, id, lat, lon):
 		cursor = self.connection.cursor()
@@ -185,3 +183,10 @@ class dao(MySQL):
 		data['normal'] = data['normal'] * 100 / total
 		data['good'] = data['good'] * 100 / total
 		return [data]
+
+
+	def delete_car(self, car_id):
+		cursor = self.connection.cursor()
+		cursor.execute('''DELETE FROM car WHERE car_id = %s ''', (car_id,))
+		self.connection.commit()
+		return car_id
