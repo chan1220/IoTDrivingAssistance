@@ -55,8 +55,8 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.sensor.start()
 		self.fuel_cut = False
 
-		self.lat = 37.340348
-		self.lon = 126.6984882
+		self.lat = 37.7362967
+		self.lon = 128.8718417
 
 		
 		self.tts = TTS()

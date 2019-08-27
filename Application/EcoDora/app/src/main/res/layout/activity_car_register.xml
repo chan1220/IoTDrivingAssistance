@@ -62,9 +62,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="text"
                 android:fontFamily="@font/nanum_pen_big"
-                android:text="202481588519593" />
+                android:inputType="text"
+                android:text="149767337947949" />
         </LinearLayout>
 
         <LinearLayout
