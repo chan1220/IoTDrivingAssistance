@@ -58,7 +58,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.lat = 37.7362967
 		self.lon = 128.8718417
 
-		self.sensitibity = 0.50
+		self.sensitibity = 0.40
 		
 		self.tts = TTS()
 		self.stt = STT()
@@ -127,6 +127,9 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=self.sensitibity)
 			spch = "호출 민감도를 낮췄어요. 현재 민감도는 " + str(self.sensitibity) + "입니다."
 
+		elif "공기" in text or "온도" in text or "습도" in text or "이산화" in text:
+			spch = "현재 차량내 CO2 농도는 " + self.label_CO2.text() + "ppm이고, 온도는 " + self.label_temperature.text() "도, 습도는 " + self.label_humidity.text() + "%입니다."
+		
 		elif "날씨" in text:
 			self.label_stt.hide()
 			self.label_tts.hide()
