@@ -58,11 +58,12 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.lat = 37.7362967
 		self.lon = 128.8718417
 
+		self.sensitibity = 0.50
 		
 		self.tts = TTS()
 		self.stt = STT()
 		self.speaker = 'mijin'
-		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=0.50)
+		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=self.sensitibity)
 		speech_thread = threading.Thread(target=self.speechRecogStart)
 		speech_thread.daemon = True
 		speech_thread.start()
@@ -113,8 +114,18 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		elif "여자친구" in text or "여자 친구" in text:
 			spch = "우리아빠 여자친구좀 만들어주세요... 외로운 개발자랍니다."
 
-		elif "시간" in text or "몇시" in text or "몇 시"in text:
+		elif "시간" in text or "몇시" in text or "몇 시" in text:
 			spch = "시흥시"
+
+		elif ("인식률" in text or "민감도" in text) and ("높" in text or "향상" in text):
+			self.sensitibity = self.sensitibity + 0.05
+			self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=self.sensitibity)
+			spch = "호출 민감도를 높혔어요. 현재 민감도는 " + self.sensitibity + "입니다."
+
+		elif ("인식률" in text or "민감도" in text) and ("낮" in text or "다운" in text):
+			self.sensitibity = self.sensitibity - 0.05
+			self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=self.sensitibity)
+			spch = "호출 민감도를 낮췄어요. 현재 민감도는 " + self.sensitibity + "입니다."
 
 		elif "날씨" in text:
 			self.label_stt.hide()
