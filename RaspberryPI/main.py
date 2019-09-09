@@ -62,7 +62,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.tts = TTS()
 		self.stt = STT()
 		self.speaker = 'mijin'
-		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=0.55)
+		self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=0.50)
 		speech_thread = threading.Thread(target=self.speechRecogStart)
 		speech_thread.daemon = True
 		speech_thread.start()
@@ -77,6 +77,7 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.label_stt.setText("...")
 			self.label_tts.setText("...")
 			self.currentwidget.hide()
+		self.label_stt.setText("--인식중--")
 		self.label_stt.show()
 		self.label_tts.show()
 		text = self.stt.get_str(self.label_stt.setText)
