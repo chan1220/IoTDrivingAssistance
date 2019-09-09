@@ -120,12 +120,12 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		elif ("인식률" in text or "민감도" in text) and ("높" in text or "향상" in text):
 			self.sensitibity = self.sensitibity + 0.05
 			self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=self.sensitibity)
-			spch = "호출 민감도를 높혔어요. 현재 민감도는 " + self.sensitibity + "입니다."
+			spch = "호출 민감도를 높혔어요. 현재 민감도는 " + str(self.sensitibity) + "입니다."
 
 		elif ("인식률" in text or "민감도" in text) and ("낮" in text or "다운" in text):
 			self.sensitibity = self.sensitibity - 0.05
 			self.detector = snowboydecoder.HotwordDetector('snowboy/resources/에몽아.pmdl', sensitivity=self.sensitibity)
-			spch = "호출 민감도를 낮췄어요. 현재 민감도는 " + self.sensitibity + "입니다."
+			spch = "호출 민감도를 낮췄어요. 현재 민감도는 " + str(self.sensitibity) + "입니다."
 
 		elif "날씨" in text:
 			self.label_stt.hide()
