@@ -103,16 +103,16 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 		elif "섹스" in text:
 			speech = "하앍....>_<"
 
-		else "노래해" in text or "노래 해" in text:
+		elif "노래해" in text or "노래 해" in text:
 			speech = "말해줘 지금 나 너의 집 앞에있어~ 우리의 시간을 되돌려줘~~"
 
-		else "강릉" in text:
+		elif "강릉" in text:
 			speech = "강릉은 멋진곳이에요. 특히 경포대는 헌팅플....읍읍..."
 
-		else "여자친구" in text or "여자 친구" in text:
+		elif "여자친구" in text or "여자 친구" in text:
 			speech = "우리아빠 여자친구좀 만들어주세요... 외로운 개발자랍니다."
 
-		else "시간" in text or "몇시" in text or "몇 시"in text:
+		elif "시간" in text or "몇시" in text or "몇 시"in text:
 			speech = "시흥시"
 
 		elif "날씨" in text:
