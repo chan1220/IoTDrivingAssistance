@@ -92,28 +92,28 @@ class mainform(QtWidgets.QMainWindow, Ui_MainWindow):
 			spch = "반가워요~"
 
 		elif "병신" in text or "씨발" in text or "개새" in text:
-			speech = "제가 뭐 잘못한거라도 있나요...?"
+			spch = "제가 뭐 잘못한거라도 있나요...?"
 
 		elif "아빠" in text or "부모" in text or "엄마" in text:
-			speech = "저희 아빠는 이수형이라는 분이에요. 저를 Github에서 주워오셨죠. 사실 진짜 아빠는 따로있어요."
+			spch = "저희 아빠는 이수형이라는 분이에요. 저를 Github에서 주워오셨죠. 사실 진짜 아빠는 따로있어요."
 
 		elif "농담" in text:
-			speech = "농담같은거 할 기분이 아니에요."
+			spch = "농담같은거 할 기분이 아니에요."
 
 		elif "섹스" in text:
-			speech = "하앍....>_<"
+			spch = "하앍....>_<"
 
 		elif "노래해" in text or "노래 해" in text:
-			speech = "말해줘 지금 나 너의 집 앞에있어~ 우리의 시간을 되돌려줘~~"
+			spch = "말해줘 지금 나 너의 집 앞에있어~ 우리의 시간을 되돌려줘~~"
 
 		elif "강릉" in text:
-			speech = "강릉은 멋진곳이에요. 특히 경포대는 헌팅플....읍읍..."
+			spch = "강릉은 멋진곳이에요. 특히 경포대는 헌팅플....읍읍..."
 
 		elif "여자친구" in text or "여자 친구" in text:
-			speech = "우리아빠 여자친구좀 만들어주세요... 외로운 개발자랍니다."
+			spch = "우리아빠 여자친구좀 만들어주세요... 외로운 개발자랍니다."
 
 		elif "시간" in text or "몇시" in text or "몇 시"in text:
-			speech = "시흥시"
+			spch = "시흥시"
 
 		elif "날씨" in text:
 			self.label_stt.hide()
